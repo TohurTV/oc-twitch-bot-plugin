@@ -6,3 +6,15 @@ fields:
     id:
         label: ID
         disabled: true
+        hidden: true
+    name:
+        label: Name
+        description: Name of the Command
+        disabled: false
+    command:
+        label: Command without (!)
+        description: command trigger without !
+        disabled: false
+    response:
+        label: Response
+        disabled: false

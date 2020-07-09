@@ -3,26 +3,59 @@
 
 namespace Tohur\Bot\Classes;
 
-
-use Tohur\Bot\Classes\HelperClass;
 use Tohur\Bot\Classes\FunctionsClass;
-use Tohur\SocialConnect\Classes\Apis\TwitchAPI;
-
 
 class CommandsClass
 {
-    function __construct($socket, $ex)
+    function __construct($socket, $ex, $config)
     {
-        $this->commands($socket, $ex);
+        $this->commands($socket, $ex, $config);
     }
 
-    function commands($socket, $ex)
+    function commands($socket, $ex, $config)
     {
+        $master = $config['master'];
         if ($ex[0] != 'PING' && isset($ex[3])) {
             $command = str_replace(array(
                 chr(10),
                 chr(13)
             ), '', $ex[3]);
+            if ($command == ":!alive?") {
+                sleep(1);
+                fputs($socket, "PRIVMSG " . $ex[2] . " :whazzup? \n");
+            }
+            if ($command == ":!time") {
+                sleep(1);
+                fputs($socket, "PRIVMSG " . $ex[2] . " :" . date(DATE_RFC2822) . " \n");
+            }
+
+            if ($command == ":!slave") {
+                sleep(1);
+                $parts = explode("!", $ex[0]);
+                $user = substr($parts['0'], 1);
+
+                if ($user == $master)
+                    fputs($socket, "PRIVMSG " . $ex[2] . " :Yes master! \n");
+                else
+                    fputs($socket, "PRIVMSG " . $ex[2] . " :get lost " . $user . " you filthy infidel! \n");
+            }
+            if ($command == ":!testinfo") {
+                sleep(1);
+                fputs($socket, "PRIVMSG " . $ex[2] . " :value0 " . $ex[0] . ", value1 " . $ex[1] . ",value2 " . $ex[2] . ",value3 " . $ex[3] . ",value4 " . $ex[4] . "\n");
+            }
+            if ($command == ":!chucknorris") {
+                sleep(1);
+                $joke = json_decode(file_get_contents('http://api.icndb.com/jokes/random', true));
+                fputs($socket, "PRIVMSG " . $ex[2] . " :" . $joke->value->joke . " \n");
+            }
+            if ($command == ":!shutdown") {
+                sleep(1);
+                $meme = file_get_contents('http://test.com');
+                if ($user == $master)
+                    fputs($socket, "PRIVMSG " . $ex[2] . " :" . $meme . " \n");
+                else
+                    fputs($socket, "PRIVMSG " . $ex[2] . " :get lost " . $user . " you filthy infidel! \n");
+            }
             $commandsDB = \DB::table('tohur_bot_commands')->get();
             foreach ($commandsDB as $commandDB) {
                 if ($command == ":!" . $commandDB->command) {
