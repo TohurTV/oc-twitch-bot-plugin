@@ -1,0 +1,8 @@
+1.0.0:
+    - Initialize plugin.
+    - create_commands_table.php
+    - create_games_table.php
+    - create_points_table.php
+    - create_queues_table.php
+    - create_timers_table.php
+    - create_users_table.php
