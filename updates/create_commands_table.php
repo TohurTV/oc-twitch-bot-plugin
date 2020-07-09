@@ -12,7 +12,9 @@ class CreateCommandsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name')->default('');
+            $table->string('command')->default('');
             $table->string('response')->default('');
+            $table->boolean('core')->default(false);
             $table->timestamps();
         });
     }

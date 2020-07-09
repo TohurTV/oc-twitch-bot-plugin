@@ -1,6 +1,7 @@
 <?php namespace Tohur\Bot\Classes;
 
 use Tohur\SocialConnect\Classes\Apis\TwitchAPI;
+use Tohur\Bot\Classes\CommandsClass;
 
 set_time_limit(0);
 
@@ -27,7 +28,7 @@ class BotClass
         fputs($socket, "PASS " . $config['pass'] . "\n");
         fputs($socket, "NICK " . $config['nick'] . "\n");
 
-         // Join channel
+        // Join channel
         foreach ($channels as $channel) {
             fputs($socket, "JOIN " . $channel . "\n");
         }
@@ -60,11 +61,7 @@ class BotClass
                         sleep(1);
                         fputs($socket, "PRIVMSG " . $ex[2] . " :" . date(DATE_RFC2822) . " \n");
                     }
-                    if ($command == ":!help") {
-                        sleep(1);
-                        fputs($socket, "PRIVMSG " . $ex[2] . " :Tohur_Bot v0.1 commands. \n");
-                        fputs($socket, "PRIVMSG " . $ex[2] . " :!alive?, !time, !slave, !chucknorris, !meme !meat \n");
-                    }
+
                     if ($command == ":!slave") {
                         sleep(1);
                         $parts = explode("!", $ex[0]);
@@ -75,9 +72,9 @@ class BotClass
                         else
                             fputs($socket, "PRIVMSG " . $ex[2] . " :get lost " . $user . " you filthy infidel! \n");
                     }
-                    if ($command == ":!test") {
+                    if ($command == ":!testinfo") {
                         sleep(1);
-                        fputs($socket, "PRIVMSG " . $ex[2] . " :value0 " . $ex[0] . ", value1 " . $ex[1] . ",value2 " . $ex[2] . ",value3 " . $ex[3] . "\n");
+                        fputs($socket, "PRIVMSG " . $ex[2] . " :value0 " . $ex[0] . ", value1 " . $ex[1] . ",value2 " . $ex[2] . ",value3 " . $ex[3] . ",value4 " . $ex[4] . "\n");
                     }
                     if ($command == ":!chucknorris") {
                         sleep(1);
@@ -92,17 +89,11 @@ class BotClass
                         else
                             fputs($socket, "PRIVMSG " . $ex[2] . " :get lost " . $user . " you filthy infidel! \n");
                     }
-                    if ($command == ":!meat") {
-                        sleep(1);
-                        $meat = file_get_contents('http://baconipsum.com/api/?type=all-meat&sentences=1');
-                        $meat = explode(" ", $meat);
-                        $meat = substr($meat['0'], 2);
-                        fputs($socket, "PRIVMSG " . $ex[2] . " :" . $meat . " \n");
-                    }
+             //       $this->commands($socket, $ex);
+                    $commands = New CommandsClass($socket, $ex);
                 }
             }
         }
     }
-
 }
 
