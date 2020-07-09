@@ -5,6 +5,7 @@ namespace Tohur\Bot\Classes;
 
 
 use Tohur\Bot\Classes\HelperClass;
+use Tohur\Bot\Classes\FunctionsClass;
 use Tohur\SocialConnect\Classes\Apis\TwitchAPI;
 
 
@@ -25,40 +26,17 @@ class CommandsClass
             $commandsDB = \DB::table('tohur_bot_commands')->get();
             foreach ($commandsDB as $commandDB) {
                 if ($command == ":!" . $commandDB->command) {
-                    $twitch = new TwitchAPI();
-                    $helper = new HelperClass();
+                    $functions = new FunctionsClass();
                     $parts = explode("!", $ex[0]);
                     $user = substr($parts['0'], 1);
-                    if (array_key_exists(2, $ex)) {
-                        $channelOwner = $helper->remove_hashtags($ex[2]);
-                    } else {
-                        $channelOwner = 'Empty';
-                    }
-                    if (array_key_exists(2, $ex)) {
-                        $apiCall = $twitch->getChannelinfo($channelOwner);
-                        $title = $apiCall[0]['title'];
-                    } else {
-                        $title = 'Empty';
-                    }
-                    if (array_key_exists(4, $ex)) {
-                        $targetUser = $helper->remove_underscores($ex[4]);
-                    } else {
-                        $targetUser = 'Empty';
-                    }
-                    if (array_key_exists(4, $ex)) {
-
-                        $apiCall = $twitch->getChannelinfo($targetUser);
-                        $targetUserGame = $apiCall[0]['game_name'];
-
-                    } else {
-                        $targetUserGame = 'Empty';
-                    }
 
                     $replace = array(
-                        '{$user}' => $channelOwner,
-                        '{$title}' => $title,
-                        '{$targetuser}' => $targetUser,
-                        '{$targetusergame}' => $targetUserGame
+                        '{$user}' => $functions->channelOwner($ex),
+                        '{$title}' => $functions->channelTitle($ex),
+                        '{$usergame}' => $functions->channelGame($ex),
+                        '{$uptime}' => $functions->uptime($ex),
+                        '{$targetuser}' => $functions->targetUser($ex),
+                        '{$targetusergame}' => $functions->targetUserGame($ex)
                     );
                     $formated = strtr($commandDB->response, $replace);
                     sleep(1);
