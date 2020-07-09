@@ -30,7 +30,7 @@ class Bot extends Command
             'name' => 'tohur_bot',
             'nick' => 'tohur_bot',
             'master' => 'tohur',
-            'pass' => 'oauth:5nx4y4odalttvshg9k169plcownihp'
+            'pass' => ''
         );
 
     }
