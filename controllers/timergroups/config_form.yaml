@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Timer Group
+
+# Model Form Field configuration
+form: $/tohur/bot/models/timergroups/fields.yaml
+
+# Model Class name
+modelClass: Tohur\Bot\Models\TimerGroups
+
+# Default redirect location
+defaultRedirect: tohur/bot/timergroups
+
+# Create page
+create:
+    title: Create Timer Group
+    redirect: tohur/bot/timergroups/update/:id
+    redirectClose: tohur/bot/timergroups
+
+# Update page
+update:
+    title: Edit Timer Group
+    redirect: tohur/bot/timergroups
+    redirectClose: tohur/bot/timergroups
+
+# Preview page
+preview:
+    title: Preview Timer Group

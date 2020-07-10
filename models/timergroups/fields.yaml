@@ -7,13 +7,9 @@ fields:
         label: ID
         disabled: true
         hidden: true
-    timersgroups:
-        label: Timer Group
-        type: relation
-        disabled: false
     name:
         label: Name
         disabled: false
-    response:
-        label: Response
+    timetorun:
+        label: Time to run (In Minutes)
         disabled: false

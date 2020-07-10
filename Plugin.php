@@ -23,7 +23,7 @@ class Plugin extends PluginBase
     {
         return [
             'name' => 'Twitch Bot',
-            'description' => 'Run a Twitch/Discord Bot from you site',
+            'description' => 'Run a Twitch/Discord Bot from your site',
             'author' => 'Joshua Webb',
             'icon' => 'icon-users'
         ];
@@ -45,16 +45,35 @@ class Plugin extends PluginBase
     public function registerNavigation()
     {
         return [
-            'commands' => [
-                'label' => 'Bot',
-                'url' => Backend::url('tohur/bot/commands'),
-                'icon' => 'icon-pencil',
+            'bot' => [
+                'label'       => 'bot',
+                'url'         => Backend::url('tohur/bot/commands'),
+                'icon'        => 'icon-comments',
                 'permissions' => ['tohur.bot.*'],
-                'order' => 500,
-                // Set counter to false to prevent the default behaviour of the main menu counter being a sum of
-                // its side menu counters
-                'counter' => false,
-                'counterLabel' => 'Label describing a dynamic menu counter',
+
+                'sideMenu'    => [
+                    'commands' => [
+                        'label' => 'Commands',
+                        'icon'        => 'icon-cogs',
+                        'url'         => Backend::url('tohur/bot/commands'),
+                        'permissions' => ['tohur.bot.*']
+
+                    ],
+                    'timergroups' => [
+                        'label' => 'Timer Groups',
+                        'icon'        => 'icon-spinner',
+                        'url'         => Backend::url('tohur/bot/timergroups'),
+                        'permissions' => ['tohur.bot.*']
+
+                    ],
+                    'timers' => [
+                        'label' => 'Timers',
+                        'icon'        => 'icon-cogs',
+                        'url'         => Backend::url('tohur/bot/timers'),
+                        'permissions' => ['tohur.bot.*']
+
+                    ]
+                ]
             ]
         ];
     }

@@ -4,6 +4,7 @@
     - create_games_table.php
     - create_points_table.php
     - create_queues_table.php
+    - create_timer_groups_table.php
     - create_timers_table.php
     - create_users_table.php
     - seed_commands_table.php

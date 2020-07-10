@@ -4,9 +4,9 @@ use BackendMenu;
 use Backend\Classes\Controller;
 
 /**
- * Commands Back-end Controller
+ * Timers Back-end Controller
  */
-class Commands extends Controller
+class Timers extends Controller
 {
     /**
      * @var array Behaviors that are implemented by this controller.
@@ -15,7 +15,7 @@ class Commands extends Controller
         'Backend.Behaviors.FormController',
         'Backend.Behaviors.ListController'
     ];
-    public $pageTitle = "Commands";
+    public $pageTitle = "Timers";
     /**
      * @var string Configuration file for the `FormController` behavior.
      */
@@ -30,6 +30,6 @@ class Commands extends Controller
     {
         parent::__construct();
 
-        BackendMenu::setContext('Tohur.Bot', 'bot', 'commands');
+        BackendMenu::setContext('Tohur.Bot', 'bot', 'timers');
     }
 }

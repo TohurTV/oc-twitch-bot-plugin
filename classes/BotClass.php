@@ -1,7 +1,9 @@
 <?php namespace Tohur\Bot\Classes;
 
+
 use Tohur\SocialConnect\Classes\Apis\TwitchAPI;
 use Tohur\Bot\Classes\CommandsClass;
+use Tohur\Bot\Classes\TimersClass;
 
 set_time_limit(0);
 
@@ -54,6 +56,7 @@ class BotClass
                     ), '', $ex[3]);
 
                     $commands = New CommandsClass($socket, $ex, $config);
+//                    $timers = New TimersClass($socket, $ex, $config);
                 }
             }
         }

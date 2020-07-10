@@ -1,23 +1,24 @@
 <?php namespace Tohur\Bot\Models;
 
 use Model;
-use Tohur\Bot\Models\TimerGroups;
+use Tohur\Bot\Models\Timers;
 
 /**
- * Timers Model
+ * TimerGroups Model
  */
-class Timers extends Model
+class TimerGroups extends Model
 {
+    public $timestamps = true;
+
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'tohur_bot_timers';
+    public $table = 'tohur_bot_timer_groups';
 
     /**
      * @var array Fillable fields
      */
-    protected $fillable = ['group_id', 'name', 'response'];
-
+    protected $fillable = ['name', 'timetorun'];
 
     /**
      * @var array Attributes to be cast to Argon (Carbon) instances
@@ -31,8 +32,8 @@ class Timers extends Model
      * @var array Relations
      */
 
-    public $belongsTo = [
-        'timersgroups' => [TimerGroups::class, 'table' => 'tohur_bot_timer_groups']
+    public $hasMany = [
+        'timers' => [Timers::class, 'table' => 'tohur_bot_timers']
     ];
 
 }

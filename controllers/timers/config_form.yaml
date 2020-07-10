@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Timer
+
+# Model Form Field configuration
+form: $/tohur/bot/models/timers/fields.yaml
+
+# Model Class name
+modelClass: Tohur\Bot\Models\Timers
+
+# Default redirect location
+defaultRedirect: tohur/bot/timers
+
+# Create page
+create:
+    title: Create Timer
+    redirect: tohur/bot/timers/update/:id
+    redirectClose: tohur/bot/timers
+
+# Update page
+update:
+    title: Edit Timer
+    redirect: tohur/bot/timers
+    redirectClose: tohur/bot/timers
+
+# Preview page
+preview:
+    title: Preview Timer

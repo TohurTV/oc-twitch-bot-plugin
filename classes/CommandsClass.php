@@ -4,6 +4,7 @@
 namespace Tohur\Bot\Classes;
 
 use Tohur\Bot\Classes\FunctionsClass;
+use Tohur\Bot\Models\Commands;
 
 class CommandsClass
 {
@@ -56,7 +57,7 @@ class CommandsClass
                 else
                     fputs($socket, "PRIVMSG " . $ex[2] . " :get lost " . $user . " you filthy infidel! \n");
             }
-            $commandsDB = \DB::table('tohur_bot_commands')->get();
+            $commandsDB = Commands::all();
             foreach ($commandsDB as $commandDB) {
                 if ($command == ":!" . $commandDB->command) {
                     $functions = new FunctionsClass();

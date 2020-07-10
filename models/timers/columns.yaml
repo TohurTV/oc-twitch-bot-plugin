@@ -3,6 +3,16 @@
 # ===================================
 
 columns:
-    id:
-        label: ID
-        searchable: true
+  id:
+    label: ID
+    searchable: true
+  timersgroups_id:
+    label: Timer Group
+
+  name:
+    label: Name
+    searchable: true
+  response:
+    label: Response
+    searchable: true
+

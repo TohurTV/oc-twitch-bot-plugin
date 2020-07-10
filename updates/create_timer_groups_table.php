@@ -4,23 +4,21 @@ use Schema;
 use October\Rain\Database\Schema\Blueprint;
 use October\Rain\Database\Updates\Migration;
 
-class CreateTimersTable extends Migration
+class CreateTimerGroupsTable extends Migration
 {
     public function up()
     {
-        Schema::create('tohur_bot_timers', function (Blueprint $table) {
+        Schema::create('tohur_bot_timer_groups', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('timersgroups_id')->unsigned();
-            $table->foreign('timersgroups_id')->references('id')->on('tohur_bot_timer_groups');
             $table->string('name')->default('');
-            $table->string('response')->default('');
+            $table->string('timetorun')->default('');
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('tohur_bot_timers');
+        Schema::dropIfExists('tohur_bot_timer_groups');
     }
 }

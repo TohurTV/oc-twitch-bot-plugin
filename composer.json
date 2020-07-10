@@ -1,0 +1,17 @@
+{
+    "name": "tohur/oc-twitch-bot-plugin",
+    "type": "october-plugin",
+    "description": "Run a Twitch/Discord Bot from your site",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joshua Webb",
+            "email": "tohur@tohur.me"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "composer/installers": "~1.0"
+    }
+}
+
