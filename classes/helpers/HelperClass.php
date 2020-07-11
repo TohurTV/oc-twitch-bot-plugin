@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Tohur\Bot\Classes;
+namespace Tohur\Bot\Classes\Helpers;
 
 
 class HelperClass

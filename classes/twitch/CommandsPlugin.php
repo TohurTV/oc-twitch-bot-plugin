@@ -1,10 +1,10 @@
 <?php
 
-namespace Tohur\Bot\Classes;
+namespace Tohur\Bot\Classes\Twitch;
 
-use Tohur\Bot\Classes\FunctionsClass;
+use Tohur\Bot\Classes\Helpers\FunctionsClass;
 use Tohur\Bot\Models\Commands;
-use Tohur\Bot\Classes\HelperClass;
+use Tohur\Bot\Classes\Helpers\HelperClass;
 use Tohur\Twitchirc\AbstractPlugin as BasePlugin;
 use Tohur\Twitchirc\IRC\Response;
 
@@ -21,9 +21,9 @@ class CommandsPlugin extends BasePlugin
                 $helper = new HelperClass();
                 $request = $event->getRequest();
                 $matches = $event->getMatches();
-                $message = explode(' ', $matches[0], 3);
+                $commandMatch = explode(' ', $matches[0], 3);
 
-                $command = Commands::where('command', $message[0])->first();
+                $command = Commands::where('command', $commandMatch[0])->first();
                 $replace = array(
                     '{$user}' => $helper->remove_hashtags($request->getSource()),
                     '{$title}' => '',

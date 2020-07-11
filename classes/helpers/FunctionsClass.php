@@ -1,11 +1,11 @@
 <?php
 
 
-namespace Tohur\Bot\Classes;
+namespace Tohur\Bot\Classes\Helpers;
 
 use Illuminate\Http\Request;
 use Tohur\Api\Classes\Helper;
-use Tohur\Bot\Classes\HelperClass;
+use Tohur\Bot\Classes\Helpers\HelperClass;
 use Tohur\SocialConnect\Classes\Apis\TwitchAPI;
 
 class FunctionsClass

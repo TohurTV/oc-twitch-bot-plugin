@@ -1,7 +1,6 @@
 <?php namespace Tohur\Bot\Classes;
 
-use Tohur\Bot\Classes\CommandsPlugin;
-use Tohur\Bot\Classes\DiscordPlugin;
+use Tohur\Bot\Classes\Twitch\CommandsPlugin;
 use Tohur\Twitchirc\Twitchirc;
 use Tohur\Twitchirc\IRC\Response;
 

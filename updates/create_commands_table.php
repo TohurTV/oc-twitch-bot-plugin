@@ -14,6 +14,7 @@ class CreateCommandsTable extends Migration
             $table->string('name')->default('');
             $table->string('command')->default('');
             $table->string('response')->default('');
+            $table->boolean('args')->default(false);
             $table->boolean('core')->default(false);
             $table->timestamps();
         });
