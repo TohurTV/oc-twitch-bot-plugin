@@ -4,7 +4,6 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Tohur\Bot\Classes\TwitchBotClass;
-use Tohur\Bot\Classes\DiscordBotClass;
 
 class TwitchBot extends Command
 {
@@ -69,10 +68,5 @@ class TwitchBot extends Command
     public function TwitchBot()
     {
         $Twitchbot = new TwitchBotClass($this->config);
-    }
-
-    public function DiscordBot()
-    {
-        $Discordbot = new DiscordBotClass($this->config);
     }
 }
