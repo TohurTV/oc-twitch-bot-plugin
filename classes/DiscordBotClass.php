@@ -33,7 +33,7 @@ class DiscordBotClass
             echo 'Received Message from ' . $message->author->tag . ' in ' . ($message->channel instanceof \CharlotteDunois\Yasmin\Interfaces\DMChannelInterface ? 'DM' : 'channel #' . $message->channel->name) . ' with ' . $message->attachments->count() . ' attachment(s) and ' . \count($message->embeds) . ' embed(s)' . PHP_EOL;
         });
 
-        $client->login('NDY0MTA2MDY3NDI1NjI0MDY1.XwlvRw.5kHUqu71gg_UAphceEBpJFACW4M')->done();
+        $client->login('')->done();
         $loop->run();
     }
 }
