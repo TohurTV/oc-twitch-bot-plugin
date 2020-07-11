@@ -1,0 +1,13 @@
+[Unit]
+Description=OctoberCMS TwitchBot
+
+[Service]
+User=user
+Group=group
+Restart=on-failure
+RemainAfterExit=yes
+ExecStart=/usr/bin/php /path/to/octobercms/artisan bot:twitch
+StartLimitBurst=0
+
+[Install]
+WantedBy=multi-user.target
