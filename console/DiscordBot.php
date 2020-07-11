@@ -22,8 +22,9 @@ class DiscordBot extends Command
     public function __construct()
     {
         parent::__construct();
+        $settings = \Tohur\bot\Models\Settings::instance()->get('bot', []);
         $this->config = array(
-            'token' => ''
+            'token' => $settings['Discord']['token']
         );
 
     }

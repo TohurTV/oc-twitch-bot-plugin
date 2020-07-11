@@ -22,18 +22,19 @@ class TwitchBot extends Command
     public function __construct()
     {
         parent::__construct();
+        $settings = \Tohur\bot\Models\Settings::instance()->get('bot', []);
         $this->config = array(
             'ssl' => false,
-            'channels' => array('#tohur'),
-            'username' => 'tohur_bot',
-            'realname' => 'tohur_bot',
-            'nick' => 'tohur_bot',
-            'master' => 'tohur',
+            'channels' => array('#'.$settings['Twitch']['channel']),
+            'username' => $settings['Twitch']['botname'],
+            'realname' => $settings['Twitch']['botname'],
+            'nick' => $settings['Twitch']['botname'],
+            'master' => $settings['Twitch']['channel'],
             "unflood" => 500,
-            "admins" => array('tohur'),
+            "admins" => array($settings['Twitch']['channel']),
             "debug" => true,
             "log" => public_path() . '/tohur/bot/bot.log',
-            'password' => ''
+            'password' => $settings['Twitch']['botpass']
         );
 
     }

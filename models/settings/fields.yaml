@@ -1,0 +1,37 @@
+# ===================================
+#  Field Definitions
+# ===================================
+tabs:
+  fields:
+
+    Discord:
+      type: partial
+      path: $/tohur/bot/partials/backend/forms/settings/_discord_info.htm
+      tab: Discord
+
+    bot[Discord][token]:
+      label: Bot Token
+      type: text
+      tab: Discord
+
+    Twitch:
+      type: partial
+      path: $/tohur/bot/partials/backend/forms/settings/_twitch_info.htm
+      tab: Twitch
+
+    bot[Twitch][channel]:
+      label: Channel to connect Bot To
+      type: text
+      tab: Twitch
+
+    bot[Twitch][botname]:
+      label: Login name of bot on twitch
+      type: text
+      tab: Twitch
+    bot[Twitch][botpass]:
+      label: Oauth Password for bot
+      type: text
+      tab: Twitch
+
+
+

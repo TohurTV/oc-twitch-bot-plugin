@@ -2,6 +2,7 @@
 
 use App;
 use Auth;
+use Backend\Widgets\Form;
 use Event;
 use Backend;
 use System\Classes\PluginBase;
@@ -35,6 +36,17 @@ class Plugin extends PluginBase
 
     public function registerSettings()
     {
+        return [
+            'settings' => [
+                'label' => 'Twitch/Discord Bot',
+                'description' => 'Manage Bot Settings.',
+                'category' => SettingsManager::CATEGORY_USERS,
+                'icon' => 'icon-users',
+                'class' => 'Tohur\Bot\Models\Settings',
+                'order' => 600,
+                'permissions' => ['rainlab.users.access_settings'],
+            ]
+        ];
     }
 
     public function register()
@@ -42,7 +54,10 @@ class Plugin extends PluginBase
         $this->registerConsoleCommand('Twitch', 'Tohur\Bot\Console\TwitchBot');
         $this->registerConsoleCommand('Discord', 'Tohur\Bot\Console\DiscordBot');
     }
+    public function boot()
+    {
 
+    }
     public function registerNavigation()
     {
         return [
