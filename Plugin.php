@@ -39,7 +39,8 @@ class Plugin extends PluginBase
 
     public function register()
     {
-        $this->registerConsoleCommand('Bot', 'Tohur\Bot\Console\Bot');
+        $this->registerConsoleCommand('Twitch', 'Tohur\Bot\Console\TwitchBot');
+        $this->registerConsoleCommand('Discord', 'Tohur\Bot\Console\DiscordBot');
     }
 
     public function registerNavigation()
