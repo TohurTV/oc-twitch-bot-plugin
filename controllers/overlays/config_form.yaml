@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Overlay
+
+# Model Form Field configuration
+form: $/tohur/bot/models/overlays/fields.yaml
+
+# Model Class name
+modelClass: Tohur\Bot\Models\Overlays
+
+# Default redirect location
+defaultRedirect: tohur/bot/overlays
+
+# Create page
+create:
+    title: Create Overlay
+    redirect: tohur/bot/overlays/update/:id
+    redirectClose: tohur/bot/overlays
+
+# Update page
+update:
+    title: Edit Overlay
+    redirect: tohur/bot/overlays
+    redirectClose: tohur/bot/overlays
+
+# Preview page
+preview:
+    title: Preview Overlay

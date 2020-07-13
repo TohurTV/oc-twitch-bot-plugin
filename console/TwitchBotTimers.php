@@ -3,14 +3,14 @@
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Tohur\Bot\Classes\TwitchBotClass;
+use Tohur\Bot\Classes\Twitch\Timers;
 
-class TwitchBot extends Command
+class TwitchBotTimers extends Command
 {
     /**
      * @var string The console command name.
      */
-    protected $name = 'bot:twitch';
+    protected $name = 'bot:twitchtimers';
 
     /**
      * @var string The console command description.
@@ -33,7 +33,7 @@ class TwitchBot extends Command
             "unflood" => 500,
             "admins" => array($settings['Twitch']['channel']),
             "debug" => true,
-            "log" => plugins_path() . '/tohur/bot/bot.log',
+            "log" => public_path() . '/tohur/bot/bot.log',
             'password' => $settings['Twitch']['botpass']
         );
 
@@ -45,7 +45,7 @@ class TwitchBot extends Command
      */
     public function handle()
     {
-            return $this->TwitchBot();
+            return $this->TwitchBotTimers();
     }
 
     /**
@@ -66,8 +66,8 @@ class TwitchBot extends Command
         return [];
     }
 
-    public function TwitchBot()
+    public function TwitchBotTimers()
     {
-        $Twitchbot = new TwitchBotClass($this->config);
+        $Twitchbot = new Timers($this->config);
     }
 }

@@ -3,23 +3,21 @@
 use Model;
 
 /**
- * Users Model
+ * Owner Model
  */
-class Users extends Model
+class Owner extends Model
 {
 
 
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'tohur_bot_users';
-
+    public $table = 'tohur_bot_owners';
 
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
-
+    protected $fillable = ['twitch_id', 'twitch', 'discord_id', 'discord', 'game', 'livepostsent', 'tweetsent'];
 
     /**
      * @var array Attributes to be cast to Argon (Carbon) instances
@@ -29,12 +27,4 @@ class Users extends Model
         'updated_at'
     ];
 
-    /**
-     * @var array Relations
-     */
-
-    public $hasMany = [
-        'points' => [Points::class, 'table' => 'tohur_bot_points'],
-        'watched' => [Points::class, 'table' => 'tohur_bot_watched']
-    ];
 }

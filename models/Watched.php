@@ -3,16 +3,16 @@
 use Model;
 
 /**
- * Users Model
+ * watched Model
  */
-class Users extends Model
+class Watched extends Model
 {
-
+    use \October\Rain\Database\Traits\Validation;
 
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'tohur_bot_users';
+    public $table = 'tohur_bot_watched';
 
 
     /**
@@ -33,8 +33,8 @@ class Users extends Model
      * @var array Relations
      */
 
-    public $hasMany = [
-        'points' => [Points::class, 'table' => 'tohur_bot_points'],
-        'watched' => [Points::class, 'table' => 'tohur_bot_watched']
+    public $belongsTo = [
+        'users' => [Users::class, 'table' => 'tohur_bot_users']
     ];
+
 }

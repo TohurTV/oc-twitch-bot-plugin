@@ -1,13 +1,12 @@
 <?php
 
-
 namespace Tohur\Bot\Classes;
 
 use Tohur\Bot\Classes\FunctionsClass;
 use Tohur\Bot\Classes\HelperClass;
+use Tohur\Bot\Classes\Discord\TwitchLivePost;
 
-use React\EventLoop\Factory;
-use CharlotteDunois\Yasmin\Client;
+use RestCord\DiscordClient;
 
 class DiscordBotClass
 {
@@ -19,13 +18,12 @@ class DiscordBotClass
 
     public function run($config)
     {
-        $loop = Factory::create();
-        $client = new Client(array(), $loop);
+        $loop = \React\EventLoop\Factory::create();
+        $client = new \CharlotteDunois\Yasmin\Client(array(), $loop);
         $client->on('error', function ($error) {
             echo $error . PHP_EOL;
         });
-
-        $client->on('ready', function () use ($client) {
+        $client->once('ready', function () use ($client) {
             echo 'Logged in as ' . $client->user->tag . ' created on ' . $client->user->createdAt->format('d.m.Y H:i:s') . PHP_EOL;
         });
 
@@ -34,6 +32,7 @@ class DiscordBotClass
         });
 
         $client->login($config['token'])->done();
+
         $loop->run();
     }
 }

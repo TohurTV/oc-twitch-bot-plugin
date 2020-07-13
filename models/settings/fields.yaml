@@ -14,6 +14,27 @@ tabs:
       type: text
       tab: Discord
 
+    bot[Discord][guildid]:
+      label: Guild Id (Turn on Developermode in Discord then right click your server name and copy id)
+      type: text
+      tab: Discord
+
+    bot[Discord][livechannel]:
+      label: Channel ID for Live stream alerts
+      type: text
+      options: listChannels
+      tab: Discord
+
+    bot[Discord][roleid]:
+      label: Role ID to mention for Live stream alerts (everyone, here, or role id from discord)
+      type: text
+      tab: Discord
+
+    bot[Discord][owner]:
+      label: Owner Username including hashtag (example- User#1028 )
+      type: text
+      tab: Discord
+
     Twitch:
       type: partial
       path: $/tohur/bot/partials/backend/forms/settings/_twitch_info.htm
@@ -33,5 +54,54 @@ tabs:
       type: text
       tab: Twitch
 
+    Twitter:
+      type: partial
+      path: $/tohur/bot/partials/backend/forms/settings/_twitter_info.htm
+      tab: Twitter
+
+    bot[Twitter][enablelivetweets]:
+      label: Enable going live tweeting?
+      type: switch
+      tab: Twitter
+
+    bot[Twitter][livetweet]:
+      label: Going live tweet message
+      type: textarea
+      tab: Twitter
+
+    bot[Twitter][enablegametweets]:
+      label: Enable live tweeting game change?
+      type: switch
+      tab: Twitter
+
+    bot[Twitter][livegametweet]:
+      label: Live game change tweet message
+      type: textarea
+      tab: Twitter
+
+    bot[Twitter][enableperiodictweets]:
+      label: Enable live periodic tweeting?
+      type: switch
+      tab: Twitter
+
+    bot[Twitter][liveperiodicinterval]:
+      label: Live periodic tweet interval. (In minutes)
+      type: text
+      tab: Twitter
+
+    bot[Twitter][liveperiodictweet]:
+      label: Live periodic tweet message
+      type: textarea
+      tab: Twitter
+
+    Other:
+      type: partial
+      path: $/tohur/bot/partials/backend/forms/settings/_other_info.htm
+      tab: Other
+
+    bot[Other][streamelementskey]:
+      label: Stream Elements JWT token
+      type: text
+      tab: Other
 
 

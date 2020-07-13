@@ -3,14 +3,15 @@
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Tohur\Bot\Classes\TwitchBotClass;
+use Tohur\Bot\Classes\Discord\TwitchLivePost;
+use Tohur\SocialConnect\Classes\Apis\TwitchAPI;
 
-class TwitchBot extends Command
+class DiscordBotLivePost extends Command
 {
     /**
      * @var string The console command name.
      */
-    protected $name = 'bot:twitch';
+    protected $name = 'bot:discordlivepost';
 
     /**
      * @var string The console command description.
@@ -22,19 +23,9 @@ class TwitchBot extends Command
     public function __construct()
     {
         parent::__construct();
-        $settings = \Tohur\bot\Models\Settings::instance()->get('bot', []);
+        $this->settings = \Tohur\bot\Models\Settings::instance()->get('bot', []);
         $this->config = array(
-            'ssl' => false,
-            'channels' => array('#'.$settings['Twitch']['channel']),
-            'username' => $settings['Twitch']['botname'],
-            'realname' => $settings['Twitch']['botname'],
-            'nick' => $settings['Twitch']['botname'],
-            'master' => $settings['Twitch']['channel'],
-            "unflood" => 500,
-            "admins" => array($settings['Twitch']['channel']),
-            "debug" => true,
-            "log" => plugins_path() . '/tohur/bot/bot.log',
-            'password' => $settings['Twitch']['botpass']
+            'token' => $this->settings['Discord']['token']
         );
 
     }
@@ -45,7 +36,13 @@ class TwitchBot extends Command
      */
     public function handle()
     {
-            return $this->TwitchBot();
+        $twitch = new TwitchAPI();
+        if ($twitch->isChannelLive($this->settings['Twitch']['channel']) == true) {
+            return $this->DiscordBotLivePost();
+        } else {
+            $this->output->writeln($this->settings['Twitch']['channel'].' is not online');
+        }
+
     }
 
     /**
@@ -66,8 +63,8 @@ class TwitchBot extends Command
         return [];
     }
 
-    public function TwitchBot()
+    public function DiscordBotLivePost()
     {
-        $Twitchbot = new TwitchBotClass($this->config);
+        $Discordbot = new TwitchLivePost($this->config);
     }
 }

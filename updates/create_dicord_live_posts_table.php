@@ -4,23 +4,22 @@ use Schema;
 use October\Rain\Database\Schema\Blueprint;
 use October\Rain\Database\Updates\Migration;
 
-class CreateUsersTable extends Migration
+class CreateDicordLivePostsTable extends Migration
 {
     public function up()
     {
-        Schema::create('tohur_bot_users', function (Blueprint $table) {
+        Schema::create('tohur_bot_dicord_live_posts', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('twitch_id')->default('');
-            $table->string('twitch')->default('');
-            $table->string('discord_id')->default('');
+            $table->string('channel')->default('');
             $table->string('discord')->default('');
+            $table->boolean('sent')->default(false);
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('tohur_bot_users');
+        Schema::dropIfExists('tohur_bot_dicord_live_posts');
     }
 }

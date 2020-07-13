@@ -3,22 +3,20 @@
 use Model;
 
 /**
- * Users Model
+ * DicordLivePosts Model
  */
-class Users extends Model
+class DicordLivePosts extends Model
 {
-
 
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'tohur_bot_users';
-
+    public $table = 'tohur_bot_dicord_live_posts';
 
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = ['channel', 'discord', 'sent'];
 
 
     /**
@@ -29,12 +27,4 @@ class Users extends Model
         'updated_at'
     ];
 
-    /**
-     * @var array Relations
-     */
-
-    public $hasMany = [
-        'points' => [Points::class, 'table' => 'tohur_bot_points'],
-        'watched' => [Points::class, 'table' => 'tohur_bot_watched']
-    ];
 }
