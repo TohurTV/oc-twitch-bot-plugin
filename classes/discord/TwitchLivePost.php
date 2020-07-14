@@ -4,7 +4,7 @@ use Tohur\Bot\Classes\FunctionsClass;
 use Tohur\Bot\Classes\HelperClass;
 use Tohur\Bot\Models\Settings;
 use Tohur\SocialConnect\Classes\Apis\TwitchAPI;
-use Tohur\Bot\Models\DicordLivePosts;
+use Tohur\Bot\Models\Owner;
 use React\EventLoop\Factory;
 use CharlotteDunois\Yasmin\Client;
 
@@ -33,12 +33,8 @@ class TwitchLivePost
         $client->once('ready', function () use ($client) {
                     $settings = Settings::instance()->get('bot', []);
                     $twitch = new TwitchAPI();
-                    $count = \DB::table('tohur_bot_dicord_live_posts')->count();
-                    if ($count == 0) {
-                        DicordLivePosts::create(['channel' => $settings['Twitch']['channel'], 'discord' => $settings['Discord']['owner'], 'sent' => false]);
-                    }
-                    $checkSent = DicordLivePosts::where('channel', $settings['Twitch']['channel'])->first();
-                    if ($twitch->isChannelLive($settings['Twitch']['channel']) == true && $checkSent->sent == false) {
+                    $checkSent = Owner::where('twitch', $settings['Twitch']['channel'])->first();
+                    if ($twitch->isChannelLive($settings['Twitch']['channel']) == true && $checkSent->livepostsent == false) {
                         $channel = $client->channels->get($settings['Discord']['livechannel']);
                         $avatarCall = $twitch->getUser($settings['Twitch']['channel']);
                         $botavatarCall = $twitch->getUser($settings['Twitch']['botname']);
@@ -88,16 +84,16 @@ class TwitchLivePost
                                     // We will just echo any errors for this example
                                     echo $error . PHP_EOL;
                                 });
-                            DicordLivePosts::where('channel', $settings['Twitch']['channel'])->update(['sent' => true]);
+                            Owner::where('twitch', $settings['Twitch']['channel'])->update(['livepostsent' => true]);
                             echo 'Live Alert Sent!' . PHP_EOL;
                             exit();
                         }
-                    } elseif ($twitch->isChannelLive($settings['Twitch']['channel']) == false && $checkSent->sent == true) {
-                        DicordLivePosts::where('channel', $settings['Twitch']['channel'])->update(['sent' => false]);
+                    } elseif ($twitch->isChannelLive($settings['Twitch']['channel']) == false && $checkSent->livepostsent == true) {
+                        Owner::where('twitch', $settings['Twitch']['channel'])->update(['livepostsent' => false]);
                         echo 'No Live Alert Sent due to being offline' . PHP_EOL;
                         exit();
                     } else {
-                        DicordLivePosts::where('channel', $settings['Twitch']['channel'])->update(['sent' => false]);
+                        Owner::where('twitch', $settings['Twitch']['channel'])->update(['livepostsent' => false]);
                         echo 'No Live Alert Sent due to being offline' . PHP_EOL;
                         exit();
                     }

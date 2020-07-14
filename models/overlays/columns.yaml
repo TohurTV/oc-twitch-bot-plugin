@@ -3,6 +3,15 @@
 # ===================================
 
 columns:
-    id:
+    overlay_id:
         label: ID
+        searchable: true
+    html:
+        label: Html
+        searchable: true
+    css:
+        label: CSS
+        searchable: true
+    js:
+        label: Javascript
         searchable: true

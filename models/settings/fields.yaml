@@ -61,36 +61,47 @@ tabs:
 
     bot[Twitter][enablelivetweets]:
       label: Enable going live tweeting?
+      span: left
       type: switch
       tab: Twitter
 
     bot[Twitter][livetweet]:
-      label: Going live tweet message
+      label: Going live tweet message. Supported variables {$user}, {$userurl}, {$usertitle},{$usergame} 
+      span: left
+      size: small
       type: textarea
       tab: Twitter
 
     bot[Twitter][enablegametweets]:
       label: Enable live tweeting game change?
+      span: right
       type: switch
       tab: Twitter
 
     bot[Twitter][livegametweet]:
-      label: Live game change tweet message
+      label: Live game change tweet message. Supported variables {$user}, {$userurl}, {$usertitle},{$usergame}
+      span: right
+      size: small
       type: textarea
       tab: Twitter
 
     bot[Twitter][enableperiodictweets]:
       label: Enable live periodic tweeting?
+      span: left
       type: switch
       tab: Twitter
 
     bot[Twitter][liveperiodicinterval]:
-      label: Live periodic tweet interval. (In minutes)
+      label: Live periodic tweet interval (In minutes). Supported variables {$user}, {$userurl}, {$usertitle},{$usergame}
+      span: left
+      size: tiny
       type: text
       tab: Twitter
 
     bot[Twitter][liveperiodictweet]:
       label: Live periodic tweet message
+      span: left
+      size: small
       type: textarea
       tab: Twitter
 

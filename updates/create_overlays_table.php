@@ -10,10 +10,11 @@ class CreateOverlaysTable extends Migration
     {
         Schema::create('tohur_bot_overlays', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('html')->default('');
             $table->string('css')->default('');
             $table->string('js')->default('');
+            $table->string('overlay_id')->default(bin2hex(random_bytes(16)));
             $table->timestamps();
         });
     }

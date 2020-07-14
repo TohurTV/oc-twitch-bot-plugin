@@ -6,3 +6,13 @@ fields:
     id:
         label: ID
         disabled: true
+        hidden: true
+    twitch:
+        label: Twitch User
+        disabled: true
+        hidden: false
+    discord:
+        label: Discord User
+        disabled: true
+        hidden: false
+ 

@@ -6,3 +6,9 @@ columns:
     id:
         label: ID
         searchable: true
+    twitch:
+        label: Twitch user
+        searchable: true
+    discord:
+        label: Discord user
+        searchable: true
