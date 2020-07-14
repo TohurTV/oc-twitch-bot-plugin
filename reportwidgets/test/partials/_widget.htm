@@ -1,0 +1,5 @@
+<div class="report-widget">
+    <h3 style="margin-bottom:5px;"><?= e(trans($this->property('title'))) ?></h3>
+    <iframe is="x-frame-bypass" src="https://dashboard.twitch.tv/u/tohur/stream-manager" width="100%" height="<?= $this->property('widgetHeight') ?>" ></iframe>
+    <script type="module" src="https://unpkg.com/x-frame-bypass"></script>
+</div>

@@ -21,6 +21,8 @@ class CreateUsersTable extends Migration
 
     public function down()
     {
+        Schema::dropIfExists('tohur_bot_points');
+        Schema::dropIfExists('tohur_bot_watched');
         Schema::dropIfExists('tohur_bot_users');
     }
 }

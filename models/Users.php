@@ -8,7 +8,7 @@ use Model;
 class Users extends Model
 {
 
-
+    public $timestamps = true;
     /**
      * @var string The database table used by the model.
      */
@@ -18,7 +18,7 @@ class Users extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = ['twitch_id', 'twitch', 'discord_id', 'discord'];
 
 
     /**

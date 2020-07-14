@@ -20,6 +20,6 @@ class CreateWatchedTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('tohur_bot_watcheds');
+        Schema::dropIfExists('tohur_bot_watched');
     }
 }

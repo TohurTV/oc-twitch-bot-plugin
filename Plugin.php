@@ -3,12 +3,14 @@
 use App;
 use Auth;
 use Backend\Widgets\Form;
+use Carbon\Carbon;
 use Event;
 use Backend;
 use System\Classes\PluginBase;
 use System\Classes\SettingsManager;
 use Illuminate\Foundation\AliasLoader;
 use Tohur\Bot\Models\Owner;
+use Tohur\Bot\Models\Users;
 use RestCord\DiscordClient;
 use Tohur\SocialConnect\Classes\Apis\TwitchAPI;
 
@@ -36,7 +38,32 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
     }
-
+    public function registerReportWidgets()
+    {
+        return [
+            'Tohur\Bot\ReportWidgets\Seactivity' => [
+                'label'   => 'Stream Elements Activity Feed',
+                'context' => 'dashboard',
+                'permissions' => [
+                    'tohur.bot.*',
+                ],
+            ],
+            'Tohur\Bot\ReportWidgets\Chat' => [
+                'label'   => 'Twitch Chat',
+                'context' => 'dashboard',
+                'permissions' => [
+                    'tohur.bot.*',
+                ],
+            ],
+            'Tohur\Bot\ReportWidgets\Test' => [
+                'label'   => 'Test',
+                'context' => 'dashboard',
+                'permissions' => [
+                    'tohur.bot.*',
+                ],
+            ],
+        ];
+    }
     public function registerSettings()
     {
         return [
@@ -56,9 +83,10 @@ class Plugin extends PluginBase
     {
         $this->registerConsoleCommand('Twitch', 'Tohur\Bot\Console\TwitchBot');
         $this->registerConsoleCommand('Twitchtimers', 'Tohur\Bot\Console\TwitchBotTimers');
+        $this->registerConsoleCommand('Twitchusers', 'Tohur\Bot\Console\TwitchBotUsers');
         $this->registerConsoleCommand('Discord', 'Tohur\Bot\Console\DiscordBot');
         $this->registerConsoleCommand('Discordlivepost', 'Tohur\Bot\Console\DiscordBotLivePost');
-//        $this->fillOwner();
+
     }
 
     public function boot()
@@ -68,8 +96,9 @@ class Plugin extends PluginBase
 
     public function registerSchedule($schedule)
     {
-        // Check if should Post Live alert in Discord
+        $schedule->command('bot:twitchchatusers')->cron('*/1 * * * *');
         $schedule->command('bot:discordlivepost')->cron('*/2 * * * *');
+
     }
 
     public function registerNavigation()
