@@ -104,6 +104,7 @@ class Plugin extends PluginBase {
         $this->registerConsoleCommand('Discord', 'Tohur\Bot\Console\DiscordBot');
         $this->registerConsoleCommand('Discordlivepost', 'Tohur\Bot\Console\DiscordBotLivePost');
         $this->registerConsoleCommand('Twitterlivepost', 'Tohur\Bot\Console\TwitterLive');
+        $this->registerConsoleCommand('Twittertimedpost', 'Tohur\Bot\Console\TwitterTimed');
     }
 
     public function boot() {
@@ -111,10 +112,11 @@ class Plugin extends PluginBase {
     }
 
     public function registerSchedule($schedule) {
+        $Settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
         $schedule->command('bot:twitchchatusers')->cron('*/1 * * * *');
         $schedule->command('bot:discordlivepost')->cron('*/2 * * * *');
         $schedule->command('bot:twitterlive')->cron('*/2 * * * *');
-
+        $schedule->command('bot:twittertimed')->cron('*/' . $settings['Twitter']['liveperiodicinterval'] . ' * * * *');
        $TimerGroups = TimerGroups::all();
        foreach ($TimerGroups as $TimerGroup) {
             $schedule->command('bot:twitchtimers '.$TimerGroup->id)->cron('*/' . $TimerGroup->timetorun . ' * * * *');
