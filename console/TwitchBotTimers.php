@@ -10,6 +10,7 @@ use Tohur\Bot\Models\Timers;
 use Tohur\Bot\Classes\Twitch\Timers as BotTimers;
 use Tohur\Bot\Classes\Helpers\HelperClass;
 use Tohur\Bot\Classes\Helpers\FunctionsClass;
+use Tohur\SocialConnect\Classes\Apis\TwitchAPI;
 
 class TwitchBotTimers extends Command {
 
@@ -41,20 +42,25 @@ class TwitchBotTimers extends Command {
      * @return void
      */
     public function handle() {
-        $helper = new HelperClass();
-        $function = new FunctionsClass();
-        $timer = Timers::where('timersgroups_id', $this->argument('id'))->inRandomOrder()->first();
-        $response = $timer->response;
-        $replace = array(
-            '{$user}' => ucfirst($this->settings['Twitch']['channel']),
-            '{$userurl}' => 'https://twitch.tv/' . $this->settings['Twitch']['channel'],
-            '{$usertitle}' => $function->channelTitle($this->settings['Twitch']['channel']),
-            '{$usergame}' => $function->channelGame($this->settings['Twitch']['channel']),
-            '{$userviewers}' => $function->viewers($this->settings['Twitch']['channel']),
-            '{$uptime}' => $function->uptime($this->settings['Twitch']['channel']),
-        );
-        $formated = strtr($response, $replace);
-        $send = new BotTimers($this->config, $formated);
+        $twitch = new TwitchAPI();
+        if ($twitch->isChannelLive($this->settings['Twitch']['channel']) == true) {
+            $helper = new HelperClass();
+            $function = new FunctionsClass();
+            $timer = Timers::where('timersgroups_id', $this->argument('id'))->inRandomOrder()->first();
+            $response = $timer->response;
+            $replace = array(
+                '{$user}' => ucfirst($this->settings['Twitch']['channel']),
+                '{$userurl}' => 'https://twitch.tv/' . $this->settings['Twitch']['channel'],
+                '{$usertitle}' => $function->channelTitle($this->settings['Twitch']['channel']),
+                '{$usergame}' => $function->channelGame($this->settings['Twitch']['channel']),
+                '{$userviewers}' => $function->viewers($this->settings['Twitch']['channel']),
+                '{$uptime}' => $function->uptime($this->settings['Twitch']['channel']),
+            );
+            $formated = strtr($response, $replace);
+            $send = new BotTimers($this->config, $formated);
+        } else {
+            $this->output->writeln($this->settings['Twitch']['channel'] . ' is not online');
+        }
     }
 
     /**
