@@ -29,7 +29,7 @@ class Seactivity extends ReportWidgetBase
             ],
             'widgetHeight' => [
                 'title' => 'Height',
-                'default' => '200',
+                'default' => '700',
                 'type' => 'string'
             ],
         ];

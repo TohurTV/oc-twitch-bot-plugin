@@ -39,7 +39,22 @@ tabs:
       type: partial
       path: $/tohur/bot/partials/backend/forms/settings/_twitch_info.htm
       tab: Twitch
-
+      
+    bot[Twitch][client_id]:
+      label: Bot app Client Id
+      type: text
+      tab: Twitch
+      
+    bot[Twitch][client_secret]:
+      label: Bot app Client secret
+      type: text
+      tab: Twitch
+      
+    bot[Twitch][redirect]:
+      label: Bot app Redirect
+      type: text
+      tab: Twitch
+      
     bot[Twitch][channel]:
       label: Channel to connect Bot To
       type: text

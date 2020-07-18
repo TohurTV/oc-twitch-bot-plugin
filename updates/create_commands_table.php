@@ -13,7 +13,7 @@ class CreateCommandsTable extends Migration
             $table->increments('id');
             $table->string('name')->default('');
             $table->string('command')->default('');
-            $table->string('response')->default('');
+            $table->string('response', 500)->default('');
             $table->boolean('args')->default(false);
             $table->boolean('core')->default(false);
             $table->timestamps();

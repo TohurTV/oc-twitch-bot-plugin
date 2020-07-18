@@ -5,8 +5,9 @@ namespace Tohur\Bot\ReportWidgets;
 use Backend\Classes\ReportWidgetBase;
 use Exception;
 use Db;
+use Tohur\SocialConnect\Classes\Apis\TwitchAPI;
 
-class Chat extends ReportWidgetBase {
+class Chatterlist extends ReportWidgetBase {
 
     public function render() {
         try {
@@ -22,7 +23,7 @@ class Chat extends ReportWidgetBase {
         return [
             'title' => [
                 'title' => 'Widget title',
-                'default' => 'Chat',
+                'default' => 'Chatter List',
                 'type' => 'string',
                 'validationPattern' => '^.+$',
                 'validationMessage' => 'The Widget Title is required.'
@@ -32,30 +33,21 @@ class Chat extends ReportWidgetBase {
                 'default' => '700',
                 'type' => 'string'
             ],
-            'parentDomain' => [
-                'title' => 'Parent Domain',
-                'default' => 'test.com',
-                'type' => 'string',
-                'validationPattern' => '^.+$',
-                'validationMessage' => 'The Widget Title is required.'
-            ],
-            'darkmode' => [
-                'title' => 'Dark Mode',
-                'type' => 'checkbox',
-                'default' => 1
-            ],
         ];
     }
 
     protected function loadData() {
+        $twitch = new TwitchAPI();
         $Settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
-        if (!strlen($Settings['Twitch']['channel']) && !strlen($Settings['Twitch']['botname']) && !strlen($Settings['Discord']['owner'])) {
-            echo 'Please go fill out Twitch info in bot settings';
-        } else {
-            $channel = $Settings['Twitch']['channel'];
-        }
-        
-        $this->vars['channel'] = $channel;
+        $viewerscall = $twitch->getChatusers($Settings['Twitch']['channel']);
+
+        $this->vars['viewers'] = $viewerscall;
+    }
+
+    public function onUpdateChatterlistWidget() {
+        return [
+            '#' . $this->alias => $this->render()
+        ];
     }
 
 }

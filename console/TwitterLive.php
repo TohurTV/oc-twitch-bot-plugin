@@ -38,23 +38,30 @@ class TwitterLive extends Command {
         $Tweet = new TwitterClient();
         $helper = new HelperClass();
         $function = new FunctionsClass();
-        $checkSent = Owner::where('twitch', $this->settings['Twitch']['channel'])->first();
-        if ($twitch->isChannelLive($this->settings['Twitch']['channel']) == true && $checkSent->tweetsent == false) {
-            $text = $this->settings['Twitter']['livetweet'];
-            $replace = array(
-                '{$user}' => ucfirst($this->settings['Twitch']['channel']),
-                '{$userurl}' => 'https://twitch.tv/' . $this->settings['Twitch']['channel'],
-                '{$usertitle}' => $function->channelTitle($this->settings['Twitch']['channel']),
-                '{$usergame}' => $function->channelGame($this->settings['Twitch']['channel']),
-            );
-            $formated = strtr($text, $replace);
-            $apiCall = $Tweet->posttweet($formated);
-        } elseif ($twitch->isChannelLive($this->settings['Twitch']['channel']) == false && $checkSent->tweetsent == true) {
-            Owner::where('twitch', $this->settings['Twitch']['channel'])->update(['tweetsent' => false]);
-            $this->output->writeln($this->settings['Twitch']['channel'] . ' is not online');
+        if (!strlen($this->settings['Twitch']['channel'])) {
+            echo 'Please Setup Twitch in Bot settings';
         } else {
-            Owner::where('twitch', $this->settings['Twitch']['channel'])->update(['tweetsent' => false]);
-            $this->output->writeln($this->settings['Twitch']['channel'] . ' is not online');
+            if (\Schema::hasTable('tohur_bot_owners')) {
+                $checkSent = Owner::where('twitch', $this->settings['Twitch']['channel'])->first();
+                if ($twitch->isChannelLive($this->settings['Twitch']['channel']) == true && $checkSent->tweetsent == false) {
+                    $text = $this->settings['Twitter']['livetweet'];
+                    $replace = array(
+                        '{$user}' => ucfirst($this->settings['Twitch']['channel']),
+                        '{$userurl}' => 'https://twitch.tv/' . $this->settings['Twitch']['channel'],
+                        '{$usertitle}' => $function->channelTitle($this->settings['Twitch']['channel']),
+                        '{$usergame}' => $function->channelGame($this->settings['Twitch']['channel']),
+                    );
+                    $formated = strtr($text, $replace);
+                    $apiCall = $Tweet->posttweet($formated);
+                    Owner::where('twitch', $this->settings['Twitch']['channel'])->update(['tweetsent' => true]);
+                } elseif ($twitch->isChannelLive($this->settings['Twitch']['channel']) == false && $checkSent->livepostsent == true) {
+                    Owner::where('twitch', $this->settings['Twitch']['channel'])->update(['tweetsent' => false]);
+                    echo 'No Live Tweet Sent due to being offline' . PHP_EOL;
+                } else {
+                    Owner::where('twitch', $this->settings['Twitch']['channel'])->update(['tweetsent' => false]);
+                    echo 'No Live Tweet Sent due to being offline' . PHP_EOL;
+                }
+            }
         }
     }
 
@@ -72,18 +79,6 @@ class TwitterLive extends Command {
      */
     protected function getOptions() {
         return [];
-    }
-
-    public function TwitchTwitterLivePost() {
-        $Tweet = new TwitterClient();
-        $helper = new HelperClass();
-        $replace = array(
-            '{$user}' => $helper->remove_hashtags($request->getSource()),
-            '{$title}' => '',
-            '{$usergame}' => ''
-        );
-        $formated = strtr($command->response, $replace);
-        $apiCall = $Tweet->posttweet($name);
     }
 
 }

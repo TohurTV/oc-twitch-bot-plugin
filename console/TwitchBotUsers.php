@@ -83,9 +83,4 @@ class TwitchBotUsers extends Command
     {
         return [];
     }
-
-    public function TwitchBot()
-    {
-        $Twitchbot = new TwitchBotClass($this->config);
-    }
 }

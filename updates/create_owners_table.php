@@ -16,6 +16,9 @@ class CreateOwnersTable extends Migration
             $table->string('discord_id')->default('');
             $table->string('discord')->default('');
             $table->string('game')->default('');
+            $table->string('twitch_token')->default('');
+            $table->string('twitch_refreshToken')->default('');
+            $table->string('twitch_expiresIn')->default('');
             $table->boolean('livepostsent')->default(false);
             $table->boolean('tweetsent')->default(false);
             $table->timestamps();

@@ -12,6 +12,9 @@ use System\Classes\PluginBase;
 use System\Classes\SettingsManager;
 use Illuminate\Foundation\AliasLoader;
 use Tohur\Bot\Models\Owner;
+use Tohur\Bot\Models\TimerGroups;
+use Tohur\Bot\Models\Timers;
+use Tohur\Bot\Classes\Twitch\Timers as BotTimers;
 use Tohur\Bot\Models\Users;
 use RestCord\DiscordClient;
 use Tohur\SocialConnect\Classes\Apis\TwitchAPI;
@@ -56,6 +59,20 @@ class Plugin extends PluginBase {
                     'tohur.bot.*',
                 ],
             ],
+            'Tohur\Bot\ReportWidgets\Chatterlist' => [
+                'label' => 'Chatter List',
+                'context' => 'dashboard',
+                'permissions' => [
+                    'tohur.bot.*',
+                ],
+            ],
+            'Tohur\Bot\ReportWidgets\Stats' => [
+                'label' => 'Stats',
+                'context' => 'dashboard',
+                'permissions' => [
+                    'tohur.bot.*',
+                ],
+            ],
             'Tohur\Bot\ReportWidgets\Test' => [
                 'label' => 'Test',
                 'context' => 'dashboard',
@@ -87,7 +104,6 @@ class Plugin extends PluginBase {
         $this->registerConsoleCommand('Discord', 'Tohur\Bot\Console\DiscordBot');
         $this->registerConsoleCommand('Discordlivepost', 'Tohur\Bot\Console\DiscordBotLivePost');
         $this->registerConsoleCommand('Twitterlivepost', 'Tohur\Bot\Console\TwitterLive');
-        $this->registerConsoleCommand('Twittertimedpost', 'Tohur\Bot\Console\TwitterTimed');
     }
 
     public function boot() {
@@ -95,17 +111,15 @@ class Plugin extends PluginBase {
     }
 
     public function registerSchedule($schedule) {
-        $Settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
         $schedule->command('bot:twitchchatusers')->cron('*/1 * * * *');
         $schedule->command('bot:discordlivepost')->cron('*/2 * * * *');
         $schedule->command('bot:twitterlive')->cron('*/2 * * * *');
 
-        if (!strlen($Settings['Twitter']['liveperiodicinterval'])) {
-            $tweetTime = '120';
-        } else {
-           $tweetTime = $Settings['Twitter']['liveperiodicinterval']; 
-        }
-        $schedule->command('bot:twittertimed')->cron('*/'.$tweetTime.' * * * *');
+       $TimerGroups = TimerGroups::all();
+       foreach ($TimerGroups as $TimerGroup) {
+            $schedule->command('bot:twitchtimers '.$TimerGroup->id)->cron('*/' . $TimerGroup->timetorun . ' * * * *');
+
+       }
     }
 
     public function registerNavigation() {
@@ -161,7 +175,7 @@ class Plugin extends PluginBase {
                 $twitch = new TwitchAPI();
                 $idCall = $twitch->getUser($Settings['Twitch']['channel']);
                 $gameCall = $twitch->getChannelinfo($Settings['Twitch']['channel']);
-                Owner::create(['twitch_id' => $idCall[0]['id'], 'twitch' => $Settings['Twitch']['channel'], 'discord' => $Settings['Discord']['owner'], 'game' => $gameCall[0]['game_name']]);
+                Owner::firstOrCreate(['twitch_id' => $idCall[0]['id'], 'twitch' => $Settings['Twitch']['channel'], 'discord' => $Settings['Discord']['owner'], 'game' => $gameCall[0]['game_name']]);
             } else {
                 
             }

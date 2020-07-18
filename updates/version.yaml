@@ -5,9 +5,9 @@
     - create_queues_table.php
     - create_timer_groups_table.php
     - create_timers_table.php
-    - create_dicord_live_posts_table.php
     - create_overlays_table.php
     - create_owners_table.php
     - create_points_table.php
     - create_watched_table.php
     - seed_commands_table.php
+    - seed_timer_groups_table.php

@@ -30,25 +30,39 @@ class FunctionsClass {
         return $game;
     }
 
+    function viewers($channel) {
+
+        $apiCall = $this->twitch->getStream($channel);
+        if ($apiCall == null) {
+            $viewercount = $channel . ' is offline';
+        } else {
+            $viewercount = $apiCall[0]['viewer_count'];
+        }
+
+        return $viewercount;
+    }
+
     function uptime($channel) {
 
         $apiCall = $this->twitch->getStream($channel);
 
         if ($apiCall == null) {
-            $text = $channel . ' is offline';
+            $uptime = $channel . ' is offline';
         } else {
 
             $time1 = new \DateTime($apiCall[0]['started_at']); // Event occurred time
             $time2 = new \DateTime(date('Y-m-d H:i:s')); // Current time
             $interval = $time1->diff($time2);
             if ($interval->h == '00') {
-                $text = $interval->i . " Mintues ";
+                $uptime = $interval->i . " Mintues ";
+            } elseif ($interval->h == '01') {
+                $uptime = $interval->y . $interval->h . " Hour, " . $interval->i . " Mintues ";
             } else {
-                $text = $interval->y . $interval->h . " Hours, " . $interval->i . " Mintues ";
+                $uptime = $interval->y . $interval->h . " Hours, " . $interval->i . " Mintues ";
             }
         }
 
-        return $text;
+        return $uptime;
     }
 
     function targetUser($channel) {

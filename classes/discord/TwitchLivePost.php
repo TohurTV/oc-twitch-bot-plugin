@@ -1,4 +1,6 @@
-<?php namespace Tohur\Bot\Classes\Discord;
+<?php
+
+namespace Tohur\Bot\Classes\Discord;
 
 use Tohur\Bot\Classes\FunctionsClass;
 use Tohur\Bot\Classes\HelperClass;
@@ -8,34 +10,35 @@ use Tohur\Bot\Models\Owner;
 use React\EventLoop\Factory;
 use CharlotteDunois\Yasmin\Client;
 
-class TwitchLivePost
-{
+class TwitchLivePost {
+
     private $sent = false;
 
-    function __construct($config)
-    {
+    function __construct($config) {
         $this->livePost($config);
-
     }
 
-    public static function livePost($config)
-    {
+    public static function livePost($config) {
         $loop = Factory::create();
-        $client = new Client(array(), $loop);
-        $client->on('error', function ($error) {
+        $discord = new Client(array(), $loop);
+        $discord->on('error', function ($error) {
             echo $error . PHP_EOL;
         });
 
-        $client->on('ready', function () use ($client) {
-            echo 'Logged in as ' . $client->user->tag . ' created on ' . $client->user->createdAt->format('d.m.Y H:i:s') . ' to check if should post live alert'. PHP_EOL;
+        $discord->on('ready', function () use ($discord) {
+            echo 'Logged in as ' . $discord->user->tag . ' created on ' . $discord->user->createdAt->format('d.m.Y H:i:s') . ' to check if should post live alert' . PHP_EOL;
         });
 
-        $client->once('ready', function () use ($client) {
-                    $settings = Settings::instance()->get('bot', []);
-                    $twitch = new TwitchAPI();
+        $discord->once('ready', function () use ($discord) {
+            $settings = Settings::instance()->get('bot', []);
+            $twitch = new TwitchAPI();
+            if (!strlen($settings['Twitch']['channel'])) {
+                echo 'Please Setup Twitch in Bot settings';
+            } else {
+                if (\Schema::hasTable('tohur_bot_owners')) {
                     $checkSent = Owner::where('twitch', $settings['Twitch']['channel'])->first();
                     if ($twitch->isChannelLive($settings['Twitch']['channel']) == true && $checkSent->livepostsent == false) {
-                        $channel = $client->channels->get($settings['Discord']['livechannel']);
+                        $channel = $discord->channels->get($settings['Discord']['livechannel']);
                         $avatarCall = $twitch->getUser($settings['Twitch']['channel']);
                         $botavatarCall = $twitch->getUser($settings['Twitch']['botname']);
                         $game = $twitch->getChannelinfo($settings['Twitch']['channel']);
@@ -65,25 +68,25 @@ class TwitchLivePost
                             $embed = new \CharlotteDunois\Yasmin\Models\MessageEmbed();
                             // Build the embed
                             $embed
-                                ->setTitle($game[0]['game_name'])
-                                ->setColor(hexdec('178458'))
-                                ->setDescription(':)')
-                                ->addField('Game', $game[0]['game_name'])
-                                ->addField('Viewers', $viewers, true)
-                                ->addField('Total Views', $viewsCall[0]['view_count'], true)
-                                ->setThumbnail($avatarCall[0]['profile_image_url'])
-                                ->setImage($gameimage)
-                                ->setTimestamp()
-                                ->setAuthor(ucfirst($settings['Twitch']['channel']), $avatarCall[0]['profile_image_url'], 'https://twitch.tv' . $settings['Twitch']['channel'])
-                                ->setFooter(ucfirst($settings['Twitch']['botname']), $botavatarCall[0]['profile_image_url'])
-                                ->setURL('https://twitch.tv' . $settings['Twitch']['channel']);
+                                    ->setTitle($game[0]['game_name'])
+                                    ->setColor(hexdec('178458'))
+                                    ->setDescription(':)')
+                                    ->addField('Game', $game[0]['game_name'])
+                                    ->addField('Viewers', $viewers, true)
+                                    ->addField('Total Views', $viewsCall[0]['view_count'], true)
+                                    ->setThumbnail($avatarCall[0]['profile_image_url'])
+                                    ->setImage($gameimage)
+                                    ->setTimestamp()
+                                    ->setAuthor(ucfirst($settings['Twitch']['channel']), $avatarCall[0]['profile_image_url'], 'https://twitch.tv' . $settings['Twitch']['channel'])
+                                    ->setFooter(ucfirst($settings['Twitch']['botname']), $botavatarCall[0]['profile_image_url'])
+                                    ->setURL('https://twitch.tv' . $settings['Twitch']['channel']);
 
                             // Send the message
                             $channel->send('Hey ' . $roleID . ',' . ucfirst($settings['Twitch']['channel']) . ' Just went live at https://twitch.tv/' . $settings['Twitch']['channel'], array('embed' => $embed))
-                                ->done(null, function ($error) {
-                                    // We will just echo any errors for this example
-                                    echo $error . PHP_EOL;
-                                });
+                                    ->done(null, function ($error) {
+                                        // We will just echo any errors for this example
+                                        echo $error . PHP_EOL;
+                                    });
                             Owner::where('twitch', $settings['Twitch']['channel'])->update(['livepostsent' => true]);
                             echo 'Live Alert Sent!' . PHP_EOL;
                             exit();
@@ -97,10 +100,12 @@ class TwitchLivePost
                         echo 'No Live Alert Sent due to being offline' . PHP_EOL;
                         exit();
                     }
-
+                }
+            }
         });
 
-        $client->login($config['token'])->done();
+        $discord->login($config['token'])->done();
         $loop->run();
     }
+
 }

@@ -1,4 +1,4 @@
 <div class="report-widget">
     <h3 style="margin-bottom:5px;"><?= e(trans($this->property('title'))) ?></h3>
-    <iframe src="https://www.twitch.tv/embed/tohur/chat?parent=<?= $this->property('parentDomain') ?><?php if ($this->property('darkmode')): ?>&darkpopout<?php endif ?>" width="100%" height="<?= $this->property('widgetHeight') ?>" ></iframe>
+    <iframe src="https://www.twitch.tv/embed/<?= $channel ?>/chat?parent=<?= $this->property('parentDomain') ?><?php if ($this->property('darkmode')): ?>&darkpopout<?php endif ?>" width="100%" height="<?= $this->property('widgetHeight') ?>" frameborder="0"></iframe>
 </div>

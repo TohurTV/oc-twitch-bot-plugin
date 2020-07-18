@@ -1,0 +1,57 @@
+<div class="report-widget">
+    <div
+        class="control-stats"
+        data-control="chart-stats"
+        data-request="onUpdateStatsWidget"
+        data-height="<?= $this->property('widgetHeight') ?>"
+        data-full-width="1"
+        style="height: <?= $this->property('widgetHeight') ?>px;">
+
+        <div style="width: 100%;">
+            <div style="width: 18%; float: left;"> 
+                <h3 style="margin-bottom: 0px;">Uptime</h3>
+                <a><?= $this->uptime() ?></a>
+            </div>
+            <div style="width: 16%; float: left;"> 
+                <h3 style="margin-bottom: 0px;">Viewers</h3>
+                <a><?= $this->viewercount() ?></a>
+            </div>
+            <div style="width: 16%;float: left;"> 
+                <h3 style="margin-bottom: 0px;">Total Views</h3>
+                <a><?= $this->totalviews() ?></a>
+            </div>
+
+            <div style="width: 16%; float: left;"> 
+                <h3 style="margin-bottom: 0px;">Hosts</h3>
+                <a><?= $this->hostcount() ?></a>
+            </div>
+            <div style="width: 16%;float: left;"> 
+                <h3 style="margin-bottom: 0px;">Followers</h3>
+                <a><?= $this->followers() ?></a>
+            </div>
+            <div style="width: 16%;float: left;"> 
+                <h3 style="margin-bottom: 0px;">Subscribers</h3>
+                <a>Place Holder</a>
+            </div> 
+        </div>
+        <div style="width: 100%;">
+            <div style="width: 18%;float: left;"> 
+                <h3 style="margin-bottom: 0px;">Title</h3>
+                <a><?= $this->title() ?></a>
+            </div> 
+            <div style="width: 16%;float: left;"> 
+                <h3 style="margin-bottom: 0px;">Game</h3>
+                <a><?= $this->game() ?></a>
+            </div>
+        </div>
+    </div>
+    <input data-request="onUpdateStatsWidget" type="submit" name="Stats" id="stat" value="Update" style="visibility:hidden;">
+
+    <script>
+        var stat = document.querySelector("[name='Stats']");
+        setTimeout(function () {
+            stat.click();
+            console.log("Stats updated!");
+        }, 30000);
+    </script>
+</div>

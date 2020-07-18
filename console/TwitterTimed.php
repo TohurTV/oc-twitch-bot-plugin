@@ -37,18 +37,22 @@ class TwitterTimed extends Command {
         $Tweet = new TwitterClient();
         $helper = new HelperClass();
         $function = new FunctionsClass();
-        if ($twitch->isChannelLive($this->settings['Twitch']['channel']) == true) {
-            $text = $this->settings['Twitter']['liveperiodictweet'];
-            $replace = array(
-                '{$user}' => ucfirst($this->settings['Twitch']['channel']),
-                '{$userurl}' => 'https://twitch.tv/'.$this->settings['Twitch']['channel'],
-                '{$usertitle}' => $function->channelTitle($this->settings['Twitch']['channel']),
-                '{$usergame}' => $function->channelGame($this->settings['Twitch']['channel']),
-            );
-            $formated = strtr($text, $replace);
-            $apiCall = $Tweet->posttweet($formated);
+        if (!strlen($this->settings['Twitch']['channel'])) {
+            echo 'Please Setup Twitch in Bot settings';
         } else {
-            $this->output->writeln($this->settings['Twitch']['channel'] . ' is not online');
+            if ($twitch->isChannelLive($this->settings['Twitch']['channel']) == true) {
+                $text = $this->settings['Twitter']['liveperiodictweet'];
+                $replace = array(
+                    '{$user}' => ucfirst($this->settings['Twitch']['channel']),
+                    '{$userurl}' => 'https://twitch.tv/' . $this->settings['Twitch']['channel'],
+                    '{$usertitle}' => $function->channelTitle($this->settings['Twitch']['channel']),
+                    '{$usergame}' => $function->channelGame($this->settings['Twitch']['channel']),
+                );
+                $formated = strtr($text, $replace);
+                $apiCall = $Tweet->posttweet($formated);
+            } else {
+                $this->output->writeln($this->settings['Twitch']['channel'] . ' is not online');
+            }
         }
     }
 

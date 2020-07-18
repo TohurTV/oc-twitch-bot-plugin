@@ -14,7 +14,7 @@ class CreateTimersTable extends Migration
             $table->integer('timersgroups_id')->unsigned();
             $table->foreign('timersgroups_id')->references('id')->on('tohur_bot_timer_groups');
             $table->string('name')->default('');
-            $table->string('response')->default('');
+            $table->string('response', 500)->default('');
             $table->timestamps();
         });
     }

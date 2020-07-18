@@ -1,0 +1,36 @@
+<div class="report-widget">
+    <h3><?= e($this->property('title')) ?></h3>
+
+    <div
+        class="control-chatterlist"
+        data-control="chart-chatterlist"
+        data-height="<?= $this->property('widgetHeight') ?>"
+        data-full-width="1"
+        data-request="onUpdateChatterlistWidget"
+        style="height: <?= $this->property('widgetHeight') ?>px;">
+        <ul style="list-style-type: none;">
+
+            <?php foreach ($viewers->chatters->broadcaster as $broadcaster): ?>
+            <li><img src="/plugins/tohur/bot/assets/img/chat-badges/broadcaster.png" alt="Broadcaster" width="18" height="18"><a>&nbsp;<?= ucfirst($broadcaster) ?></a></li>
+            <?php endforeach ?>
+            <?php foreach ($viewers->chatters->moderators as $moderator): ?>
+            <li><img src="/plugins/tohur/bot/assets/img/chat-badges/mod.png" alt="Broadcaster" width="18" height="18"><a>&nbsp;<?= ucfirst($moderator) ?></a></li>
+            <?php endforeach ?>
+            <?php foreach ($viewers->chatters->vips as $vip): ?>
+            <li><a><img src="/plugins/tohur/bot/assets/img/chat-badges/vip.png" alt="Broadcaster" width="18" height="18">&nbsp;<?= ucfirst($vip) ?></a></li>
+            <?php endforeach ?>
+            <?php foreach ($viewers->chatters->viewers as $viewer): ?>
+            <li><a>&nbsp;<?= ucfirst($viewer) ?></a></li>
+            <?php endforeach ?>           
+        </ul>
+    </div>
+    <input data-request="onUpdateChatterlistWidget" type="submit" name="ChatterList" id="chatter" value="Update" style="visibility:hidden;">
+
+    <script>
+        var chatter = document.querySelector("[name='ChatterList']");
+        setTimeout(function () {
+            chatter.click();
+            console.log("Chatter List updated!");
+        }, 30000);
+    </script>
+</div>

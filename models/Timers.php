@@ -16,7 +16,7 @@ class Timers extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = ['group_id', 'name', 'response'];
+    protected $fillable = ['timersgroups_id', 'name', 'response'];
 
 
     /**
