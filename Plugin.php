@@ -116,7 +116,7 @@ class Plugin extends PluginBase {
         $schedule->command('bot:twitchchatusers')->cron('*/1 * * * *');
         $schedule->command('bot:discordlivepost')->cron('*/2 * * * *');
         $schedule->command('bot:twitterlive')->cron('*/2 * * * *');
-        $schedule->command('bot:twittertimed')->cron('*/' . $settings['Twitter']['liveperiodicinterval'] . ' * * * *');
+        $schedule->command('bot:twittertimed')->cron('*/' . $Settings['Twitter']['liveperiodicinterval'] . ' * * * *');
        $TimerGroups = TimerGroups::all();
        foreach ($TimerGroups as $TimerGroup) {
             $schedule->command('bot:twitchtimers '.$TimerGroup->id)->cron('*/' . $TimerGroup->timetorun . ' * * * *');
