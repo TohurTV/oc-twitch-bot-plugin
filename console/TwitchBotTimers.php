@@ -80,28 +80,4 @@ class TwitchBotTimers extends Command {
     protected function getOptions() {
         return [];
     }
-
-    public function TwitchBotTimers() {
-        $settings = \Tohur\bot\Models\Settings::instance()->get('bot', []);
-        $config = array(
-            'channel' => '#' . $settings['Twitch']['channel'],
-            'server' => 'irc.chat.twitch.tv',
-            'port' => 6667,
-            'nick' => $settings['Twitch']['botname'],
-            'password' => $settings['Twitch']['botpass']
-        );
-        $helper = new HelperClass();
-        $function = new FunctionsClass();
-        $timer = Timers::where('timersgroups_id', $this->argument('id'))->inRandomOrder()->first();
-        $response = $timer->response;
-        $replace = array(
-            '{$user}' => ucfirst($this->settings['Twitch']['channel']),
-            '{$userurl}' => 'https://twitch.tv/' . $this->settings['Twitch']['channel'],
-            '{$usertitle}' => $function->channelTitle($this->settings['Twitch']['channel']),
-            '{$usergame}' => $function->channelGame($this->settings['Twitch']['channel']),
-        );
-        $formated = strtr($text, $replace);
-        $send = new BotTimers($config, $response);
-    }
-
 }
