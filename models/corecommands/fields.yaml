@@ -1,0 +1,18 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    id:
+        label: ID
+        hidden: true
+        disabled: true
+    name:
+        label: Name
+        disabled: true
+    command:
+        label: Command
+        disabled: true
+    response:
+        label: Response
+        disabled: false

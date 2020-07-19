@@ -59,9 +59,8 @@ class Timers {
         if ($this->ex[0] == 'PING') {
             $this->send_data('PONG', $this->ex[1]); //Plays ping-pong with the server to stay connected.
         }
-        
-        $this->send_data('PRIVMSG ' . $config['channel'] . ' :', $response);
 
+        $this->send_data('PRIVMSG ' . $config['channel'] . ' :', $response);
     }
 
     function send_data($cmd, $msg = null) { //displays stuff to the broswer and sends data to the server.
@@ -76,7 +75,6 @@ class Timers {
     }
 
     function join_channel($channel) { //Joins a channel, used in the join function.
-
         if (is_array($channel)) {
             foreach ($channel as $chan) {
                 $this->send_data('JOIN', $chan);

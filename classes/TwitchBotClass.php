@@ -1,6 +1,7 @@
 <?php namespace Tohur\Bot\Classes;
 
-use Tohur\Bot\Classes\Twitch\Commands;
+use Tohur\Bot\Classes\Twitch\CoreCommands;
+use Tohur\Bot\Classes\Twitch\CustomCommands;
 use Tohur\Twitchirc\Twitchirc;
 use Tohur\Twitchirc\IRC\Response;
 
@@ -17,7 +18,8 @@ class TwitchBotClass
         $bot = new Twitchirc($config);
 
         $bot->loadPlugins(array(
-            new Commands($bot),
+            new CoreCommands($bot),
+            new CustomCommands($bot),
         ));
         $bot->run();
     }

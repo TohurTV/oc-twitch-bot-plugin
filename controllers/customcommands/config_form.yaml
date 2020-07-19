@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Custom Command
+
+# Model Form Field configuration
+form: $/tohur/bot/models/customcommands/fields.yaml
+
+# Model Class name
+modelClass: Tohur\Bot\Models\CustomCommands
+
+# Default redirect location
+defaultRedirect: tohur/bot/customcommands
+
+# Create page
+create:
+    title: Create Custom Command
+    redirect: tohur/bot/customcommands/update/:id
+    redirectClose: tohur/bot/customcommands
+
+# Update page
+update:
+    title: Edit Custom Command
+    redirect: tohur/bot/customcommands
+    redirectClose: tohur/bot/customcommands
+
+# Preview page
+preview:
+    title: Preview Custom Command

@@ -22,19 +22,19 @@ class TwitchBot extends Command
     public function __construct()
     {
         parent::__construct();
-        $settings = \Tohur\bot\Models\Settings::instance()->get('bot', []);
+        $this->settings = \Tohur\bot\Models\Settings::instance()->get('bot', []);
         $this->config = array(
             'ssl' => false,
-            'channels' => array('#'.$settings['Twitch']['channel']),
-            'username' => $settings['Twitch']['botname'],
-            'realname' => $settings['Twitch']['botname'],
-            'nick' => $settings['Twitch']['botname'],
-            'master' => $settings['Twitch']['channel'],
+            'channels' => array('#'.$this->settings['Twitch']['channel']),
+            'username' => $this->settings['Twitch']['botname'],
+            'realname' => $this->settings['Twitch']['botname'],
+            'nick' => $this->settings['Twitch']['botname'],
+            'master' => $this->settings['Twitch']['channel'],
             "unflood" => 500,
-            "admins" => array($settings['Twitch']['channel']),
+            "admins" => array($this->settings['Twitch']['channel']),
             "debug" => true,
             "log" => plugins_path() . '/tohur/bot/bot.log',
-            'password' => $settings['Twitch']['botpass']
+            'password' => $this->settings['Twitch']['botpass']
         );
 
     }
@@ -45,7 +45,7 @@ class TwitchBot extends Command
      */
     public function handle()
     {
-            return $this->TwitchBot();
+           $Twitchbot = new TwitchBotClass($this->config);
     }
 
     /**

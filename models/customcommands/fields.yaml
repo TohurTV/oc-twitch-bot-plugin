@@ -18,3 +18,10 @@ fields:
     response:
         label: Response
         disabled: false
+    description:
+        label: Description
+        disabled: false
+    args:
+        label: Requires Arguments?
+        type: switch
+        disabled: false

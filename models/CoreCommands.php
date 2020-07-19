@@ -1,26 +1,23 @@
-<?php namespace Tohur\Bot\Models;
+<?php
+
+namespace Tohur\Bot\Models;
 
 use Model;
 
 /**
- * Commands Model
+ * CoreCommands Model
  */
-class Commands extends Model
-{
-
-    public $timestamps = true;
+class CoreCommands extends Model {
 
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'tohur_bot_commands';
-
+    public $table = 'tohur_bot_core_commands';
 
     /**
      * @var array Fillable fields
      */
     protected $fillable = ['name', 'command', 'response'];
-
 
     /**
      * @var array Attributes to be cast to Argon (Carbon) instances

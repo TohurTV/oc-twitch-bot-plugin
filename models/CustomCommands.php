@@ -3,20 +3,23 @@
 use Model;
 
 /**
- * DicordLivePosts Model
+ * Commands Model
  */
-class DicordLivePosts extends Model
+class CustomCommands extends Model
 {
+
+    public $timestamps = true;
 
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'tohur_bot_dicord_live_posts';
+    public $table = 'tohur_bot_custom_commands';
+
 
     /**
      * @var array Fillable fields
      */
-    protected $fillable = ['channel', 'discord', 'sent'];
+    protected $fillable = ['name', 'command', 'response'];
 
 
     /**

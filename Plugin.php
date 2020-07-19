@@ -128,16 +128,22 @@ class Plugin extends PluginBase {
         return [
             'bot' => [
                 'label' => 'bot',
-                'url' => Backend::url('tohur/bot/commands'),
+                'url' => Backend::url('tohur/bot/corecommands'),
                 'icon' => 'icon-comments',
                 'permissions' => ['tohur.bot.*'],
                 'sideMenu' => [
-                    'commands' => [
-                        'label' => 'Commands',
+                    'corecommands' => [
+                        'label' => 'Core Commands',
                         'icon' => 'icon-cogs',
-                        'url' => Backend::url('tohur/bot/commands'),
+                        'url' => Backend::url('tohur/bot/corecommands'),
                         'permissions' => ['tohur.bot.*']
                     ],
+                    'customcommands' => [
+                        'label' => 'Custom Commands',
+                        'icon' => 'icon-cogs',
+                        'url' => Backend::url('tohur/bot/customcommands'),
+                        'permissions' => ['tohur.bot.*']
+                    ],                    
                     'timergroups' => [
                         'label' => 'Timer Groups',
                         'icon' => 'icon-spinner',
