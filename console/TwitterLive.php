@@ -54,6 +54,8 @@ class TwitterLive extends Command {
                     $formated = strtr($text, $replace);
                     $apiCall = $Tweet->posttweet($formated);
                     Owner::where('twitch', $this->settings['Twitch']['channel'])->update(['tweetsent' => true]);
+                } elseif ($twitch->isChannelLive($this->settings['Twitch']['channel']) == true && $checkSent->livepostsent == true) {
+                    echo 'Live Tweet already sent this session' . PHP_EOL;
                 } elseif ($twitch->isChannelLive($this->settings['Twitch']['channel']) == false && $checkSent->livepostsent == true) {
                     Owner::where('twitch', $this->settings['Twitch']['channel'])->update(['tweetsent' => false]);
                     echo 'No Live Tweet Sent due to being offline' . PHP_EOL;

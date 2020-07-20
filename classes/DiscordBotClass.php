@@ -25,7 +25,7 @@ class DiscordBotClass {
                     array(
                         'since' => null, //unix time (in milliseconds) of when the client went idle, or null if the client is not idle
                         'game' => array(
-                            'name' => "Tohur_Bot is under construction!",
+                            'name' => "Under construction!",
                             'type' => 3, //0, 1, 2, 3, 4 | Game/Playing, Streaming, Listening, Watching, Custom Status
                             'url' => null //stream url, is validated when type is 1, only Youtube and Twitch allowed
                         /*

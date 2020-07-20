@@ -3,7 +3,7 @@
 namespace Tohur\Bot\Classes\Twitch;
 
 use Tohur\Bot\Classes\Helpers\FunctionsClass;
-use Tohur\Bot\Models\Commands as CommandsDB;
+use Tohur\Bot\Models\CoreCommands as CommandsDB;
 use Tohur\Bot\Classes\Helpers\HelperClass;
 use Tohur\Twitchirc\AbstractPlugin as BasePlugin;
 use Tohur\Twitchirc\IRC\Response;
@@ -19,10 +19,26 @@ class CoreCommands extends BasePlugin {
             $matches = $event->getMatches();
             $event->addResponse(Response::msg($request->getSource(), trim($matches[0])));
         });
-        $this->bot->onChannel('/^!echo (.*)$/', function($event) {
+        // Follow Age Command
+        $this->bot->onChannel('/^!followage(.*)$/', function($event) {
+            $helper = new HelperClass();
+            $function = new FunctionsClass();
             $request = $event->getRequest();
             $matches = $event->getMatches();
-            $event->addResponse(Response::msg($request->getSource(), trim($matches[0])));
+
+            $command = CommandsDB::where('command', 'followage')->first();
+            if (empty($matches[0])) {
+                $targetUser = $request->getSendingUser();
+            } else {
+                $targetUser = trim($matches[0]);
+                
+            }
+            $replace = array(
+                '{$followage}' => $function->followage($targetUser),
+                '{$targetuser}' => $targetUser,
+            );
+            $formated = strtr($command->response, $replace);
+            $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
         });
     }
 

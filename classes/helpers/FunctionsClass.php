@@ -12,6 +12,7 @@ class FunctionsClass {
     function __construct() {
         $this->twitch = new TwitchAPI();
         $this->helper = new HelperClass();
+        $this->settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
     }
 
     function channelTitle($channel) {
@@ -40,6 +41,23 @@ class FunctionsClass {
         }
 
         return $viewercount;
+    }
+
+    function followage($targetUser) {
+
+        $apiCall = $this->twitch->getFollowRelationship($this->settings['Twitch']['channel'], $targetUser);
+        if ($apiCall == null) {
+            $followage = $targetUser . ' is not following';
+        } else {
+
+            $time1 = new \DateTime($apiCall[0]['followed_at']); // Event occurred time
+            $time2 = new \DateTime(date('Y-m-d H:i:s')); // Current time
+            $interval = $time1->diff($time2);
+
+            $followage = $interval->y . " Years, " . $interval->m . " Months, " . $interval->d . " Days ";
+        }
+
+        return $followage;
     }
 
     function uptime($channel) {

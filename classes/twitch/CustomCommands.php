@@ -3,7 +3,7 @@
 namespace Tohur\Bot\Classes\Twitch;
 
 use Tohur\Bot\Classes\Helpers\FunctionsClass;
-use Tohur\Bot\Models\CustomCommands;
+use Tohur\Bot\Models\CustomCommands as CommandDB;
 use Tohur\Bot\Classes\Helpers\HelperClass;
 use Tohur\Twitchirc\AbstractPlugin as BasePlugin;
 use Tohur\Twitchirc\IRC\Response;
@@ -21,10 +21,8 @@ class CustomCommands extends BasePlugin {
             $match = implode(' ', $matches);
             $commandMatch = explode(' ', $match, 3);
 
-            $command = CustomCommands::where('command', $commandMatch[0])->first();
+            $command = CommandDB::where('command', $commandMatch[0])->first();
             if (empty($command)) {
-                
-            } elseif ($command->core == true) {
                 
             } else {
                 $replace = array(

@@ -10,7 +10,7 @@ class SeedCoreCommandsTable extends Migration
 {
     public function up()
     {
-        CoreCommands::create(['name' => 'Followage', 'command' => 'followage', 'response' => '{$followage}']);
+        CoreCommands::create(['name' => 'Followage', 'command' => 'followage', 'response' => '{$targetuser} has been following for {$followage}!']);
     }
 
     public function down()
