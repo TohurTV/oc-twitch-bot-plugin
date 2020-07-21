@@ -1,5 +1,5 @@
 [Unit]
-Description=OctoberCMS TwitchBot
+Description=OctoberCMS DiscordBot
 
 [Service]
 User=user

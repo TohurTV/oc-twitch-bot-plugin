@@ -117,11 +117,12 @@ class Plugin extends PluginBase {
         $schedule->command('bot:discordlivepost')->cron('*/2 * * * *');
         $schedule->command('bot:twitterlive')->cron('*/2 * * * *');
         $schedule->command('bot:twittertimed')->cron('*/' . $Settings['Twitter']['liveperiodicinterval'] . ' * * * *');
-       $TimerGroups = TimerGroups::all();
-       foreach ($TimerGroups as $TimerGroup) {
-            $schedule->command('bot:twitchtimers '.$TimerGroup->id)->cron('*/' . $TimerGroup->timetorun . ' * * * *');
-
-       }
+        if (\Schema::hasTable('tohur_bot_timer_groups')) {
+            $TimerGroups = TimerGroups::all();
+            foreach ($TimerGroups as $TimerGroup) {
+                $schedule->command('bot:twitchtimers ' . $TimerGroup->id)->cron('*/' . $TimerGroup->timetorun . ' * * * *');
+            }
+        }
     }
 
     public function registerNavigation() {
@@ -143,7 +144,7 @@ class Plugin extends PluginBase {
                         'icon' => 'icon-cogs',
                         'url' => Backend::url('tohur/bot/customcommands'),
                         'permissions' => ['tohur.bot.*']
-                    ],                    
+                    ],
                     'timergroups' => [
                         'label' => 'Timer Groups',
                         'icon' => 'icon-spinner',
