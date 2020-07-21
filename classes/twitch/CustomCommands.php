@@ -16,7 +16,6 @@ class CustomCommands extends BasePlugin {
     public function init() {
         $this->bot->onChannel('/^!(.*)$/', function ($event) {
             $helper = new HelperClass();
-            $function = new FunctionsClass();
             $request = $event->getRequest();
             $matches = $event->getMatches();
             $match = implode(' ', $matches);
@@ -26,25 +25,17 @@ class CustomCommands extends BasePlugin {
             if (empty($command)) {
                 
             } else {
-                if (empty($commandMatch[1])) {
-                    $targetUser = $request->getSendingUser();
-                } else {
-                    $targetUser = trim($commandMatch[1]);
-                }
                 $replace = array(
                     '{$user}' => $helper->remove_hashtags($request->getSource()),
-                    '{$userurl}' => 'https://twitch.tv/'.$helper->remove_hashtags($request->getSource()),
-                    '{$usertitle}' => $function->channelTitle($helper->remove_hashtags($request->getSource())),
-                    '{$usergame}' => $function->channelGame($helper->remove_hashtags($request->getSource())),
-                    '{$userviewers}' => $function->viewers($helper->remove_hashtags($request->getSource())),
-                    '{$uptime}' => $function->uptime($helper->remove_hashtags($request->getSource())),
-                    '{$targetuser}' => $targetUser,
-                    '{$targetuserurl}' => 'https://twitch.tv/'.$targetUser,
-                    '{$targetusertitle}' => $function->channelTitle($targetUser),
-                    '{$targetusergame}' => $function->channelGame($targetUser),
-                    '{$targetuserviewers}' => $function->viewers($targetUser),
+                    '{$usertitle}' => '',
+                    '{$usergame}' => '',
+                    '{$uptime}' => '',
+                    '{$targetuser}' => '',
+                    '{$targetusergame}' => '',
+                    '{$echo}' => trim($matches[0]),
                 );
                 $formated = strtr($command->response, $replace);
+                sleep(1);
                 $event->addResponse(
                         Response::msg($request->getSource(), "{$formated}")
                 );

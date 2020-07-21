@@ -127,7 +127,7 @@ class Plugin extends PluginBase {
     public function registerNavigation() {
         return [
             'bot' => [
-                'label' => 'Bot',
+                'label' => 'bot',
                 'url' => Backend::url('tohur/bot/corecommands'),
                 'icon' => 'icon-comments',
                 'permissions' => ['tohur.bot.*'],

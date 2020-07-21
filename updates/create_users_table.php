@@ -15,7 +15,6 @@ class CreateUsersTable extends Migration
             $table->string('twitch')->default('');
             $table->string('discord_id')->default('');
             $table->string('discord')->default('');
-            $table->string('lastseen', 200)->default('');
             $table->timestamps();
         });
     }

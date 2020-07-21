@@ -19,28 +19,6 @@ class CoreCommands extends BasePlugin {
             $matches = $event->getMatches();
             $event->addResponse(Response::msg($request->getSource(), trim($matches[0])));
         });
-
-        // Account Age Command
-        $this->bot->onChannel('/^!age(.*)$/', function($event) {
-            $helper = new HelperClass();
-            $function = new FunctionsClass();
-            $request = $event->getRequest();
-            $matches = $event->getMatches();
-
-            $command = CommandsDB::where('command', 'age')->first();
-            if (empty($matches[0])) {
-                $targetUser = $request->getSendingUser();
-            } else {
-                $targetUser = trim($matches[0]);
-            }
-            $replace = array(
-                '{$age}' => $function->followage($targetUser),
-                '{$targetuser}' => $targetUser,
-            );
-            $formated = strtr($command->response, $replace);
-            $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
-        });
-
         // Follow Age Command
         $this->bot->onChannel('/^!followage(.*)$/', function($event) {
             $helper = new HelperClass();
@@ -53,40 +31,11 @@ class CoreCommands extends BasePlugin {
                 $targetUser = $request->getSendingUser();
             } else {
                 $targetUser = trim($matches[0]);
+                
             }
             $replace = array(
                 '{$followage}' => $function->followage($targetUser),
                 '{$targetuser}' => $targetUser,
-            );
-            $formated = strtr($command->response, $replace);
-            $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
-        });
-
-        // Uptime Command
-        $this->bot->onChannel('/^!uptime(.*)$/', function($event) {
-            $helper = new HelperClass();
-            $function = new FunctionsClass();
-            $request = $event->getRequest();
-
-            $command = CommandsDB::where('command', 'uptime')->first();
-            $replace = array(
-                '{$user}' => $helper->remove_hashtags($request->getSource()),
-                '{$uptime}' => $function->uptime($helper->remove_hashtags($request->getSource())),
-            );
-            $formated = strtr($command->response, $replace);
-            $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
-        });
-
-        // Follower count Command
-        $this->bot->onChannel('/^!followers(.*)$/', function($event) {
-            $helper = new HelperClass();
-            $function = new FunctionsClass();
-            $request = $event->getRequest();
-
-            $command = CommandsDB::where('command', 'followers')->first();
-            $replace = array(
-                '{$user}' => $helper->remove_hashtags($request->getSource()),
-                '{$followers}' => $function->followcount($helper->remove_hashtags($request->getSource())),
             );
             $formated = strtr($command->response, $replace);
             $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
