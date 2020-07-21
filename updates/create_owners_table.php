@@ -18,6 +18,8 @@ class CreateOwnersTable extends Migration
             $table->string('twitch_token')->default('');
             $table->string('twitch_refreshToken')->default('');
             $table->string('twitch_expiresIn')->default('');
+             $table->string('token_created_at')->nullable();
+              $table->string('token_updated_at')->nullable();
             $table->string('game')->default('');
             $table->string('latestfollower')->default('');
             $table->string('latestsub')->default('');

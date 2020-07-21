@@ -123,6 +123,45 @@ class Plugin extends PluginBase {
                 $schedule->command('bot:twitchtimers ' . $TimerGroup->id)->cron('*/' . $TimerGroup->timetorun . ' * * * *');
             }
         }
+        
+        if (\Schema::hasTable('tohur_bot_owners')) {
+            $schedule->call(function () {
+                $Settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
+                $twitch = new TwitchAPI();
+                if (!strlen($Settings['Twitch']['client_id'])) {
+                    
+                } else {
+                    $client_id = $Settings['Twitch']['client_id'];
+                    $client_secret = $Settings['Twitch']['client_secret'];
+
+                    $count = \DB::table('tohur_bot_owners')->count();
+                    if ($count == 0) {
+                        
+                    } else {
+                        $Tokens = \DB::table('tohur_bot_owners')->get();
+                        foreach ($Tokens as $Token) {
+                        $expiresIn = $Token->twitch_expiresIn;
+                        $current = Carbon::now();
+                        if ($Token->token_updated_at == null) {
+                            $time = $Token->token_created_at;
+                        } else {
+                            $time = $Token->token_updated_at;
+                        }
+                        $expired = Carbon::parse($time)->addSeconds($expiresIn);
+
+                        if ($current > $expired) {
+                           $scopes = 'analytics:read:extensions%20analytics:read:games%20bits:read%20channel:edit:commercial%20channel:read:hype_train%20channel:read:subscriptions%20clips:edit%20user:edit%20user:edit:broadcast%20user:read:broadcast%20user:read:email%20channel_check_subscription%20channel_commercial%20channel_editor%20channel_read%20channel_stream%20channel_subscriptions%20collections_edit%20user_read%20user_subscriptions%20viewing_activity_read%20channel:moderate%20chat:edit%20chat:read%20whispers:read%20whispers:edit';
+                            $tokenRequest = json_decode($twitch->helixTokenRequest($twitch->oAuthbaseUrl . "?grant_type=client_credentials&client_id=" . $client_id . "&client_secret=" . $client_secret . "&scope=".$scopes), true);
+                            $accessToken = $tokenRequest['access_token'];
+                            $tokenExpires = $tokenRequest['expires_in'];
+                            \Db::table('tohur_bot_owners')
+                                    ->update(['twitch_token' => $accessToken, 'twitch_expiresIn' => $tokenExpires, 'token_updated_at' => now()]);
+                        }
+                    }
+                    }
+                }
+            })->cron('*/2 * * * *');
+        }
     }
 
     public function registerNavigation() {

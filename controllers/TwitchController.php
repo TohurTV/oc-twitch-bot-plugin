@@ -24,27 +24,36 @@ class TwitchController extends Controller {
 
     public function __construct() {
         parent::__construct();
-//        Socialite::extend($this->driver, /**
-//                 *
-//                 */
-//                function($app) {
-//            $providers = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
-//            $providers['Twitch']['redirect'] = URL::route('tohur_bot_twitch_callback', true);
-//            $provider = Socialite::buildProvider(
-//                            TwitchProvider::class, (array) @$providers['Twitch']
-//            );
-//            return $provider;
-//        });
+        Socialite::extend($this->driver, /**
+                 *
+                 */
+                function($app) {
+            $providers = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
+            $provider = Socialite::buildProvider(
+                            TwitchProvider::class, (array) @$providers['Twitch']
+            );
+            return $provider;
+        });
     }
 
     public function getTwitchRedirect() {
-        return Socialite::with($this->driver)->redirect();
+        $scopes = ['analytics:read:extensions', 'analytics:read:games', 'bits:read', 'channel:edit:commercial', 'channel:read:hype_train', 'channel:read:subscriptions', 'clips:edit', 'user:edit', 'user:edit:broadcast', 'user:read:broadcast', 'user:read:email', 'channel_check_subscription', 'channel_commercial', 'channel_editor', 'channel_read', 'channel_stream', 'channel_subscriptions', 'collections_edit', 'user_read', 'user_subscriptions', 'viewing_activity_read', 'channel:moderate', 'chat:edit', 'chat:read', 'whispers:read', 'whispers:edit'];
+        return Socialite::with($this->driver)->scopes($scopes)->redirect();
     }
 
     public function getTwitchCallback() {
         $socialUser = Socialite::with($this->driver)->user();
 
         $user = Owner::where('twitch_id', '=', $socialUser->id)->first();
+
+        $user->twitch_token = $socialUser->token;
+        $user->twitch_refreshToken = $socialUser->refreshToken;
+        $user->twitch_expiresIn = $socialUser->expiresIn;
+        $user->token_created_at = now();
+
+        $user->save();
+
+
 
         return redirect('/backend/system/settings/update/tohur/bot/settings#primarytab-twitch');
     }
