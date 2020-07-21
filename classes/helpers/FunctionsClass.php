@@ -60,6 +60,14 @@ class FunctionsClass {
         return $followage;
     }
 
+    function followcount($channel) {
+
+        $twitch = new TwitchAPI();
+        $apiCall = $twitch->getFollowcount($channel);
+
+        return $apiCall;
+    }
+
     function uptime($channel) {
 
         $apiCall = $this->twitch->getStream($channel);
