@@ -65,7 +65,7 @@ class TwitchLivePost {
                         ->setThumbnail($avatarCall[0]['profile_image_url'])
                         ->setImage($gameimage)
                         ->setTimestamp()
-                        ->setAuthor(ucfirst($settings['Twitch']['channel']), $avatarCall[0]['profile_image_url'], 'https://twitch.tv' . $settings['Twitch']['channel'])
+                        ->setAuthor(ucfirst($settings['Twitch']['channel']), $avatarCall[0]['profile_image_url'], 'https://twitch.tv/' . $settings['Twitch']['channel'])
                         ->setFooter(ucfirst($settings['Twitch']['botname']), $botavatarCall[0]['profile_image_url'])
                         ->setURL('https://twitch.tv/' . $settings['Twitch']['channel']);
                 // Send the message

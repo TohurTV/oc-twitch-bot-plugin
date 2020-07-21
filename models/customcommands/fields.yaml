@@ -16,7 +16,7 @@ fields:
         description: command trigger without !
         disabled: false
     response:
-        label: Response
+        label: Response.  Supported variables {$user}, {$userurl}, {$usertitle}, {$usergame}, {$userviewers}, {$uptime}, {$targetuser}, {$targetuserurl}, {$targetusertitle}, {$targetusergame}, {$targetuserviewers}
         disabled: false
     description:
         label: Description
