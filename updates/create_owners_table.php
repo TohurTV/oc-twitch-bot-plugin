@@ -1,13 +1,14 @@
-<?php namespace Tohur\Bot\Updates;
+<?php
+
+namespace Tohur\Bot\Updates;
 
 use Schema;
 use October\Rain\Database\Schema\Blueprint;
 use October\Rain\Database\Updates\Migration;
 
-class CreateOwnersTable extends Migration
-{
-    public function up()
-    {
+class CreateOwnersTable extends Migration {
+
+    public function up() {
         Schema::create('tohur_bot_owners', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
@@ -18,8 +19,8 @@ class CreateOwnersTable extends Migration
             $table->string('twitch_token')->default('');
             $table->string('twitch_refreshToken')->default('');
             $table->string('twitch_expiresIn')->default('');
-             $table->string('token_created_at')->nullable();
-              $table->string('token_updated_at')->nullable();
+            $table->string('token_created_at')->nullable();
+            $table->string('token_updated_at')->nullable();
             $table->string('game')->default('');
             $table->string('latestfollower')->default('');
             $table->string('latestsub')->default('');
@@ -33,8 +34,8 @@ class CreateOwnersTable extends Migration
         });
     }
 
-    public function down()
-    {
+    public function down() {
         Schema::dropIfExists('tohur_bot_owners');
     }
+
 }

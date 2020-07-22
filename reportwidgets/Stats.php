@@ -79,6 +79,24 @@ class Stats extends ReportWidgetBase {
         return $viewercount;
     }
 
+    protected function subcount() {
+        $twitch = new TwitchAPI();
+        $Settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
+        $user = $twitch->getUser($Settings['Twitch']['channel']);
+        $channelID = $user[0]['id'];
+        $findToken = \DB::table('tohur_bot_owners')->where('twitch_id', '=', $channelID)->get();
+        $acessToken = $findToken[0]->twitch_token;
+        $bot = true;
+        $apiCall = $twitch->getSubcount($Settings['Twitch']['channel'],$acessToken, $bot = true);
+        if ($apiCall == null) {
+            $subcount = $channel . ' is offline';
+        } else {
+            $subcount = $apiCall;
+        }
+
+        return $subcount;
+    }
+
     protected function totalviews() {
         $twitch = new TwitchAPI();
         $Settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);

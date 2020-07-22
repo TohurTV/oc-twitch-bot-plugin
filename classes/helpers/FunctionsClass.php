@@ -43,6 +43,21 @@ class FunctionsClass {
         return $viewercount;
     }
 
+    function subcount($channel) {
+        $user = $this->twitch->getUser($channel);
+        $channelID = $user[0]['id'];
+        $findToken = \DB::table('tohur_bot_owners')->where('twitch_id', '=', $channelID)->get();
+        $acessToken = $findToken[0]->twitch_token;
+        $apiCall = $this->twitch->getSubcount($channel, $acessToken, $bot = true);
+        if ($apiCall == null) {
+            $subcount = $channel . ' is offline';
+        } else {
+            $subcount = $apiCall;
+        }
+
+        return $subcount;
+    }
+
     function followage($targetUser) {
 
         $apiCall = $this->twitch->getFollowRelationship($this->settings['Twitch']['channel'], $targetUser);

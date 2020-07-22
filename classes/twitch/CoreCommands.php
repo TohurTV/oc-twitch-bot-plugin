@@ -91,6 +91,21 @@ class CoreCommands extends BasePlugin {
             $formated = strtr($command->response, $replace);
             $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
         });
+
+        // Sub count Command
+        $this->bot->onChannel('/^!subs(.*)$/', function($event) {
+            $helper = new HelperClass();
+            $function = new FunctionsClass();
+            $request = $event->getRequest();
+
+            $command = CommandsDB::where('command', 'subs')->first();
+            $replace = array(
+                '{$user}' => $helper->remove_hashtags($request->getSource()),
+                '{$subs}' => $function->subcount($helper->remove_hashtags($request->getSource())),
+            );
+            $formated = strtr($command->response, $replace);
+            $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+        });
     }
 
     /**
