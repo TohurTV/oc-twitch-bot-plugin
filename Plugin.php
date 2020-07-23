@@ -150,8 +150,7 @@ class Plugin extends PluginBase {
                             $expired = Carbon::parse($time)->addSeconds($expiresIn);
 
                             if ($current > $expired) {
-                                $scopes = 'analytics:read:extensions%20analytics:read:games%20bits:read%20channel:edit:commercial%20channel:read:hype_train%20channel:read:subscriptions%20clips:edit%20user:edit%20user:edit:broadcast%20user:read:broadcast%20user:read:email%20channel_check_subscription%20channel_commercial%20channel_editor%20channel_read%20channel_stream%20channel_subscriptions%20collections_edit%20user_read%20user_subscriptions%20viewing_activity_read%20channel:moderate%20chat:edit%20chat:read%20whispers:read%20whispers:edit';
-                                $tokenRequest = json_decode($twitch->helixTokenRequest($twitch->oAuthbaseUrl . "?grant_type=refresh_token&refresh_token=" . $Token->twitch_refreshToken . "client_id=" . $client_id . "&client_secret=" . $client_secret . "&scope=" . $scopes), true);
+                                $tokenRequest = json_decode($twitch->helixTokenRequest($twitch->oAuthbaseUrl . "?grant_type=refresh_token&refresh_token=" . $Token->twitch_refreshToken . "&client_id=" . $client_id . "&client_secret=" . $client_secret . ""), true);
                                 $accessToken = $tokenRequest['access_token'];
                                 $refreshToken = $tokenRequest['refresh_token'];
                                 $tokenExpires = $expiresIn;
@@ -161,7 +160,7 @@ class Plugin extends PluginBase {
                         }
                     }
                 }
-            })->cron('*/2 * * * *');
+            })->cron('*/1 * * * *');
         }
     }
 
