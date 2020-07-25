@@ -11,6 +11,7 @@ class CreateUsersTable extends Migration
         Schema::create('tohur_bot_users', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->string('channel', 200)->nullable();
             $table->string('twitch_id', 200)->nullable();
             $table->string('twitch', 200)->nullable();
             $table->string('discord_id', 200)->nullable();
