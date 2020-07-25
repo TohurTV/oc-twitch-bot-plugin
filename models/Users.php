@@ -18,7 +18,7 @@ class Users extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = ['twitch_id', 'twitch', 'discord_id', 'discord', 'points', 'watchtime', 'totalmessages', 'lastseen'];
+    protected $fillable = ['channel', 'twitch_id', 'twitch', 'discord_id', 'discord', 'points', 'watchtime', 'totalmessages', 'lastseen', 'ignore'];
 
 
     /**

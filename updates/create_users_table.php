@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('watchtime', 200)->nullable();
             $table->string('totalmessages', 200)->nullable();
             $table->string('lastseen', 200)->nullable();
+            $table->boolean('ignore')->default(false);
             $table->timestamps();
         });
     }

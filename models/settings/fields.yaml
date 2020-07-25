@@ -130,6 +130,11 @@ tabs:
       type: text
       tab: Points
       
+    bot[Points][pointspermessage]:
+      label: Points per Message sent in chat
+      type: text
+      tab: Points      
+      
     Other:
       type: partial
       path: $/tohur/bot/partials/backend/forms/settings/_other_info.htm

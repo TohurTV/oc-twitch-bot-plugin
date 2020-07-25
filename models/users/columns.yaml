@@ -12,3 +12,13 @@ columns:
     discord:
         label: Discord user
         searchable: true
+    points:
+        label: Points
+        searchable: true
+    watchtime:
+        label: Watch Time
+        searchable: true
+    lastseen:
+        label: Last Seen
+        searchable: true
+        mode: date

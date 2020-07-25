@@ -2,6 +2,7 @@
 
 use Tohur\Bot\Classes\Twitch\CoreCommands;
 use Tohur\Bot\Classes\Twitch\CustomCommands;
+use Tohur\Bot\Classes\Twitch\UserTracking;
 use Tohur\Twitchirc\Twitchirc;
 use Tohur\Twitchirc\IRC\Response;
 
@@ -20,6 +21,7 @@ class TwitchBotClass
         $bot->loadPlugins(array(
             new CoreCommands($bot),
             new CustomCommands($bot),
+            new UserTracking($bot),
         ));
         $bot->run();
     }

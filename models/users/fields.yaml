@@ -15,4 +15,9 @@ fields:
         label: Discord User
         disabled: true
         hidden: false
+    ignore:
+        label: Ignore user for points and watch time?
+        disabled: false
+        type: switch
+        hidden: false
  

@@ -17,9 +17,42 @@ class UserTracking extends BasePlugin {
      */
     public function init() {
         $this->bot->onChannel('/^(.*)$/', function ($event) {
+            $Settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
             $helper = new HelperClass();
+            $function = new FunctionsClass();
             $request = $event->getRequest();
             $matches = $event->getMatches();
+            $channel = $helper->remove_hashtags($request->getSource());
+            $chatter = $helper->remove_hashtags($request->getSendingUser());
+            $userId = $function->userid($chatter);
+
+// Create User in Database if not 
+            $findchatter = Users::firstOrCreate(['channel' => $channel, 'twitch_id' => $userId, 'twitch' => $chatter]);
+            $user = Users::where('channel', $channel)
+                    ->where('twitch_id', $userId)
+                    ->where('twitch', $chatter)
+                    ->first();
+
+            if ($user->totalmessages == null) {
+                $messagecount = 1;
+            } else {
+                $amountOne = $user->totalmessages;
+                $amountTwo = 1;
+                $messagecount = $amountTwo + $amountOne;
+            }
+
+            if ($user->points == null) {
+                $pointcount = $Settings['Points']['pointspermessage'];
+            } else {
+                $amountOne = $user->points;
+                $amountTwo = $Settings['Points']['pointspermessage'];
+                $pointcount = $amountTwo + $amountOne;
+            }
+            
+            $update = Users::where('channel', $channel)
+                    ->where('twitch_id', $userId)
+                    ->where('twitch', $chatter)
+                    ->update(['points' => $pointcount, 'totalmessages' => $messagecount, 'lastseen' => now()]);
         });
     }
 

@@ -106,19 +106,11 @@ class FunctionsClass {
         return $uptime;
     }
 
-    function targetUser($channel) {
+    function userid($channel) {
+        $user = $this->twitch->getUser($channel);
+        $userID = $user[0]['id'];
 
-        $targetUser = $this->helper->remove_underscores($channel);
-
-        return $targetUser;
-    }
-
-    function targetUserGame($channel) {
-
-        $apiCall = $this->twitch->getChannelinfo($channel);
-        $targetUserGame = $apiCall[0]['game_name'];
-
-        return $targetUserGame;
+        return $userID;
     }
 
 }
