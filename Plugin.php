@@ -73,13 +73,6 @@ class Plugin extends PluginBase {
                     'tohur.bot.*',
                 ],
             ],
-            'Tohur\Bot\ReportWidgets\Test' => [
-                'label' => 'Test',
-                'context' => 'dashboard',
-                'permissions' => [
-                    'tohur.bot.*',
-                ],
-            ],
         ];
     }
 

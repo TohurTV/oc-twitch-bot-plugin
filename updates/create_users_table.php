@@ -11,19 +11,20 @@ class CreateUsersTable extends Migration
         Schema::create('tohur_bot_users', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('twitch_id')->default('');
-            $table->string('twitch')->default('');
-            $table->string('discord_id')->default('');
-            $table->string('discord')->default('');
-            $table->string('lastseen', 200)->default('');
+            $table->string('twitch_id', 200)->nullable();
+            $table->string('twitch', 200)->nullable();
+            $table->string('discord_id', 200)->nullable();
+            $table->string('discord', 200)->nullable();
+            $table->string('points', 200)->nullable();
+            $table->string('watchtime', 200)->nullable();
+            $table->string('totalmessages', 200)->nullable();
+            $table->string('lastseen', 200)->nullable();
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('tohur_bot_points');
-        Schema::dropIfExists('tohur_bot_watched');
         Schema::dropIfExists('tohur_bot_users');
     }
 }

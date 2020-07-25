@@ -14,7 +14,7 @@ class SeedCoreCommandsTable extends Migration
         CoreCommands::create(['name' => 'Age', 'command' => 'age', 'response' => '{$targetuser}s account is {$age}!', 'description' => 'Shows a users account age.']);
         CoreCommands::create(['name' => 'Uptime', 'command' => 'uptime', 'response' => '{$user} has been live for {$uptime}!', 'description' => 'Shows channels uptime.']);
         CoreCommands::create(['name' => 'Subs', 'command' => 'subs', 'response' => '{$user} has {$subs} subs!', 'description' => 'Shows channels sub count.']);
-        CoreCommands::create(['name' => 'Followers', 'command' => 'followers', 'response' => '{$user} has {$followers}!', 'description' => 'Shows channels follow count.']);
+        CoreCommands::create(['name' => 'Followers', 'command' => 'followers', 'response' => '{$user} has {$followers} followers!', 'description' => 'Shows channels follow count.']);
         CoreCommands::create(['name' => 'Lastseen ', 'command' => 'lastseen ', 'response' => '{$targetuser} was last seen on {$lastseen}!', 'description' => 'Shows last time user chatted on channel.']);
         CoreCommands::create(['name' => 'Watched', 'command' => 'watched ', 'response' => '{$targetuser} has watched {$user} for {$watched}!', 'description' => 'Shows show total time a user has watched channel.']);
         CoreCommands::create(['name' => 'Stats', 'command' => 'stats ', 'response' => '{$targetuser} has {$points} points, watched for {$watched}, and has sent {$totalmessages}.', 'description' => 'Shows points, watched time of user and message count with optional username.']);

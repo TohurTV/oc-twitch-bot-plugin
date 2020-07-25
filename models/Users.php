@@ -18,7 +18,7 @@ class Users extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = ['twitch_id', 'twitch', 'discord_id', 'discord'];
+    protected $fillable = ['twitch_id', 'twitch', 'discord_id', 'discord', 'points', 'watchtime', 'totalmessages', 'lastseen'];
 
 
     /**
@@ -29,12 +29,4 @@ class Users extends Model
         'updated_at'
     ];
 
-    /**
-     * @var array Relations
-     */
-
-    public $hasMany = [
-        'points' => [Points::class, 'table' => 'tohur_bot_points'],
-        'watched' => [Points::class, 'table' => 'tohur_bot_watched']
-    ];
 }

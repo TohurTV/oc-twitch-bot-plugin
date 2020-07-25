@@ -33,7 +33,7 @@ body.dark .table >tbody >tr >td {
     border-top: 1px solid #616161;
 }
 
-/* Dashboard - Панель управления */
+/* Dashboard */
 body.dark .report-container > ul .item {
     background: #6f6f6f;
 }
@@ -77,7 +77,7 @@ body.dark .report-widget a:not(.btn).status-label.primary {
 body.dark .control-chart div.chart-legend table {
     color: #bbb;
 }
-/* END Dashboard - Панель управления */
+/* END Dashboard */
 
 
 
@@ -135,7 +135,7 @@ body.dark #layout-side-panel div.control-toolbar input.form-control {
 
 
 
-/* Меню плагинов */
+/* Plugin menu */
 body.dark #layout-sidenav li.active {
     margin-left: 5px;
     background: black;
@@ -147,11 +147,11 @@ body.dark #layout-sidenav li.active a:hover {
 body.dark #layout-sidenav ul li a:hover {
     background: #333333;
 }
-/* End - Меню плагинов */
+/* End - Plugin menu */
 
 
 
-/* List - Список */
+/* List */
 body.dark .control-filter {
     color: #fff;
     background-color: #416080;
@@ -304,7 +304,7 @@ body.dark .control-breadcrumb li:last-child {
 
 
 
-/* Создать - Редактировать */
+/* Create - Edit */
 body.dark label {
     color: #c8c8c8;
 }
@@ -344,7 +344,7 @@ body.dark .field-fileupload.style-image-multi .upload-object {
 body.dark .field-fileupload .upload-object h4 {
     color: #d7ba7d;
 }
-/* ___вкладки */
+/* ___ tabs */
 body.dark .control-tabs.primary-tabs >ul.nav-tabs >li a >span.title:before,
 body.dark .control-tabs.primary-tabs >div >ul.nav-tabs >li a >span.title:before,
 body.dark .control-tabs.primary-tabs >div >div >ul.nav-tabs >li a >span.title:before,
@@ -408,15 +408,15 @@ body.dark .control-tabs >div >div >ul.nav-tabs >li.active a {
 body.dark .layout-cell.w-300.form-sidebar.control-scrollpanel {
     background-color: #2d2d2d;
 }
-/* END - Создать - Редактировать */
+/* END - Create - Edit */
 
 
 
-/* Фронтенд темы */
+/* Front-end themes */
 body.dark .theme-selector-layout .theme-description h3 {
     color: #f9e23d;
 }
 body.dark .theme-selector-layout .theme-description p.description {
     color: #c5c5c5;
 }
-/* End - Фронтенд темы */
+/* End - Front-end themes */

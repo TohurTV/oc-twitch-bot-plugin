@@ -3,8 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
         $body = document.querySelector('body'),
         lang = document.querySelector('html').getAttribute('lang'),
         textCheckbox = {
-            en: 'Dark Theme',
-            ru: 'Тёмная тема'
+            en: 'Dark Theme'
         },
         txtLang = textCheckbox[lang] ? textCheckbox[lang] : 'Dark Theme';
 

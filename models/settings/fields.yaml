@@ -120,6 +120,16 @@ tabs:
       type: textarea
       tab: Twitter
 
+    Points:
+      type: partial
+      path: $/tohur/bot/partials/backend/forms/settings/_points_info.htm
+      tab: Points
+      
+    bot[Points][pointspermin]:
+      label: Points per viewing minute
+      type: text
+      tab: Points
+      
     Other:
       type: partial
       path: $/tohur/bot/partials/backend/forms/settings/_other_info.htm
