@@ -40,7 +40,11 @@ class Plugin extends PluginBase {
     }
 
     public function registerComponents() {
-        
+        return [
+            'Tohur\Bot\Components\Toppoints' => 'toppoints',
+            'Tohur\Bot\Components\Topwatched' => 'topwatched',
+            'Tohur\Bot\Components\Commands' => 'commands'
+        ];
     }
 
     public function registerReportWidgets() {
@@ -148,12 +152,13 @@ class Plugin extends PluginBase {
                                 $refreshToken = $tokenRequest['refresh_token'];
                                 $tokenExpires = $expiresIn;
                                 \Db::table('tohur_bot_owners')
+                                        ->where('twitch', '=', $Token->twitch)
                                         ->update(['twitch_token' => $accessToken, 'twitch_refreshToken' => $refreshToken, 'twitch_expiresIn' => $tokenExpires, 'token_updated_at' => now()]);
                             }
                         }
                     }
                 }
-            })->cron('*/1 * * * *');
+            })->everyMinute();
         }
     }
 

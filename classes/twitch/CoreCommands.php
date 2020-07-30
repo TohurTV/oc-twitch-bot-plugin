@@ -4,6 +4,7 @@ namespace Tohur\Bot\Classes\Twitch;
 
 use Tohur\Bot\Classes\Helpers\FunctionsClass;
 use Tohur\Bot\Models\CoreCommands as CommandsDB;
+use Tohur\Bot\Models\Users;
 use Tohur\Bot\Classes\Helpers\HelperClass;
 use Tohur\Twitchirc\AbstractPlugin as BasePlugin;
 use Tohur\Twitchirc\IRC\Response;
@@ -34,7 +35,7 @@ class CoreCommands extends BasePlugin {
                 $targetUser = trim($matches[0]);
             }
             $replace = array(
-                '{$age}' => $function->followage($targetUser),
+                '{$age}' => $function->accountage($targetUser),
                 '{$targetuser}' => $targetUser,
             );
             $formated = strtr($command->response, $replace);
@@ -56,6 +57,27 @@ class CoreCommands extends BasePlugin {
             }
             $replace = array(
                 '{$followage}' => $function->followage($targetUser),
+                '{$targetuser}' => $targetUser,
+            );
+            $formated = strtr($command->response, $replace);
+            $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+        });
+
+        // Last seen Command
+        $this->bot->onChannel('/^!lastseen(.*)$/', function($event) {
+            $helper = new HelperClass();
+            $function = new FunctionsClass();
+            $request = $event->getRequest();
+            $matches = $event->getMatches();
+
+            $command = CommandsDB::where('command', 'lastseen')->first();
+            if (empty($matches[0])) {
+                $targetUser = $request->getSendingUser();
+            } else {
+                $targetUser = trim($matches[0]);
+            }
+            $replace = array(
+                '{$lastseen}' => $function->lastseen($helper->remove_hashtags($request->getSource()), $targetUser),
                 '{$targetuser}' => $targetUser,
             );
             $formated = strtr($command->response, $replace);

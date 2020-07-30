@@ -15,6 +15,14 @@ fields:
         label: Discord User
         disabled: true
         hidden: false
+    points:
+        label: Points
+        disabled: false
+        hidden: false
+    watchtime:
+        label: Watched time minutes
+        disabled: false
+        hidden: false        
     ignore:
         label: Ignore user for points and watch time?
         disabled: false

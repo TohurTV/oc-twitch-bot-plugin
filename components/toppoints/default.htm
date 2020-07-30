@@ -1,0 +1,13 @@
+<div class="bot-pointlist">
+    <div class="points-grid">
+        {% set count = 0 %}
+        {% for key,point in __SELF__.PointLeaders %}
+        <div class="video">
+            <p class="rank"><a>{% set count = count + 1 %}{{ count }}</a></p>
+            <p class="name"><a>{{ point.twitch|e }}</a></p>
+            <p class="amount">{{ point.points|e }} Points</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+

@@ -48,11 +48,17 @@ class UserTracking extends BasePlugin {
                 $amountTwo = $Settings['Points']['pointspermessage'];
                 $pointcount = $amountTwo + $amountOne;
             }
-            
-            $update = Users::where('channel', $channel)
-                    ->where('twitch_id', $userId)
-                    ->where('twitch', $chatter)
-                    ->update(['points' => $pointcount, 'totalmessages' => $messagecount, 'lastseen' => now()]);
+            if ($user->ignore == true) {
+                $update = Users::where('channel', $channel)
+                        ->where('twitch_id', $userId)
+                        ->where('twitch', $chatter)
+                        ->update(['totalmessages' => $messagecount, 'lastseen' => now()]);
+            } else {
+                $update = Users::where('channel', $channel)
+                        ->where('twitch_id', $userId)
+                        ->where('twitch', $chatter)
+                        ->update(['points' => $pointcount, 'totalmessages' => $messagecount, 'lastseen' => now()]);
+            }
         });
     }
 

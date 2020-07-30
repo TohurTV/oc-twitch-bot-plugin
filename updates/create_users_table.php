@@ -16,9 +16,9 @@ class CreateUsersTable extends Migration
             $table->string('twitch', 200)->nullable();
             $table->string('discord_id', 200)->nullable();
             $table->string('discord', 200)->nullable();
-            $table->string('points', 200)->nullable();
-            $table->string('watchtime', 200)->nullable();
-            $table->string('totalmessages', 200)->nullable();
+            $table->bigInteger('points', 200)->nullable()->index();
+            $table->bigInteger('watchtime', 200)->nullable()->index();
+            $table->bigInteger('totalmessages', 200)->nullable()->index();
             $table->string('lastseen', 200)->nullable();
             $table->boolean('ignore')->default(false);
             $table->timestamps();

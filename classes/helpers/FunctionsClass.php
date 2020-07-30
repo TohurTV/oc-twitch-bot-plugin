@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Tohur\Api\Classes\Helper;
 use Tohur\Bot\Classes\Helpers\HelperClass;
 use Tohur\SocialConnect\Classes\Apis\TwitchAPI;
+use Tohur\Bot\Models\Users;
 
 class FunctionsClass {
 
@@ -73,6 +74,47 @@ class FunctionsClass {
         }
 
         return $followage;
+    }
+
+    function accountage($targetUser) {
+        $user = $this->twitch->getUser($targetUser);
+        $userID = $user[0]['id'];
+        $apiCall = $this->twitch->krakengetUser($userID);
+        if ($apiCall == null) {
+            $accountage = $targetUser . ' is not following';
+        } else {
+
+            $time1 = new \DateTime($apiCall['created_at']); // Event occurred time
+            $time2 = new \DateTime(date('Y-m-d H:i:s')); // Current time
+            $interval = $time1->diff($time2);
+
+            $accountage = $interval->y . " Years, " . $interval->m . " Months, " . $interval->d . " Days ";
+        }
+
+        return $accountage;
+    }
+
+    function lastseen($channel, $targetUser) {
+
+        $twitchuser = $this->twitch->getUser($channel);
+        $userID = $twitchuser[0]['id'];
+
+        $user = Users::where('channel', $channel)
+                ->where('twitch', $targetUser)
+                ->first();
+
+        if ($user->lastseen == null) {
+            $lastseen = $targetUser . ' has not been in chat';
+        } else {
+
+            $time1 = new \DateTime($user->lastseen); // Event occurred time
+            $time2 = new \DateTime(date('Y-m-d H:i:s')); // Current time
+            $interval = $time1->diff($time2);
+
+            $lastseen = $interval->y . " Years, " . $interval->m . " Months, " . $interval->d . " Days ";
+        }
+
+        return $lastseen;
     }
 
     function followcount($channel) {

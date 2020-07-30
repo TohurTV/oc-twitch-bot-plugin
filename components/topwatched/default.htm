@@ -1,0 +1,13 @@
+<div class="bot-watchedlist">
+    <div class="watched-grid">
+        {% set count = 0 %}
+        {% for key,watch in __SELF__.WatchLeaders %}
+        <div class="video">
+            <p class="rank"><a>{% set count = count + 1 %}{{ count }}</a></p>
+            <p class="name"><a>{{ watch.twitch|e }}</a></p>
+            <p class="amount">{{ __SELF__.hoursandmins(watch.watchtime, '%02d Hours, %02d Minutes') }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+

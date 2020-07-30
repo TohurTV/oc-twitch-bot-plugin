@@ -11,7 +11,7 @@ class SeedCoreCommandsTable extends Migration
     public function up()
     {
         CoreCommands::create(['name' => 'Followage', 'command' => 'followage', 'response' => '{$targetuser} has been following for {$followage}!', 'description' => 'Shows a users Follow Age on The Channel.']);
-        CoreCommands::create(['name' => 'Age', 'command' => 'age', 'response' => '{$targetuser}s account is {$age}!', 'description' => 'Shows a users account age.']);
+        CoreCommands::create(['name' => 'Age', 'command' => 'age', 'response' => '{$targetuser}s account is {$age} old!', 'description' => 'Shows a users account age.']);
         CoreCommands::create(['name' => 'Uptime', 'command' => 'uptime', 'response' => '{$user} has been live for {$uptime}!', 'description' => 'Shows channels uptime.']);
         CoreCommands::create(['name' => 'Subs', 'command' => 'subs', 'response' => '{$user} has {$subs} subs!', 'description' => 'Shows channels sub count.']);
         CoreCommands::create(['name' => 'Followers', 'command' => 'followers', 'response' => '{$user} has {$followers} followers!', 'description' => 'Shows channels follow count.']);
