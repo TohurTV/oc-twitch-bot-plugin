@@ -9,6 +9,7 @@ use Tohur\Bot\Models\Users;
 use Tohur\Bot\Models\Points;
 use Tohur\Twitchirc\AbstractPlugin as BasePlugin;
 use Tohur\Twitchirc\IRC\Response;
+use Tohur\Bot\Classes\Helpers\BotBlacklist;
 
 class UserTracking extends BasePlugin {
 
@@ -20,6 +21,8 @@ class UserTracking extends BasePlugin {
             $Settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
             $helper = new HelperClass();
             $function = new FunctionsClass();
+            $bot = BotBlacklist::$bots;
+
             $request = $event->getRequest();
             $matches = $event->getMatches();
             $channel = $helper->remove_hashtags($request->getSource());
@@ -48,7 +51,13 @@ class UserTracking extends BasePlugin {
                 $amountTwo = $Settings['Points']['pointspermessage'];
                 $pointcount = $amountTwo + $amountOne;
             }
-            if ($user->ignore == true) {
+            if (in_array($chatter, $bot)) {
+                $update = Users::where('channel', $channel)
+                        ->where('twitch_id', $userId)
+                        ->where('twitch', $chatter)
+                        ->update(['totalmessages' => $messagecount, 'lastseen' => now()]);
+            }
+            elseif ($user->ignore == true) {
                 $update = Users::where('channel', $channel)
                         ->where('twitch_id', $userId)
                         ->where('twitch', $chatter)

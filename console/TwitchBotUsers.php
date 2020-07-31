@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Tohur\Bot\Classes\TwitchBotClass;
 use Tohur\Bot\Models\Users;
 use Tohur\SocialConnect\Classes\Apis\TwitchAPI;
+use Tohur\Bot\Classes\Helpers\BotBlacklist;
 
 class TwitchBotUsers extends Command {
 
@@ -33,6 +34,7 @@ class TwitchBotUsers extends Command {
         $twitch = new TwitchAPI();
         $Settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
         $viewerscall = $twitch->getChatusers($Settings['Twitch']['channel']);
+        $bot = BotBlacklist::$bots;
 
         foreach ($viewerscall->chatters->broadcaster as $obj) {
             $broadcaster = $obj;
@@ -62,7 +64,10 @@ class TwitchBotUsers extends Command {
                 $pointcount = $amountTwo + $amountOne;
             }
             if ($twitch->isChannelLive($Settings['Twitch']['channel']) == true) {
-                if ($user->ignore == true) {
+                if (in_array($broadcaster, $bot)) {
+                    echo 'User is Bot';
+                }
+                elseif ($user->ignore == true) {
                     echo 'User is ignored';
                 } else {
 
@@ -101,7 +106,10 @@ class TwitchBotUsers extends Command {
                 $pointcount = $amountTwo + $amountOne;
             }
             if ($twitch->isChannelLive($Settings['Twitch']['channel']) == true) {
-                if ($user->ignore == true) {
+                if (in_array($vip, $bot)) {
+                    echo 'User is Bot';
+                }
+                elseif ($user->ignore == true) {
                     echo 'User is ignored';
                 } else {
                     $update = Users::where('channel', $Settings['Twitch']['channel'])
@@ -139,7 +147,10 @@ class TwitchBotUsers extends Command {
                 $pointcount = $amountTwo + $amountOne;
             }
             if ($twitch->isChannelLive($Settings['Twitch']['channel']) == true) {
-                if ($user->ignore == true) {
+                if (in_array($moderator, $bot)) {
+                    echo 'User is Bot';
+                }
+                elseif ($user->ignore == true) {
                     echo 'User is ignored';
                 } else {
                     $update = Users::where('channel', $Settings['Twitch']['channel'])
@@ -178,7 +189,10 @@ class TwitchBotUsers extends Command {
                 $pointcount = $amountTwo + $amountOne;
             }
             if ($twitch->isChannelLive($Settings['Twitch']['channel']) == true) {
-                if ($user->ignore == true) {
+                if (in_array($viewer, $bot)) {
+                    echo 'User is Bot';
+                }
+                elseif ($user->ignore == true) {
                     echo 'User is ignored';
                 } else {
                     $update = Users::where('channel', $Settings['Twitch']['channel'])
