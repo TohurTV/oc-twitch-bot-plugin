@@ -77,6 +77,13 @@ class Plugin extends PluginBase {
                     'tohur.bot.*',
                 ],
             ],
+            'Tohur\Bot\ReportWidgets\Streaminfo' => [
+                'label' => 'Stream Info',
+                'context' => 'dashboard',
+                'permissions' => [
+                    'tohur.bot.*',
+                ],
+            ],
         ];
     }
 

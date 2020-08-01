@@ -17,7 +17,7 @@ class Owner extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = ['twitch_id', 'twitch', 'discord_id', 'discord', 'game', 'livepostsent', 'tweetsent'];
+    protected $fillable = ['twitch_id', 'twitch', 'discord_id', 'discord', 'title', 'game', 'livepostsent', 'tweetsent'];
 
     /**
      * @var array Attributes to be cast to Argon (Carbon) instances

@@ -1,0 +1,32 @@
+<div class="report-widget">
+    <h3>Stream Info</h3>
+
+    <div class="pane">
+    <ul class="list-nostyle">
+
+    </ul>
+    </div>
+
+    <br/>
+	
+    <?= Form::open([
+            'url'       => URL::route('tohur_bot_twitch_update_streaminfo'),
+            'method'    => 'POST'
+        ]);
+    ?>
+    <div class="form-group">
+        <?= Form::label('title', 'Title') ?>
+        <input class="form-control" type="text" name="title" placeholder="Title" value="<?= $this->title() ?>" required />
+    </div>
+
+    <div class="form-group">
+        <?= Form::label('game', 'Game') ?>
+        <input class="form-control" type="text" name="game" placeholder="Game" value="<?= $this->game() ?>" required />
+    </div>
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Submit" />
+    </div>
+
+    <?= Form::close(); ?>
+</div>

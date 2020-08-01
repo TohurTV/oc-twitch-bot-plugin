@@ -5,6 +5,7 @@ class BotBlacklist {
       "1fps",
       "anotherttvviewer",
       "aten",
+      "bloodlustr",
       "commanderroot",
       "communityshowcase",
       "dinu",
@@ -18,6 +19,7 @@ class BotBlacklist {
       "streamlabs",
       "universe",
       "v_and_k",
-      "wizebot"
+      "wizebot",
+      "world_origin"
     ];
 }

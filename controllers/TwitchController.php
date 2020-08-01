@@ -12,6 +12,7 @@ use Socialite;
 use URL;
 use Tohur\Bot\Models\Owner;
 use SocialiteProviders\Twitch\Provider as TwitchProvider;
+use Tohur\SocialConnect\Classes\Apis\TwitchAPI;
 
 class TwitchController extends Controller {
 
@@ -56,6 +57,23 @@ class TwitchController extends Controller {
 
 
         return redirect('/backend/system/settings/update/tohur/bot/settings#primarytab-twitch');
+    }
+
+    public function postStreaminfo() {
+        $twitch = new TwitchAPI();
+        $Settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
+        $title = input('title');
+        $game = input('game');
+        $user = $twitch->getUser($Settings['Twitch']['channel']);
+        $channelID = $user[0]['id'];
+        $owner = Owner::where('twitch_id', '=', $channelID)->first();
+        $acessToken = $owner->twitch_token;
+        $owner->title = $title;
+        $owner->game = $game;
+        $owner->save();
+        $bot = true;
+        $post = $twitch->updateChannelinfo($Settings['Twitch']['channel'], $title, $game, $acessToken, $bot = true);
+        return back();
     }
 
 }
