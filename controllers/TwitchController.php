@@ -59,11 +59,11 @@ class TwitchController extends Controller {
         return redirect('/backend/system/settings/update/tohur/bot/settings#primarytab-twitch');
     }
 
-    public function postStreaminfo() {
+    public function postStreaminfo(Request $request) {
         $twitch = new TwitchAPI();
         $Settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
-        $title = input('title');
-        $game = input('game');
+        $title = $request->title;
+        $game = $request->game;
         $user = $twitch->getUser($Settings['Twitch']['channel']);
         $channelID = $user[0]['id'];
         $owner = Owner::where('twitch_id', '=', $channelID)->first();
@@ -73,7 +73,8 @@ class TwitchController extends Controller {
         $owner->save();
         $bot = true;
         $post = $twitch->updateChannelinfo($Settings['Twitch']['channel'], $title, $game, $acessToken, $bot = true);
-        return back();
+
+        return response()->json(['success' => 'Sucessfully Updated']);
     }
 
 }

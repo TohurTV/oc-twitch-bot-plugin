@@ -1,32 +1,48 @@
 <div class="report-widget">
     <h3>Stream Info</h3>
-
-    <div class="pane">
-    <ul class="list-nostyle">
-
-    </ul>
-    </div>
-
-    <br/>
-	
-    <?= Form::open([
-            'url'       => URL::route('tohur_bot_twitch_update_streaminfo'),
-            'method'    => 'POST'
-        ]);
-    ?>
+    <div class="sucess"></div>  
+    <?= Form::open(array('method'=>'post', 'url' => URL::route('tohur_bot_twitch_update_streaminfo'), 'id'=>'streaminfo')) ?>
     <div class="form-group">
         <?= Form::label('title', 'Title') ?>
-        <input class="form-control" type="text" name="title" placeholder="Title" value="<?= $this->title() ?>" required />
+        <?= Form::text('title', $this->title(), array('class'=>'form-control', 'id'=>'title', 'name'=>'title')) ?>
     </div>
 
     <div class="form-group">
         <?= Form::label('game', 'Game') ?>
-        <input class="form-control" type="text" name="game" placeholder="Game" value="<?= $this->game() ?>" required />
+        <?= Form::text('title', $this->game(), array('class'=>'form-control', 'id'=>'game', 'name'=>'game')) ?>
     </div>
 
     <div class="form-group">
-        <input type="submit" class="btn btn-primary" value="Submit" />
+        <?= Form::submit('Update', array('name'=>'submit', 'class'=>'btn btn-primary btn-submit')) ?>
     </div>
 
     <?= Form::close(); ?>
+
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(".btn-submit").click(function (e) {
+            e.preventDefault();
+            var title = $("input[name=title]").val();
+            var game = $("input[name=game]").val();
+
+            $.ajax({
+                type: 'POST',
+                url: "<?= URL::route('tohur_bot_twitch_update_streaminfo') ?>",
+                data: {title: title, game: game},
+                dataType: 'json',
+                success: function (data) {
+                    $(".sucess").append('<p class="added flash-message static success">' + data.success + '</p>');
+                    setTimeout(function () {
+                        $('.added').remove();
+                    }, 10000);
+                }
+            });
+        });
+
+    </script>
 </div>

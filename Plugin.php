@@ -92,7 +92,7 @@ class Plugin extends PluginBase {
             'settings' => [
                 'label' => 'Twitch/Discord Bot',
                 'description' => 'Manage Bot Settings.',
-                'category' => SettingsManager::CATEGORY_USERS,
+                'category' => 'Tohur',
                 'icon' => 'icon-comments',
                 'class' => 'Tohur\Bot\Models\Settings',
                 'order' => 600,

@@ -140,9 +140,5 @@ tabs:
       path: $/tohur/bot/partials/backend/forms/settings/_other_info.htm
       tab: Other
 
-    bot[Other][streamelementskey]:
-      label: Stream Elements JWT token
-      type: text
-      tab: Other
 
 
