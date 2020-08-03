@@ -1,6 +1,6 @@
 <div class="report-widget">
     <h3>Stream Info</h3>
-    <div class="sucess"></div>  
+    <div class="success"></div>  
     <?= Form::open(array('method'=>'post', 'url' => URL::route('tohur_bot_twitch_update_streaminfo'), 'id'=>'streaminfo')) ?>
     <div class="form-group">
         <?= Form::label('title', 'Title') ?>
@@ -36,7 +36,7 @@
                 data: {title: title, game: game},
                 dataType: 'json',
                 success: function (data) {
-                    $(".sucess").append('<p class="added flash-message static success">' + data.success + '</p>');
+                    $(".success").append('<p class="added flash-message static success">' + data.success + '</p>');
                     setTimeout(function () {
                         $('.added').remove();
                     }, 10000);
