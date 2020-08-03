@@ -108,6 +108,7 @@ class Plugin extends PluginBase {
         $this->registerConsoleCommand('Discord', 'Tohur\Bot\Console\DiscordBot');
         $this->registerConsoleCommand('Discordlivepost', 'Tohur\Bot\Console\DiscordBotLivePost');
         $this->registerConsoleCommand('Twitterlivepost', 'Tohur\Bot\Console\TwitterLive');
+        $this->registerConsoleCommand('Twittergamechange', 'Tohur\Bot\Console\TwitterGameChange');
         $this->registerConsoleCommand('Twittertimedpost', 'Tohur\Bot\Console\TwitterTimed');
     }
 

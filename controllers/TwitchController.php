@@ -56,7 +56,7 @@ class TwitchController extends Controller {
 
 
 
-        return redirect('/backend/system/settings/update/tohur/bot/settings#primarytab-twitch');
+        return back();
     }
 
     public function postStreaminfo(Request $request) {
@@ -66,12 +66,22 @@ class TwitchController extends Controller {
         $game = $request->game;
         $user = $twitch->getUser($Settings['Twitch']['channel']);
         $channelID = $user[0]['id'];
+        
         $owner = Owner::where('twitch_id', '=', $channelID)->first();
+        
         $acessToken = $owner->twitch_token;
-        $owner->title = $title;
-        $owner->game = $game;
-        $owner->save();
+        if ($owner->game == $game) {
+            $owner->title = $title;
+            $owner->save();
+        } else {
+            $owner->title = $title;
+            $owner->game = $game;
+            $owner->save();
+            Artisan::call('bot:twittergamechange');
+        }
+
         $bot = true;
+        
         $post = $twitch->updateChannelinfo($Settings['Twitch']['channel'], $title, $game, $acessToken, $bot = true);
 
         return response()->json(['success' => 'Sucessfully Updated']);
