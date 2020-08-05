@@ -91,7 +91,7 @@ class Stats extends ReportWidgetBase {
         if ($apiCall == null) {
             $subcount = $channel . ' is offline';
         } else {
-            $subcount = $apiCall;
+            $subcount = $apiCall - 1;
         }
 
         return $subcount;

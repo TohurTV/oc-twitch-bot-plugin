@@ -100,7 +100,12 @@ class Plugin extends PluginBase {
             ]
         ];
     }
-
+    public function registerFormWidgets()
+    {
+        return [
+            'Tohur\Bot\FormWidgets\BotPermissionEditor' => 'botpermissioneditor',
+        ];
+    }
     public function register() {
         $this->registerConsoleCommand('Twitch', 'Tohur\Bot\Console\TwitchBot');
         $this->registerConsoleCommand('Twitchtimers', 'Tohur\Bot\Console\TwitchBotTimers');

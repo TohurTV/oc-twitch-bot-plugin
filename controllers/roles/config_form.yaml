@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Role
+
+# Model Form Field configuration
+form: $/tohur/bot/models/role/fields.yaml
+
+# Model Class name
+modelClass: Tohur\Bot\Models\Role
+
+# Default redirect location
+defaultRedirect: tohur/bot/roles
+
+# Create page
+create:
+    title: Create Role
+    redirect: tohur/bot/roles/update/:id
+    redirectClose: tohur/bot/roles
+
+# Update page
+update:
+    title: Edit Role
+    redirect: tohur/bot/roles
+    redirectClose: tohur/bot/roles
+
+# Preview page
+preview:
+    title: Preview Role

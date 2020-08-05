@@ -4,6 +4,7 @@ namespace Tohur\Bot\Models;
 
 use Model;
 use October\Rain\Database\Traits\Nullable;
+use Tohur\Bot\Models\Roles;
 
 /**
  * Users Model
@@ -38,6 +39,13 @@ class Users extends Model {
     protected $dates = [
         'created_at',
         'updated_at'
+    ];
+
+    /**
+     * @var array Relations
+     */
+    public $belongsToMany = [
+        'roles' => [Roles::class, 'table' => 'tohur_bot_roles']
     ];
 
 }

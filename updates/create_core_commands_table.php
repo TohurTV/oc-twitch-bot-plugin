@@ -16,6 +16,8 @@ class CreateCoreCommandsTable extends Migration {
             $table->string('command')->default('');
             $table->string('response', 500)->default('');
             $table->string('description', 500)->default('');
+            $table->integer('permission_id')->unsigned()->nullable();
+            $table->foreign('permission_id')->references('id')->on('tohur_bot_botpermissions_permissions');
             $table->timestamps();
         });
     }

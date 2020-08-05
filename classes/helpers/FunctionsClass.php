@@ -32,6 +32,16 @@ class FunctionsClass {
         return $game;
     }
 
+    function channelGameImage($channel) {
+
+        $game = $this->twitch->getChannelinfo($channel);
+        $gameimage1 = "https://static-cdn.jtvnw.net/ttv-boxart/";
+        $gameimage2 = str_replace(' ', '%20', $game[0]['game_name']);
+        $gameimage3 = "-600x800.jpg";
+        $gameimage = $gameimage1 . $gameimage2 . $gameimage3;
+        return $gameimage;
+    }
+
     function viewers($channel) {
 
         $apiCall = $this->twitch->getStream($channel);
@@ -53,7 +63,7 @@ class FunctionsClass {
         if ($apiCall == null) {
             $subcount = $channel . ' is offline';
         } else {
-            $subcount = $apiCall;
+            $subcount = $apiCall - 1;
         }
 
         return $subcount;

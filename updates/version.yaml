@@ -1,5 +1,7 @@
 1.0.0:
     - create_users_table.php
+    - create_roles_table.php
+    - create_permissions_table.php
     - create_core_commands_table.php
     - create_custom_commands_table.php
     - create_games_table.php
@@ -10,3 +12,4 @@
     - create_owners_table.php
     - seed_core_commands_table.php
     - seed_timer_groups_table.php
+    - seed_roles_table.php
