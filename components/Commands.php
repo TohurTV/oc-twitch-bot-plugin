@@ -5,6 +5,7 @@ namespace Tohur\Bot\Components;
 use Cms\Classes\ComponentBase;
 use Tohur\Bot\Models\CoreCommands;
 use Tohur\Bot\Models\CustomCommands;
+use Tohur\Bot\Models\Roles;
 
 class Commands extends ComponentBase {
 
@@ -25,6 +26,12 @@ class Commands extends ComponentBase {
 
     public function customcommands() {
         return CustomCommands::all();
+    }
+
+    public function permission($id) {
+        $findRole = Roles::where('id', $id)->first();
+        $roleName = $findRole->name;
+        return $roleName;
     }
 
 }

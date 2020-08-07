@@ -3,10 +3,12 @@
 <p><strong>!{{ corecommand.command }}</strong></p>
 <p>{{ corecommand.description }}</p>
 <p>{{ corecommand.response }}</p>
+<p>{{ __SELF__.permission(corecommand.roles_id) }}</p>
 {% endfor %}
 {% for customcommand in __SELF__.customcommands %}
 <p><strong>!{{ customcommand.command }}</strong></p>
 <p>{{ customcommand.description }}</p>
 <p>{{ customcommand.response }}</p>
+<p>{{ __SELF__.permission(customcommand.roles_id) }}</p>
 {% endfor %}  
 
