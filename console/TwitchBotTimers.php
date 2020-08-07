@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Tohur\Bot\Models\TimerGroups;
 use Tohur\Bot\Models\Timers;
-use Tohur\Bot\Classes\Twitch\Timers as BotTimers;
+use Tohur\Bot\Classes\Twitch\SendToChannel as BotTimers;
 use Tohur\Bot\Classes\Helpers\HelperClass;
 use Tohur\Bot\Classes\Helpers\FunctionsClass;
 use Tohur\SocialConnect\Classes\Apis\TwitchAPI;

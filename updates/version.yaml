@@ -1,11 +1,9 @@
 1.0.0:
     - create_users_table.php
     - create_roles_table.php
-    - create_permissions_table.php
+    - create_user_roles_table.php
     - create_core_commands_table.php
     - create_custom_commands_table.php
-    - create_games_table.php
-    - create_queues_table.php
     - create_timer_groups_table.php
     - create_timers_table.php
     - create_overlays_table.php

@@ -56,7 +56,7 @@ class TwitchController extends Controller {
 
 
 
-        return back();
+        return redirect('/backend/system/settings/update/tohur/bot/settings#primarytab-twitch');
     }
 
     public function postStreaminfo(Request $request) {

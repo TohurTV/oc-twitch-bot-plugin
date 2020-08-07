@@ -102,9 +102,7 @@ class Plugin extends PluginBase {
     }
     public function registerFormWidgets()
     {
-        return [
-            'Tohur\Bot\FormWidgets\BotPermissionEditor' => 'botpermissioneditor',
-        ];
+        return [];
     }
     public function register() {
         $this->registerConsoleCommand('Twitch', 'Tohur\Bot\Console\TwitchBot');
@@ -217,6 +215,12 @@ class Plugin extends PluginBase {
                         'label' => 'Users',
                         'icon' => 'icon-users',
                         'url' => Backend::url('tohur/bot/users'),
+                        'permissions' => ['tohur.bot.*']
+                    ],
+                    'roles' => [
+                        'label' => 'User Roles',
+                        'icon' => 'icon-users',
+                        'url' => Backend::url('tohur/bot/roles'),
                         'permissions' => ['tohur.bot.*']
                     ]
                 ]

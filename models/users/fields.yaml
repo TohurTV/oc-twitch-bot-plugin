@@ -28,7 +28,7 @@ fields:
         disabled: false
         type: switch
         hidden: false
-#    roles:
-#        label: User Roles
-#        type: relation
+    roles:
+        label: User Roles
+        type: relation
  

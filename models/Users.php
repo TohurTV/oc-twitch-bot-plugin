@@ -45,7 +45,7 @@ class Users extends Model {
      * @var array Relations
      */
     public $belongsToMany = [
-        'roles' => [Roles::class, 'table' => 'tohur_bot_roles']
+        'roles' => [Roles::class, 'table' => 'tohur_bot_user_roles']
     ];
 
 }

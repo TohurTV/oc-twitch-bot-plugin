@@ -10,9 +10,9 @@ class CreateUserRolesTable extends Migration
     {
         Schema::create('tohur_bot_user_roles', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->integer('user_id')->unsigned();
-            $table->integer('user_role_id')->unsigned();
-            $table->primary(['user_id', 'user_role_id'], 'user_role');
+            $table->integer('users_id')->unsigned();
+            $table->integer('roles_id')->unsigned();
+            $table->primary(['users_id', 'roles_id'], 'users_roles');
         });
     }
 

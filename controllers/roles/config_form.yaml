@@ -6,10 +6,10 @@
 name: Role
 
 # Model Form Field configuration
-form: $/tohur/bot/models/role/fields.yaml
+form: $/tohur/bot/models/roles/fields.yaml
 
 # Model Class name
-modelClass: Tohur\Bot\Models\Role
+modelClass: Tohur\Bot\Models\Roles
 
 # Default redirect location
 defaultRedirect: tohur/bot/roles

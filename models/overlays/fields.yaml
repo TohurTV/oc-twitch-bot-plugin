@@ -3,6 +3,13 @@
 # ===================================
 
 fields:
-    id:
+    overlay_id:
         label: ID
         disabled: true
+    html:
+        label: HTML
+    css:
+        label: CSS
+    js:
+        label: Javascript
+       

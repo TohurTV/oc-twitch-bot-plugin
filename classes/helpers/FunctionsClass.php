@@ -54,6 +54,12 @@ class FunctionsClass {
         return $viewercount;
     }
 
+    function totalviews($channel) {
+        $apiCall = $this->twitch->getUser($channel);
+
+        return $apiCall[0]['view_count'];
+    }
+
     function subcount($channel) {
         $user = $this->twitch->getUser($channel);
         $channelID = $user[0]['id'];
@@ -69,6 +75,13 @@ class FunctionsClass {
         return $subcount;
     }
 
+    function hostcount($channel) {
+
+        $apiCall = $this->twitch->hostscount($channel);
+
+        return $apiCall;
+    }
+
     function followage($targetUser) {
 
         $apiCall = $this->twitch->getFollowRelationship($this->settings['Twitch']['channel'], $targetUser);
@@ -76,11 +89,7 @@ class FunctionsClass {
             $followage = $targetUser . ' is not following';
         } else {
 
-            $time1 = new \DateTime($apiCall[0]['followed_at']); // Event occurred time
-            $time2 = new \DateTime(date('Y-m-d H:i:s')); // Current time
-            $interval = $time1->diff($time2);
-
-            $followage = $interval->y . " Years, " . $interval->m . " Months, " . $interval->d . " Days ";
+            $followage = $this->helper->converttime($apiCall[0]['followed_at']);
         }
 
         return $followage;
@@ -94,11 +103,7 @@ class FunctionsClass {
             $accountage = $targetUser . ' is not following';
         } else {
 
-            $time1 = new \DateTime($apiCall['created_at']); // Event occurred time
-            $time2 = new \DateTime(date('Y-m-d H:i:s')); // Current time
-            $interval = $time1->diff($time2);
-
-            $accountage = $interval->y . " Years, " . $interval->m . " Months, " . $interval->d . " Days ";
+            $accountage = $this->helper->converttime($apiCall['created_at']);
         }
 
         return $accountage;
@@ -117,14 +122,24 @@ class FunctionsClass {
             $lastseen = $targetUser . ' has not been in chat';
         } else {
 
-            $time1 = new \DateTime($user->lastseen); // Event occurred time
-            $time2 = new \DateTime(date('Y-m-d H:i:s')); // Current time
-            $interval = $time1->diff($time2);
-
-            $lastseen = $interval->y . " Years, " . $interval->m . " Months, " . $interval->d . " Days ";
+            $lastseen = $this->helper->converttime($user->lastseen);
         }
 
         return $lastseen;
+    }
+
+    function watchtime($channel, $targetUser) {
+
+        $user = Users::where('channel', $channel)
+                ->where('twitch', $targetUser)
+                ->first();
+        if ($user->watchtime == null) {
+            $watchtime = $targetUser . ' has no watchtime';
+        } else {
+            $watchtime = $this->helper->converttime($user->watchtime);
+        }
+
+        return $watchtime;
     }
 
     function followcount($channel) {
@@ -143,16 +158,7 @@ class FunctionsClass {
             $uptime = $channel . ' is offline';
         } else {
 
-            $time1 = new \DateTime($apiCall[0]['started_at']); // Event occurred time
-            $time2 = new \DateTime(date('Y-m-d H:i:s')); // Current time
-            $interval = $time1->diff($time2);
-            if ($interval->h == '00') {
-                $uptime = $interval->i . " Mintues ";
-            } elseif ($interval->h == '01') {
-                $uptime = $interval->y . $interval->h . " Hour, " . $interval->i . " Mintues ";
-            } else {
-                $uptime = $interval->y . $interval->h . " Hours, " . $interval->i . " Mintues ";
-            }
+            $uptime = $this->helper->convertuptime($apiCall[0]['started_at']);
         }
 
         return $uptime;

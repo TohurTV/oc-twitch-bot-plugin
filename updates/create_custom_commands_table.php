@@ -16,8 +16,8 @@ class CreateCustomCommandsTable extends Migration
             $table->string('response', 500)->default('');
             $table->string('description', 500)->default('');
             $table->boolean('args')->default(false);
-            $table->integer('permission_id')->unsigned()->nullable();
-            $table->foreign('permission_id')->references('id')->on('tohur_bot_botpermissions_permissions');
+            $table->integer('roles_id')->unsigned();
+            $table->foreign('roles_id')->references('id')->on('tohur_bot_roles');
             $table->timestamps();
         });
     }

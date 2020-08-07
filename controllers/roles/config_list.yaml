@@ -3,10 +3,10 @@
 # ===================================
 
 # Model List Column configuration
-list: $/tohur/bot/models/role/columns.yaml
+list: $/tohur/bot/models/roles/columns.yaml
 
 # Model Class name
-modelClass: Tohur\Bot\Models\Role
+modelClass: Tohur\Bot\Models\Roles
 
 # List Title
 title: Manage Roles

@@ -16,3 +16,7 @@ fields:
     response:
         label: Response
         disabled: false
+    roles:
+        label: Required Permission Level
+        type: relation
+        disabled: false

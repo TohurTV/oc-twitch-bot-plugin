@@ -1,7 +1,7 @@
 <?php namespace Tohur\Bot\Models;
 
 use Model;
-
+use Tohur\Bot\Models\Roles;
 /**
  * Commands Model
  */
@@ -28,6 +28,10 @@ class CustomCommands extends Model
     protected $dates = [
         'created_at',
         'updated_at'
+    ];
+    
+    public $belongsTo = [
+        'roles' => [Roles::class, 'table' => 'tohur_bot_roles']
     ];
 
 }

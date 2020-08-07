@@ -3,6 +3,7 @@
 namespace Tohur\Bot\Models;
 
 use Model;
+use Tohur\Bot\Models\Roles;
 
 /**
  * CoreCommands Model
@@ -25,6 +26,10 @@ class CoreCommands extends Model {
     protected $dates = [
         'created_at',
         'updated_at'
+    ];
+    
+    public $belongsTo = [
+        'roles' => [Roles::class, 'table' => 'tohur_bot_roles']
     ];
 
 }

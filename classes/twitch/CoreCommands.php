@@ -128,6 +128,30 @@ class CoreCommands extends BasePlugin {
             $formated = strtr($command->response, $replace);
             $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
         });
+
+        // Sub count Command
+        $this->bot->onChannel('/^!watchtime(.*)$/', function($event) {
+            $helper = new HelperClass();
+            $function = new FunctionsClass();
+            $request = $event->getRequest();
+            $matches = $event->getMatches();
+
+            $command = CommandsDB::where('command', 'watchtime')->first();
+
+            if (empty($matches[0])) {
+                $targetUser = $request->getSendingUser();
+            } else {
+                $targetUser = trim($matches[0]);
+            }
+
+            $replace = array(
+                '{$user}' => $helper->remove_hashtags($request->getSource()),
+                '{$targetuser}' => $targetUser,
+                '{$watchtime}' => $function->watchtime($helper->remove_hashtags($request->getSource()), $targetUser),
+            );
+            $formated = strtr($command->response, $replace);
+            $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+        });
     }
 
     /**

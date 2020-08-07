@@ -5,7 +5,7 @@ namespace Tohur\Bot\ReportWidgets;
 use Backend\Classes\ReportWidgetBase;
 use Exception;
 use Db;
-use Tohur\SocialConnect\Classes\Apis\TwitchAPI;
+use Tohur\Bot\Classes\Helpers\FunctionsClass;
 
 class Stats extends ReportWidgetBase {
 
@@ -37,104 +37,74 @@ class Stats extends ReportWidgetBase {
     }
 
     protected function loadData() {
-        $twitch = new TwitchAPI();
-        $Settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
-        $viewerscall = $twitch->getChatusers($Settings['Twitch']['channel']);
-
-        $this->vars['viewers'] = $viewerscall;
+        
     }
 
     protected function uptime() {
-        $twitch = new TwitchAPI();
+        $function = new FunctionsClass();
         $Settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
-        $apiCall = $twitch->getStream($Settings['Twitch']['channel']);
 
-        if ($apiCall == null) {
-            $uptime = 'You are offline';
-        } else {
+        $uptime = $function->uptime($Settings['Twitch']['channel']);
 
-            $time1 = new \DateTime($apiCall[0]['started_at']); // Event occurred time
-            $time2 = new \DateTime(date('Y-m-d H:i:s')); // Current time
-            $interval = $time1->diff($time2);
-            if ($interval->h == '00') {
-                $uptime = $interval->i . " Mintues ";
-            } elseif ($interval->h == '01') {
-                $uptime = $interval->y . $interval->h . " Hour, " . $interval->i . " Mintues ";
-            } else {
-                $uptime = $interval->y . $interval->h . " Hours, " . $interval->i . " Mintues ";
-            }
-        }
         return $uptime;
     }
 
     protected function viewercount() {
-        $twitch = new TwitchAPI();
+        $function = new FunctionsClass();
         $Settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
-        $apiCall = $twitch->getStream($Settings['Twitch']['channel']);
-        if ($apiCall == null) {
-            $viewercount = 'You are offline';
-        } else {
-            $viewercount = $apiCall[0]['viewer_count'];
-        }
+
+        $viewercount = $function->viewers($Settings['Twitch']['channel']);
+
         return $viewercount;
     }
 
     protected function subcount() {
-        $twitch = new TwitchAPI();
+        $function = new FunctionsClass();
         $Settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
-        $user = $twitch->getUser($Settings['Twitch']['channel']);
-        $channelID = $user[0]['id'];
-        $findToken = \DB::table('tohur_bot_owners')->where('twitch_id', '=', $channelID)->get();
-        $acessToken = $findToken[0]->twitch_token;
-        $bot = true;
-        $apiCall = $twitch->getSubcount($Settings['Twitch']['channel'],$acessToken, $bot = true);
-        if ($apiCall == null) {
-            $subcount = $channel . ' is offline';
-        } else {
-            $subcount = $apiCall - 1;
-        }
+
+        $subcount = $function->subcount($Settings['Twitch']['channel']);
 
         return $subcount;
     }
 
     protected function totalviews() {
-        $twitch = new TwitchAPI();
+        $function = new FunctionsClass();
         $Settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
-        $apiCall = $twitch->getUser($Settings['Twitch']['channel']);
+        $totalViewers = $function->totalviews($Settings['Twitch']['channel']);
 
-        return $apiCall[0]['view_count'];
+        return $totalViewers;
     }
 
     protected function hostcount() {
-        $twitch = new TwitchAPI();
+        $function = new FunctionsClass();
         $Settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
-        $apiCall = $twitch->hostscount($Settings['Twitch']['channel']);
+        $hostcount = $function->hostcount($Settings['Twitch']['channel']);
 
-        return $apiCall;
+        return $hostcount;
     }
 
     protected function followers() {
-        $twitch = new TwitchAPI();
+        $function = new FunctionsClass();
         $Settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
-        $apiCall = $twitch->getFollowcount($Settings['Twitch']['channel']);
+        $followercount = $function->followcount($Settings['Twitch']['channel']);
 
-        return $apiCall;
+        return $followercount;
     }
 
     protected function title() {
-        $twitch = new TwitchAPI();
+        $function = new FunctionsClass();
         $Settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
-        $apiCall = $twitch->getChannelinfo($Settings['Twitch']['channel']);
+        $title = $function->channelTitle($Settings['Twitch']['channel']);
 
-        return $apiCall[0]['title'];
+        return $title;
     }
 
     protected function game() {
-        $twitch = new TwitchAPI();
+        $function = new FunctionsClass();
         $Settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
-        $apiCall = $twitch->getChannelinfo($Settings['Twitch']['channel']);
+        $game = $function->channelGame($Settings['Twitch']['channel']);
 
-        return $apiCall[0]['game_name'];
+        return $game;
     }
 
     public function onUpdateStatsWidget() {
