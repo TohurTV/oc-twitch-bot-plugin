@@ -7,6 +7,8 @@ use Tohur\Bot\Models\CustomCommands as CommandDB;
 use Tohur\Bot\Classes\Helpers\HelperClass;
 use Tohur\Twitchirc\AbstractPlugin as BasePlugin;
 use Tohur\Twitchirc\IRC\Response;
+use Tohur\Bot\Models\Roles;
+use Tohur\Bot\Models\Users;
 
 class CustomCommands extends BasePlugin {
 
@@ -33,21 +35,33 @@ class CustomCommands extends BasePlugin {
                 }
                 $replace = array(
                     '{$user}' => $helper->remove_hashtags($request->getSource()),
-                    '{$userurl}' => 'https://twitch.tv/'.$helper->remove_hashtags($request->getSource()),
+                    '{$userurl}' => 'https://twitch.tv/' . $helper->remove_hashtags($request->getSource()),
                     '{$usertitle}' => $function->channelTitle($helper->remove_hashtags($request->getSource())),
                     '{$usergame}' => $function->channelGame($helper->remove_hashtags($request->getSource())),
                     '{$userviewers}' => $function->viewers($helper->remove_hashtags($request->getSource())),
                     '{$uptime}' => $function->uptime($helper->remove_hashtags($request->getSource())),
                     '{$targetuser}' => $targetUser,
-                    '{$targetuserurl}' => 'https://twitch.tv/'.$targetUser,
+                    '{$targetuserurl}' => 'https://twitch.tv/' . $targetUser,
                     '{$targetusertitle}' => $function->channelTitle($targetUser),
                     '{$targetusergame}' => $function->channelGame($targetUser),
                     '{$targetuserviewers}' => $function->viewers($targetUser),
                 );
                 $formated = strtr($command->response, $replace);
-                $event->addResponse(
-                        Response::msg($request->getSource(), "{$formated}")
-                );
+
+                $user = Users::where('channel', $helper->remove_hashtags($request->getSource()))
+                        ->where('twitch_id', $function->userid($helper->remove_hashtags($request->getSendingUser())))
+                        ->where('twitch', $helper->remove_hashtags($request->getSendingUser()))
+                        ->first();
+
+                $broadcasterrole = Roles::where('code', 'broadcaster')->first();
+                $requiredRole = Roles::where('id', $command->roles_id)->first();
+                if ($user->inRole($broadcasterrole)) {
+                    $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+                } elseif ($user->inRole($requiredRole)) {
+                    $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+                } else {
+                    $event->addResponse(Response::msg($request->getSource(), "You Do not have the proper permission to use this command"));
+                }
             }
         });
     }

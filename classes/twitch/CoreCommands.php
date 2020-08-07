@@ -5,6 +5,7 @@ namespace Tohur\Bot\Classes\Twitch;
 use Tohur\Bot\Classes\Helpers\FunctionsClass;
 use Tohur\Bot\Models\CoreCommands as CommandsDB;
 use Tohur\Bot\Models\Users;
+use Tohur\Bot\Models\Roles;
 use Tohur\Bot\Classes\Helpers\HelperClass;
 use Tohur\Twitchirc\AbstractPlugin as BasePlugin;
 use Tohur\Twitchirc\IRC\Response;
@@ -39,7 +40,21 @@ class CoreCommands extends BasePlugin {
                 '{$targetuser}' => $targetUser,
             );
             $formated = strtr($command->response, $replace);
-            $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+
+            $user = Users::where('channel', $helper->remove_hashtags($request->getSource()))
+                    ->where('twitch_id', $function->userid($helper->remove_hashtags($request->getSendingUser())))
+                    ->where('twitch', $helper->remove_hashtags($request->getSendingUser()))
+                    ->first();
+
+            $broadcasterrole = Roles::where('code', 'broadcaster')->first();
+            $requiredRole = Roles::where('id', $command->roles_id)->first();
+            if ($user->inRole($broadcasterrole)) {
+                $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+            } elseif ($user->inRole($requiredRole)) {
+                $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+            } else {
+                $event->addResponse(Response::msg($request->getSource(), "You Do not have the proper permission to use this command"));
+            }
         });
 
         // Follow Age Command
@@ -60,7 +75,21 @@ class CoreCommands extends BasePlugin {
                 '{$targetuser}' => $targetUser,
             );
             $formated = strtr($command->response, $replace);
-            $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+
+            $user = Users::where('channel', $helper->remove_hashtags($request->getSource()))
+                    ->where('twitch_id', $function->userid($helper->remove_hashtags($request->getSendingUser())))
+                    ->where('twitch', $helper->remove_hashtags($request->getSendingUser()))
+                    ->first();
+
+            $broadcasterrole = Roles::where('code', 'broadcaster')->first();
+            $requiredRole = Roles::where('id', $command->roles_id)->first();
+            if ($user->inRole($broadcasterrole)) {
+                $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+            } elseif ($user->inRole($requiredRole)) {
+                $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+            } else {
+                $event->addResponse(Response::msg($request->getSource(), "You Do not have the proper permission to use this command"));
+            }
         });
 
         // Last seen Command
@@ -81,7 +110,21 @@ class CoreCommands extends BasePlugin {
                 '{$targetuser}' => $targetUser,
             );
             $formated = strtr($command->response, $replace);
-            $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+
+            $user = Users::where('channel', $helper->remove_hashtags($request->getSource()))
+                    ->where('twitch_id', $function->userid($helper->remove_hashtags($request->getSendingUser())))
+                    ->where('twitch', $helper->remove_hashtags($request->getSendingUser()))
+                    ->first();
+
+            $broadcasterrole = Roles::where('code', 'broadcaster')->first();
+            $requiredRole = Roles::where('id', $command->roles_id)->first();
+            if ($user->inRole($broadcasterrole)) {
+                $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+            } elseif ($user->inRole($requiredRole)) {
+                $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+            } else {
+                $event->addResponse(Response::msg($request->getSource(), "You Do not have the proper permission to use this command"));
+            }
         });
 
         // Uptime Command
@@ -96,7 +139,21 @@ class CoreCommands extends BasePlugin {
                 '{$uptime}' => $function->uptime($helper->remove_hashtags($request->getSource())),
             );
             $formated = strtr($command->response, $replace);
-            $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+
+            $user = Users::where('channel', $helper->remove_hashtags($request->getSource()))
+                    ->where('twitch_id', $function->userid($helper->remove_hashtags($request->getSendingUser())))
+                    ->where('twitch', $helper->remove_hashtags($request->getSendingUser()))
+                    ->first();
+
+            $broadcasterrole = Roles::where('code', 'broadcaster')->first();
+            $requiredRole = Roles::where('id', $command->roles_id)->first();
+            if ($user->inRole($broadcasterrole)) {
+                $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+            } elseif ($user->inRole($requiredRole)) {
+                $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+            } else {
+                $event->addResponse(Response::msg($request->getSource(), "You Do not have the proper permission to use this command"));
+            }
         });
 
         // Follower count Command
@@ -111,7 +168,21 @@ class CoreCommands extends BasePlugin {
                 '{$followers}' => $function->followcount($helper->remove_hashtags($request->getSource())),
             );
             $formated = strtr($command->response, $replace);
-            $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+
+            $user = Users::where('channel', $helper->remove_hashtags($request->getSource()))
+                    ->where('twitch_id', $function->userid($helper->remove_hashtags($request->getSendingUser())))
+                    ->where('twitch', $helper->remove_hashtags($request->getSendingUser()))
+                    ->first();
+
+            $broadcasterrole = Roles::where('code', 'broadcaster')->first();
+            $requiredRole = Roles::where('id', $command->roles_id)->first();
+            if ($user->inRole($broadcasterrole)) {
+                $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+            } elseif ($user->inRole($requiredRole)) {
+                $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+            } else {
+                $event->addResponse(Response::msg($request->getSource(), "You Do not have the proper permission to use this command"));
+            }
         });
 
         // Sub count Command
@@ -126,7 +197,21 @@ class CoreCommands extends BasePlugin {
                 '{$subs}' => $function->subcount($helper->remove_hashtags($request->getSource())),
             );
             $formated = strtr($command->response, $replace);
-            $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+
+            $user = Users::where('channel', $helper->remove_hashtags($request->getSource()))
+                    ->where('twitch_id', $function->userid($helper->remove_hashtags($request->getSendingUser())))
+                    ->where('twitch', $helper->remove_hashtags($request->getSendingUser()))
+                    ->first();
+
+            $broadcasterrole = Roles::where('code', 'broadcaster')->first();
+            $requiredRole = Roles::where('id', $command->roles_id)->first();
+            if ($user->inRole($broadcasterrole)) {
+                $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+            } elseif ($user->inRole($requiredRole)) {
+                $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+            } else {
+                $event->addResponse(Response::msg($request->getSource(), "You Do not have the proper permission to use this command"));
+            }
         });
 
         // Sub count Command
@@ -150,7 +235,21 @@ class CoreCommands extends BasePlugin {
                 '{$watchtime}' => $function->watchtime($helper->remove_hashtags($request->getSource()), $targetUser),
             );
             $formated = strtr($command->response, $replace);
-            $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+
+            $user = Users::where('channel', $helper->remove_hashtags($request->getSource()))
+                    ->where('twitch_id', $function->userid($helper->remove_hashtags($request->getSendingUser())))
+                    ->where('twitch', $helper->remove_hashtags($request->getSendingUser()))
+                    ->first();
+
+            $broadcasterrole = Roles::where('code', 'broadcaster')->first();
+            $requiredRole = Roles::where('id', $command->roles_id)->first();
+            if ($user->inRole($broadcasterrole)) {
+                $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+            } elseif ($user->inRole($requiredRole)) {
+                $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+            } else {
+                $event->addResponse(Response::msg($request->getSource(), "You Do not have the proper permission to use this command"));
+            }
         });
     }
 
