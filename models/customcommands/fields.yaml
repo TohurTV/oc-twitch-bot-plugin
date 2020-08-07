@@ -25,3 +25,7 @@ fields:
         label: Requires Arguments?
         type: switch
         disabled: false
+    roles:
+        label: Required Permission Level
+        type: relation
+        disabled: false        

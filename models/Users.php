@@ -48,4 +48,58 @@ class Users extends Model {
         'roles' => [Roles::class, 'table' => 'tohur_bot_user_roles']
     ];
 
+    /**
+     * Returns an array of roles which the given user belongs to.
+     * @return array
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * Adds the user to the given role.
+     * @param Role $role
+     * @return bool
+     */
+    public function addRole($role)
+    {
+        if (!$this->inRole($role)) {
+            $this->roles()->attach($role);
+            $this->reloadRelations('roles');
+        }
+
+        return true;
+    }
+
+    /**
+     * Removes the user from the given role.
+     * @param Role $role
+     * @return bool
+     */
+    public function removeRole($role)
+    {
+        if ($this->inRole($role)) {
+            $this->roles()->detach($role);
+            $this->reloadRelations('roles');
+        }
+
+        return true;
+    }
+
+    /**
+     * See if the user is in the given role.
+     * @param Role $role
+     * @return bool
+     */
+    public function inRole($role)
+    {
+        foreach ($this->getRoles() as $_role) {
+            if ($_role->getKey() == $role->getKey()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

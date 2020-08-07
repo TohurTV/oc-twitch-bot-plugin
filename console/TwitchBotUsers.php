@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Tohur\Bot\Classes\TwitchBotClass;
 use Tohur\Bot\Models\Users;
+use Tohur\Bot\Models\Roles;
 use Tohur\SocialConnect\Classes\Apis\TwitchAPI;
 use Tohur\Bot\Classes\Helpers\BotBlacklist;
 
@@ -47,7 +48,32 @@ class TwitchBotUsers extends Command {
                     ->where('twitch_id', $channelID)
                     ->where('twitch', $broadcaster)
                     ->first();
-
+            $broadcasterrole = Roles::where('code', 'broadcaster')->first();
+            if ($user->inRole($broadcasterrole)) {
+                // User is in Role
+            } else {
+                $user->roles()->add($broadcasterrole);
+                $user->save();
+            }
+            $viewerrole = Roles::where('code', 'viewer')->first();
+            if ($user->inRole($viewerrole)) {
+                // User is in Role
+            } else {
+                $user->roles()->add($viewerrole);
+                $user->save();
+            }
+            $followerCall = $twitch->getFollowRelationship($Settings['Twitch']['channel'], $broadcaster);
+            if ($followerCall == null) {
+                
+            } else {
+                $followerrole = Roles::where('code', 'follower')->first();
+                if ($user->inRole($followerrole)) {
+                    // User is in Group... Push to Array
+                } else {
+                    $user->roles()->add($followerrole);
+                    $user->save();
+                }
+            }
             if ($user->watchtime == null) {
                 $watchmins = 1;
             } else {
@@ -66,8 +92,7 @@ class TwitchBotUsers extends Command {
             if ($twitch->isChannelLive($Settings['Twitch']['channel']) == true) {
                 if (in_array($broadcaster, $bot)) {
                     echo 'User is Bot';
-                }
-                elseif ($user->ignore == true) {
+                } elseif ($user->ignore == true) {
                     echo 'User is ignored';
                 } else {
 
@@ -90,6 +115,32 @@ class TwitchBotUsers extends Command {
                     ->where('twitch', $vip)
                     ->first();
 
+            $viprole = Roles::where('code', 'vip')->first();
+            if ($user->inRole($viprole)) {
+                // User is in Role
+            } else {
+                $user->roles()->add($viprole);
+                $user->save();
+            }
+            $viewerrole = Roles::where('code', 'viewer')->first();
+            if ($user->inRole($viewerrole)) {
+                // User is in Role
+            } else {
+                $user->roles()->add($viewerrole);
+                $user->save();
+            }
+            $followerCall = $twitch->getFollowRelationship($Settings['Twitch']['channel'], $broadcaster);
+            if ($followerCall == null) {
+                
+            } else {
+                $followerrole = Roles::where('code', 'follower')->first();
+                if ($user->inRole($followerrole)) {
+                    // User is in Group... Push to Array
+                } else {
+                    $user->roles()->add($followerrole);
+                    $user->save();
+                }
+            }
             if ($user->watchtime == null) {
                 $watchmins = 1;
             } else {
@@ -108,8 +159,7 @@ class TwitchBotUsers extends Command {
             if ($twitch->isChannelLive($Settings['Twitch']['channel']) == true) {
                 if (in_array($vip, $bot)) {
                     echo 'User is Bot';
-                }
-                elseif ($user->ignore == true) {
+                } elseif ($user->ignore == true) {
                     echo 'User is ignored';
                 } else {
                     $update = Users::where('channel', $Settings['Twitch']['channel'])
@@ -131,6 +181,32 @@ class TwitchBotUsers extends Command {
                     ->where('twitch', $moderator)
                     ->first();
 
+            $moderatorrole = Roles::where('code', 'moderator')->first();
+            if ($user->inRole($moderatorrole)) {
+                // User is in Role
+            } else {
+                $user->roles()->add($moderatorrole);
+                $user->save();
+            }
+            $viewerrole = Roles::where('code', 'viewer')->first();
+            if ($user->inRole($viewerrole)) {
+                // User is in Role
+            } else {
+                $user->roles()->add($viewerrole);
+                $user->save();
+            }
+            $followerCall = $twitch->getFollowRelationship($Settings['Twitch']['channel'], $broadcaster);
+            if ($followerCall == null) {
+                
+            } else {
+                $followerrole = Roles::where('code', 'follower')->first();
+                if ($user->inRole($followerrole)) {
+                    // User is in Group... Push to Array
+                } else {
+                    $user->roles()->add($followerrole);
+                    $user->save();
+                }
+            }
             if ($user->watchtime == null) {
                 $watchmins = 1;
             } else {
@@ -149,8 +225,7 @@ class TwitchBotUsers extends Command {
             if ($twitch->isChannelLive($Settings['Twitch']['channel']) == true) {
                 if (in_array($moderator, $bot)) {
                     echo 'User is Bot';
-                }
-                elseif ($user->ignore == true) {
+                } elseif ($user->ignore == true) {
                     echo 'User is ignored';
                 } else {
                     $update = Users::where('channel', $Settings['Twitch']['channel'])
@@ -173,6 +248,26 @@ class TwitchBotUsers extends Command {
                     ->where('twitch', $viewer)
                     ->first();
 
+            $viewerrole = Roles::where('code', 'viewer')->first();
+            if ($user->inRole($viewerrole)) {
+                // User is in Role
+            } else {
+                $user->roles()->add($viewerrole);
+                $user->save();
+            }
+
+            $followerCall = $twitch->getFollowRelationship($Settings['Twitch']['channel'], $broadcaster);
+            if ($followerCall == null) {
+                
+            } else {
+                $followerrole = Roles::where('code', 'follower')->first();
+                if ($user->inRole($followerrole)) {
+                    // User is in Group... Push to Array
+                } else {
+                    $user->roles()->add($followerrole);
+                    $user->save();
+                }
+            }
             if ($user->watchtime == null) {
                 $watchmins = 1;
             } else {
@@ -191,8 +286,7 @@ class TwitchBotUsers extends Command {
             if ($twitch->isChannelLive($Settings['Twitch']['channel']) == true) {
                 if (in_array($viewer, $bot)) {
                     echo 'User is Bot';
-                }
-                elseif ($user->ignore == true) {
+                } elseif ($user->ignore == true) {
                     echo 'User is ignored';
                 } else {
                     $update = Users::where('channel', $Settings['Twitch']['channel'])
