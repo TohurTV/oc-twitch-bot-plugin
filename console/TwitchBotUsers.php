@@ -129,7 +129,7 @@ class TwitchBotUsers extends Command {
                 $user->roles()->add($viewerrole);
                 $user->save();
             }
-            $followerCall = $twitch->getFollowRelationship($Settings['Twitch']['channel'], $broadcaster);
+            $followerCall = $twitch->getFollowRelationship($Settings['Twitch']['channel'], $vip);
             if ($followerCall == null) {
                 
             } else {
@@ -195,7 +195,7 @@ class TwitchBotUsers extends Command {
                 $user->roles()->add($viewerrole);
                 $user->save();
             }
-            $followerCall = $twitch->getFollowRelationship($Settings['Twitch']['channel'], $broadcaster);
+            $followerCall = $twitch->getFollowRelationship($Settings['Twitch']['channel'], $moderator);
             if ($followerCall == null) {
                 
             } else {
@@ -256,7 +256,7 @@ class TwitchBotUsers extends Command {
                 $user->save();
             }
 
-            $followerCall = $twitch->getFollowRelationship($Settings['Twitch']['channel'], $broadcaster);
+            $followerCall = $twitch->getFollowRelationship($Settings['Twitch']['channel'], $viewer);
             if ($followerCall == null) {
                 
             } else {
