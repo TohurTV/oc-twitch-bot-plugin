@@ -46,10 +46,10 @@ class TwitchController extends Controller {
         $socialUser = Socialite::with($this->driver)->user();
 
         $user = Owner::where('twitch_id', '=', $socialUser->id)->first();
-
+        $expiresIn = $socialUser->expiresIn - 2000;
         $user->twitch_token = $socialUser->token;
         $user->twitch_refreshToken = $socialUser->refreshToken;
-        $user->twitch_expiresIn = $socialUser->expiresIn;
+        $user->twitch_expiresIn = $expiresIn;
         $user->token_created_at = now();
 
         $user->save();
@@ -77,7 +77,7 @@ class TwitchController extends Controller {
             $owner->title = $title;
             $owner->game = $game;
             $owner->save();
-            Artisan::call('bot:twittergamechange');
+            \Artisan::call('bot:twittergamechange');
         }
 
         $bot = true;
