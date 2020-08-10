@@ -88,7 +88,7 @@ class TwitchBotUsers extends Command {
             if ($followerCall == null) {
                 $followerrole = Roles::where('code', 'follower')->first();
                 if ($user->inRole($followerrole)) {
-                    $user->roles()->add($followerrole);
+                    $user->roles()->detach($followerrole);
                     $user->save();
                 } else {
                     // User is not in Role... Push to Array
@@ -180,7 +180,7 @@ class TwitchBotUsers extends Command {
             if ($followerCall == null) {
                 $followerrole = Roles::where('code', 'follower')->first();
                 if ($user->inRole($followerrole)) {
-                    $user->roles()->add($followerrole);
+                    $user->roles()->detach($followerrole);
                     $user->save();
                 } else {
                     // User is not in Role... Push to Array
@@ -271,7 +271,7 @@ class TwitchBotUsers extends Command {
             if ($followerCall == null) {
                 $followerrole = Roles::where('code', 'follower')->first();
                 if ($user->inRole($followerrole)) {
-                    $user->roles()->add($followerrole);
+                    $user->roles()->detach($followerrole);
                     $user->save();
                 } else {
                     // User is not in Role... Push to Array
@@ -357,7 +357,7 @@ class TwitchBotUsers extends Command {
             if ($followerCall == null) {
                 $followerrole = Roles::where('code', 'follower')->first();
                 if ($user->inRole($followerrole)) {
-                    $user->roles()->add($followerrole);
+                    $user->roles()->detach($followerrole);
                     $user->save();
                 } else {
                     // User is not in Role... Push to Array
