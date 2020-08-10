@@ -133,13 +133,44 @@ class FunctionsClass {
         $user = Users::where('channel', $channel)
                 ->where('twitch', $targetUser)
                 ->first();
+
         if ($user->watchtime == null) {
             $watchtime = $targetUser . ' has no watchtime';
         } else {
-            $watchtime = $this->helper->converttime($user->watchtime);
+            $watchtime = $this->helper->hoursandmins($user->watchtime, '%02d Hours, %02d Minutes');
         }
 
         return $watchtime;
+    }
+
+    function points($channel, $targetUser) {
+
+        $user = Users::where('channel', $channel)
+                ->where('twitch', $targetUser)
+                ->first();
+
+        if ($user->points == null) {
+            $points = $targetUser . ' has no points';
+        } else {
+            $points = number_format($user->points);
+        }
+
+        return $points;
+    }
+
+    function totalmessages($channel, $targetUser) {
+
+        $user = Users::where('channel', $channel)
+                ->where('twitch', $targetUser)
+                ->first();
+
+        if ($user->totalmessages == null) {
+            $totalmessages = $targetUser . ' has no messages';
+        } else {
+            $totalmessages = number_format($user->totalmessages);
+        }
+
+        return $totalmessages;
     }
 
     function followcount($channel) {

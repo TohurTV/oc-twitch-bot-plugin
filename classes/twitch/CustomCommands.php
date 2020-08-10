@@ -31,7 +31,7 @@ class CustomCommands extends BasePlugin {
                 if (empty($commandMatch[1])) {
                     $targetUser = $request->getSendingUser();
                 } else {
-                    $targetUser = trim($commandMatch[1]);
+                    $targetUser = $helper->remove_atsign(trim($commandMatch[1]));
                 }
                 $replace = array(
                     '{$user}' => $helper->remove_hashtags($request->getSource()),

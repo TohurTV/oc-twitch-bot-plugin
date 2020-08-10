@@ -205,22 +205,10 @@ class Plugin extends PluginBase {
                         'url' => Backend::url('tohur/bot/timers'),
                         'permissions' => ['tohur.bot.*']
                     ],
-                    'overlays' => [
-                        'label' => 'Overlays',
-                        'icon' => 'icon-cogs',
-                        'url' => Backend::url('tohur/bot/overlays'),
-                        'permissions' => ['tohur.bot.*']
-                    ],
                     'users' => [
                         'label' => 'Users',
                         'icon' => 'icon-users',
                         'url' => Backend::url('tohur/bot/users'),
-                        'permissions' => ['tohur.bot.*']
-                    ],
-                    'roles' => [
-                        'label' => 'User Roles',
-                        'icon' => 'icon-users',
-                        'url' => Backend::url('tohur/bot/roles'),
                         'permissions' => ['tohur.bot.*']
                     ]
                 ]

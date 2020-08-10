@@ -21,11 +21,11 @@ class Commands extends ComponentBase {
     }
 
     public function corecommands() {
-        return CoreCommands::all();
+        return CoreCommands::orderBy('command')->get();
     }
 
     public function customcommands() {
-        return CustomCommands::all();
+        return CustomCommands::orderBy('command')->get();
     }
 
     public function permission($id) {

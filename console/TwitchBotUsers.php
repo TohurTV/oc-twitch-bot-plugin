@@ -36,6 +36,10 @@ class TwitchBotUsers extends Command {
         $Settings = \Tohur\Bot\Models\Settings::instance()->get('bot', []);
         $viewerscall = $twitch->getChatusers($Settings['Twitch']['channel']);
         $bot = BotBlacklist::$bots;
+        $twitchuser = $twitch->getUser($Settings['Twitch']['channel']);
+        $channelID = $twitchuser[0]['id'];
+        $findToken = \DB::table('tohur_bot_owners')->where('twitch_id', '=', $channelID)->get();
+        $acessToken = $findToken[0]->twitch_token;
 
         foreach ($viewerscall->chatters->broadcaster as $obj) {
             $broadcaster = $obj;
@@ -62,13 +66,37 @@ class TwitchBotUsers extends Command {
                 $user->roles()->add($viewerrole);
                 $user->save();
             }
+            $subcriberCall = $twitch->getSubstatus($Settings['Twitch']['channel'], $broadcaster, $acessToken, $bot = true);
+            if ($subcriberCall == null) {
+                $subcriberrole = Roles::where('code', 'subcriber')->first();
+                if ($user->inRole($subcriberrole)) {
+                    $user->roles()->detach($subcriberrole);
+                    $user->save();
+                } else {
+                    // User is not in Role... Push to Array
+                }
+            } else {
+                $subcriberrole = Roles::where('code', 'subcriber')->first();
+                if ($user->inRole($subcriberrole)) {
+                    // User is in Role... Push to Array
+                } else {
+                    $user->roles()->add($subcriberrole);
+                    $user->save();
+                }
+            }
             $followerCall = $twitch->getFollowRelationship($Settings['Twitch']['channel'], $broadcaster);
             if ($followerCall == null) {
-                
+                $followerrole = Roles::where('code', 'follower')->first();
+                if ($user->inRole($followerrole)) {
+                    $user->roles()->add($followerrole);
+                    $user->save();
+                } else {
+                    // User is not in Role... Push to Array
+                }
             } else {
                 $followerrole = Roles::where('code', 'follower')->first();
                 if ($user->inRole($followerrole)) {
-                    // User is in Group... Push to Array
+                    // User is in Role... Push to Array
                 } else {
                     $user->roles()->add($followerrole);
                     $user->save();
@@ -103,6 +131,7 @@ class TwitchBotUsers extends Command {
                 }
             }
         }
+        
         foreach ($viewerscall->chatters->vips as $obj) {
             $vip = $obj;
             $userid = $twitch->getUser($vip);
@@ -129,13 +158,37 @@ class TwitchBotUsers extends Command {
                 $user->roles()->add($viewerrole);
                 $user->save();
             }
+            $subcriberCall = $twitch->getSubstatus($Settings['Twitch']['channel'], $vip, $acessToken, $bot = true);
+            if ($subcriberCall == null) {
+                $subcriberrole = Roles::where('code', 'subcriber')->first();
+                if ($user->inRole($subcriberrole)) {
+                    $user->roles()->detach($subcriberrole);
+                    $user->save();
+                } else {
+                    // User is not in Role... Push to Array
+                }
+            } else {
+                $subcriberrole = Roles::where('code', 'subcriber')->first();
+                if ($user->inRole($subcriberrole)) {
+                    // User is in Role... Push to Array
+                } else {
+                    $user->roles()->add($subcriberrole);
+                    $user->save();
+                }
+            }
             $followerCall = $twitch->getFollowRelationship($Settings['Twitch']['channel'], $vip);
             if ($followerCall == null) {
-                
+                $followerrole = Roles::where('code', 'follower')->first();
+                if ($user->inRole($followerrole)) {
+                    $user->roles()->add($followerrole);
+                    $user->save();
+                } else {
+                    // User is not in Role... Push to Array
+                }
             } else {
                 $followerrole = Roles::where('code', 'follower')->first();
                 if ($user->inRole($followerrole)) {
-                    // User is in Group... Push to Array
+                    // User is in Role... Push to Array
                 } else {
                     $user->roles()->add($followerrole);
                     $user->save();
@@ -169,6 +222,7 @@ class TwitchBotUsers extends Command {
                 }
             }
         }
+        
         foreach ($viewerscall->chatters->moderators as $obj) {
             $moderator = $obj;
             $userid = $twitch->getUser($moderator);
@@ -195,13 +249,37 @@ class TwitchBotUsers extends Command {
                 $user->roles()->add($viewerrole);
                 $user->save();
             }
+            $subcriberCall = $twitch->getSubstatus($Settings['Twitch']['channel'], $moderator, $acessToken, $bot = true);
+            if ($subcriberCall == null) {
+                $subcriberrole = Roles::where('code', 'subcriber')->first();
+                if ($user->inRole($subcriberrole)) {
+                    $user->roles()->detach($subcriberrole);
+                    $user->save();
+                } else {
+                    // User is not in Role... Push to Array
+                }
+            } else {
+                $subcriberrole = Roles::where('code', 'subcriber')->first();
+                if ($user->inRole($subcriberrole)) {
+                    // User is in Role... Push to Array
+                } else {
+                    $user->roles()->add($subcriberrole);
+                    $user->save();
+                }
+            }
             $followerCall = $twitch->getFollowRelationship($Settings['Twitch']['channel'], $moderator);
             if ($followerCall == null) {
-                
+                $followerrole = Roles::where('code', 'follower')->first();
+                if ($user->inRole($followerrole)) {
+                    $user->roles()->add($followerrole);
+                    $user->save();
+                } else {
+                    // User is not in Role... Push to Array
+                }
             } else {
                 $followerrole = Roles::where('code', 'follower')->first();
                 if ($user->inRole($followerrole)) {
-                    // User is in Group... Push to Array
+                    // User is in Role... Push to Array
                 } else {
                     $user->roles()->add($followerrole);
                     $user->save();
@@ -235,6 +313,7 @@ class TwitchBotUsers extends Command {
                 }
             }
         }
+        
         foreach ($viewerscall->chatters->viewers as $obj) {
             $viewer = $obj;
             $userid = $twitch->getUser($viewer);
@@ -256,13 +335,37 @@ class TwitchBotUsers extends Command {
                 $user->save();
             }
 
+            $subcriberCall = $twitch->getSubstatus($Settings['Twitch']['channel'], $viewer, $acessToken, $bot = true);
+            if ($subcriberCall == null) {
+                $subcriberrole = Roles::where('code', 'subcriber')->first();
+                if ($user->inRole($subcriberrole)) {
+                    $user->roles()->detach($subcriberrole);
+                    $user->save();
+                } else {
+                    // User is not in Role... Push to Array
+                }
+            } else {
+                $subcriberrole = Roles::where('code', 'subcriber')->first();
+                if ($user->inRole($subcriberrole)) {
+                    // User is in Role... Push to Array
+                } else {
+                    $user->roles()->add($subcriberrole);
+                    $user->save();
+                }
+            }
             $followerCall = $twitch->getFollowRelationship($Settings['Twitch']['channel'], $viewer);
             if ($followerCall == null) {
-                
+                $followerrole = Roles::where('code', 'follower')->first();
+                if ($user->inRole($followerrole)) {
+                    $user->roles()->add($followerrole);
+                    $user->save();
+                } else {
+                    // User is not in Role... Push to Array
+                }
             } else {
                 $followerrole = Roles::where('code', 'follower')->first();
                 if ($user->inRole($followerrole)) {
-                    // User is in Group... Push to Array
+                    // User is in Role... Push to Array
                 } else {
                     $user->roles()->add($followerrole);
                     $user->save();

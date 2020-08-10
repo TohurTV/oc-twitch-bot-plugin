@@ -33,7 +33,7 @@ class CoreCommands extends BasePlugin {
             if (empty($matches[0])) {
                 $targetUser = $request->getSendingUser();
             } else {
-                $targetUser = trim($matches[0]);
+                $targetUser = $helper->remove_atsign(trim($matches[0]));
             }
             $replace = array(
                 '{$age}' => $function->accountage($targetUser),
@@ -68,7 +68,7 @@ class CoreCommands extends BasePlugin {
             if (empty($matches[0])) {
                 $targetUser = $request->getSendingUser();
             } else {
-                $targetUser = trim($matches[0]);
+                $targetUser = $helper->remove_atsign(trim($matches[0]));
             }
             $replace = array(
                 '{$followage}' => $function->followage($targetUser),
@@ -103,7 +103,7 @@ class CoreCommands extends BasePlugin {
             if (empty($matches[0])) {
                 $targetUser = $request->getSendingUser();
             } else {
-                $targetUser = trim($matches[0]);
+                $targetUser = $helper->remove_atsign(trim($matches[0]));
             }
             $replace = array(
                 '{$lastseen}' => $function->lastseen($helper->remove_hashtags($request->getSource()), $targetUser),
@@ -214,7 +214,7 @@ class CoreCommands extends BasePlugin {
             }
         });
 
-        // Sub count Command
+        // Watch Time Command
         $this->bot->onChannel('/^!watchtime(.*)$/', function($event) {
             $helper = new HelperClass();
             $function = new FunctionsClass();
@@ -226,7 +226,7 @@ class CoreCommands extends BasePlugin {
             if (empty($matches[0])) {
                 $targetUser = $request->getSendingUser();
             } else {
-                $targetUser = trim($matches[0]);
+                $targetUser = $helper->remove_atsign(trim($matches[0]));
             }
 
             $replace = array(
@@ -251,6 +251,85 @@ class CoreCommands extends BasePlugin {
                 $event->addResponse(Response::msg($request->getSource(), "You Do not have the proper permission to use this command"));
             }
         });
+        
+         // Points Command
+        $this->bot->onChannel('/^!points(.*)$/', function($event) {
+            $helper = new HelperClass();
+            $function = new FunctionsClass();
+            $request = $event->getRequest();
+            $matches = $event->getMatches();
+
+            $command = CommandsDB::where('command', 'points')->first();
+
+            if (empty($matches[0])) {
+                $targetUser = $request->getSendingUser();
+            } else {
+                $targetUser = $helper->remove_atsign(trim($matches[0]));
+            }
+
+            $replace = array(
+                '{$user}' => $helper->remove_hashtags($request->getSource()),
+                '{$targetuser}' => $targetUser,
+                '{$points}' => $function->points($helper->remove_hashtags($request->getSource()), $targetUser),
+            );
+            $formated = strtr($command->response, $replace);
+
+            $user = Users::where('channel', $helper->remove_hashtags($request->getSource()))
+                    ->where('twitch_id', $function->userid($helper->remove_hashtags($request->getSendingUser())))
+                    ->where('twitch', $helper->remove_hashtags($request->getSendingUser()))
+                    ->first();
+
+            $broadcasterrole = Roles::where('code', 'broadcaster')->first();
+            $requiredRole = Roles::where('id', $command->roles_id)->first();
+            if ($user->inRole($broadcasterrole)) {
+                $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+            } elseif ($user->inRole($requiredRole)) {
+                $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+            } else {
+                $event->addResponse(Response::msg($request->getSource(), "You Do not have the proper permission to use this command"));
+            }
+        });
+
+         // Stats Command
+        $this->bot->onChannel('/^!stats(.*)$/', function($event) {
+            $helper = new HelperClass();
+            $function = new FunctionsClass();
+            $request = $event->getRequest();
+            $matches = $event->getMatches();
+
+            $command = CommandsDB::where('command', 'stats')->first();
+
+            if (empty($matches[0])) {
+                $targetUser = $request->getSendingUser();
+            } else {
+                $targetUser = $helper->remove_atsign(trim($matches[0]));
+            }
+
+            $replace = array(
+                '{$user}' => $helper->remove_hashtags($request->getSource()),
+                '{$targetuser}' => $targetUser,
+                '{$points}' => $function->points($helper->remove_hashtags($request->getSource()), $targetUser),
+                '{$watchtime}' => $function->watchtime($helper->remove_hashtags($request->getSource()), $targetUser),
+                '{$totalmessages}' => $function->totalmessages($helper->remove_hashtags($request->getSource()), $targetUser),
+            );
+            $formated = strtr($command->response, $replace);
+
+            $user = Users::where('channel', $helper->remove_hashtags($request->getSource()))
+                    ->where('twitch_id', $function->userid($helper->remove_hashtags($request->getSendingUser())))
+                    ->where('twitch', $helper->remove_hashtags($request->getSendingUser()))
+                    ->first();
+
+            $broadcasterrole = Roles::where('code', 'broadcaster')->first();
+            $requiredRole = Roles::where('id', $command->roles_id)->first();
+            if ($user->inRole($broadcasterrole)) {
+                $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+            } elseif ($user->inRole($requiredRole)) {
+                $event->addResponse(Response::msg($request->getSource(), "{$formated}"));
+            } else {
+                $event->addResponse(Response::msg($request->getSource(), "You Do not have the proper permission to use this command"));
+            }
+        });
+        
     }
 
     /**
