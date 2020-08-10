@@ -37,8 +37,8 @@ class TwitchBotUsers extends Command {
         $viewerscall = $twitch->getChatusers($Settings['Twitch']['channel']);
         $bot = BotBlacklist::$bots;
         $twitchuser = $twitch->getUser($Settings['Twitch']['channel']);
-        $channelID = $twitchuser[0]['id'];
-        $findToken = \DB::table('tohur_bot_owners')->where('twitch_id', '=', $channelID)->get();
+        $channel = $twitchuser[0]['id'];
+        $findToken = \DB::table('tohur_bot_owners')->where('twitch_id', '=', $channel)->get();
         $acessToken = $findToken[0]->twitch_token;
 
         foreach ($viewerscall->chatters->broadcaster as $obj) {
