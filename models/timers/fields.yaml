@@ -17,3 +17,7 @@ fields:
     response:
         label: Response Supported variables {$user}, {$userurl}, {$usertitle}, {$usergame}, {$userviewers}, {$uptime}
         disabled: false
+    command:
+        label: Is a Command? If so ONLY put the custom command in response without (!)
+        type: switch
+        disabled: false        
